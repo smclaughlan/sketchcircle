@@ -50,6 +50,9 @@ const NavBar = (props) => {
     </Grid >
   ) : (
       <>
+        <NavLink style={{ color: 'white' }} to="/">
+          <Button color="inherit">Sketchcircle</Button>
+        </NavLink>
         <NavLink style={{ color: 'white' }} to="/register">
           <Button color="inherit">Register</Button>
         </NavLink>
