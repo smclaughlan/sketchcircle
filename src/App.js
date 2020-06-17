@@ -4,19 +4,21 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Theme from './Theme';
 import Nav from './components/Nav';
-// import Login from './components/Login';
-// import Register from './components/Register';
+import Main from './components/Main';
+import Login from './components/Login';
+import Register from './components/Register';
 
 import { ProtectedRoute, AuthRoute } from './authRoutes';
 
 function App(props) {
   return (
     <BrowserRouter>
-      <Nav>
-        <Switch path="/">
-          <h1>Hello world!</h1>
-        </Switch>
-      </Nav>
+      <Nav />
+      <Switch>
+        <Route path="/register" component={Register} currentUserId={props.currentUserId} />
+        <Route path="/login" component={Login} currentUserId={props.currentUserId} />
+        <Route path="/" component={Main} currentUserId={props.currentUserId} />
+      </Switch>
     </BrowserRouter>
   );
 }
@@ -25,7 +27,7 @@ function App(props) {
 
 const mapStateToProps = state => {
   return {
-    // currentUserId: state.user.currentUserId,
+    currentUserId: state.user.currentUserId,
   };
 };
 
