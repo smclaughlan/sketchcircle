@@ -12,6 +12,8 @@
   - View a sketchbook
 - "/sketchbook/:id/:page"
   - View a specific page in a sketchbook
+-  "/sketchbook/:id/timeline"
+  - View a sketchbook timeline (only images posted by sketchbook owner along with timestamps)
 
 ## API Endpoints
 
@@ -26,9 +28,6 @@
     - Add sketchbook to follows for current logged in user
   - DELETE /users/:sketchbookId/follow
     - Delete sketchbook from follows for current logged in user
-- Session
-  - POST /session
-  - DELETE /session
 - Sketchbook
   - GET /sketchbooks
     - Return basic data about sketchbooks to populate index
@@ -39,3 +38,10 @@
 - Post
   - PUT /post/:postId
     - Update a post's body
+- Goal
+  - POST /goal/
+    - Add a new goal for logged in user
+  - POST /goal/:goalId/datapoint
+    - Add datapoint for goal
+  - PUT /goal/:goalId/
+    - Update goal title, description, target, targetdate

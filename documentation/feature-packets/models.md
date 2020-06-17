@@ -19,33 +19,45 @@
 
 ### Follows
 
-| column        | type    | max length | default | constraints                          |
-| ------------- | ------- | ---------- | ------- | ------------------------------------ |
-| sketchbook_id | integer | none       | no      | not null references: (Sketchbook.Id) |
-| user_id       | integer | none       | no      | not null references: (Users.Id)      |
+| column        | type    | max length | default | constraints                            |
+| ------------- | ------- | ---------- | ------- | -------------------------------------- |
+| sketchbook_id | integer | none       | no      | not null, references: (Sketchbooks.Id) |
+| user_id       | integer | none       | no      | not null, references: (Users.Id)       |
 
 ### Sketchbooks
 
 | column   | type    | max length | default | constraints                      |
 | -------- | ------- | ---------- | ------- | -------------------------------- |
 | owner_id | integer | none       | no      | not null, references: (Users.Id) |
+| title    | varchar | 200        | no      |                                  |
 
 ### Posts
 
-| column        | type    | max length | default      | constraints                          |
-| ------------- | ------- | ---------- | ------------ | ------------------------------------ |
-| poster_id     | integer | none       | no           | not null, references: (Users.Id)     |
-| sketchbook_id | integer | none       | no           | not null references: (Sketchbook.Id) |
-| body          | text    | none       | no           | not null                             |
-| timestamp     | date    | none       | current time | not null                             |
+| column        | type    | max length | default      | constraints                            |
+| ------------- | ------- | ---------- | ------------ | -------------------------------------- |
+| poster_id     | integer | none       | no           | not null, references: (Users.Id)       |
+| sketchbook_id | integer | none       | no           | not null, references: (Sketchbooks.Id) |
+| body          | text    | none       | no           | not null                               |
+| timestamp     | date    | none       | current time | not null                               |
 
 ### Goals
 
-| column         | type      | max length | default      | constraints                          |
-| -------------- | --------- | ---------- | ------------ | ------------------------------------ |
-| owner_id       | integer   | none       | no           | not null, references: (Users.Id)     |
-| sketchbook_id  | integer   | none       | no           | not null references: (Sketchbook.Id) |
-| target         | integer   | none       | no           | not null                             |
-| targetdate     | date      | none       | current time | not null                             |
+| column        | type    | max length | default | constraints                            |
+| ------------- | ------- | ---------- | ------- | -------------------------------------- |
+| owner_id      | integer | none       | no      | not null, references: (Users.Id)       |
+| sketchbook_id | integer | none       | no      | not null, references: (Sketchbooks.Id) |
+| title         | varchar | 200        | no      | not null                               |
+| description   | varchar | 1000       | no      |                                        |
+| target        | integer | none       | no      | not null                               |
+| targetdate    | date    | none       | no      | not null                               |
+<!--
 | datapoints     | integer[] | none       | no           |                                      |
-| datapointsdate | date[]    | none       | current time |                                      |
+| datapointsdate | date[]    | none       | current time |                                      | -->
+
+### Datapoints
+
+| column    | type    | max length | default      | constraints                      |
+| --------- | ------- | ---------- | ------------ | -------------------------------- |
+| goal_id   | integer | none       | no           | not null, references: (Goals.id) |
+| value     | integer | none       | no           | not null                         |
+| timestamp | date    | none       | current time | not null                         |
