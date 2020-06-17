@@ -44,16 +44,18 @@ const Register = (props) => {
         </Container>
         <Container>
           <form onSubmit={registerUser}>
-            <p>
+            <div>
               <TextField label="Username" onChange={userNameChange} />
-            </p>
-            <p>
+            </div>
+            <div>
               <TextField label="Email" onChange={emailChange} />
-            </p>
-            <p>
+            </div>
+            <div>
               <TextField label="Password" onChange={passwordChange} />
-            </p>
-            <Button color="primary">Register</Button>
+            </div>
+            <div>
+              <Button color="primary" type="submit">Register</Button>
+            </div>
           </form>
         </Container>
       </Paper>

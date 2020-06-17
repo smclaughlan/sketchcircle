@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import { sendLogoutReq } from '../redux/user';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,19 +38,14 @@ const NavBar = (props) => {
     <Grid container spacing={3}>
       <Grid item xs={10}>
         <NavLink style={{ color: 'white' }} to="/">
-          <Button color="inherit">Instantelegram</Button>
+          <Button color="inherit">Sketchcircle</Button>
         </NavLink>
-        <NavLink style={{ color: 'white' }} to={`/profile/${props.currentUserId}`}>
-          <Button color="inherit">Profile</Button>
+        {/* <NavLink style={{ color: 'white' }} to={`/profile/${props.currentUserId}`}>
+          <Button color="inherit">My Sketchbook</Button>
+        </NavLink> */}
+        <NavLink style={{ color: 'white' }} to="/">
+          <Button color="inherit" onClick={logOut}>Logout</Button>
         </NavLink>
-        <NavLink style={{ color: 'white' }} to="/upload">
-          <Button color="inherit">Upload</Button>
-        </NavLink>
-      </Grid>
-      <Grid item xs={2}>
-        <div className={classes.logout} style={{ color: 'white' }}>
-          <Button className={classes.logout} color="inherit" onClick={logOut}>Logout</Button>
-        </div>
       </Grid>
     </Grid >
   ) : (
@@ -79,13 +75,13 @@ const NavBar = (props) => {
 
 const mapStateToProps = state => {
   return {
-    // currentUserId: state.user.currentUserId,
+    currentUserId: state.user.currentUserId,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    // sendLogoutReq: () => dispatch(sendLogoutReq()),
+    sendLogoutReq: () => dispatch(sendLogoutReq()),
   };
 };
 

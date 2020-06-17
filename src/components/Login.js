@@ -36,13 +36,15 @@ const Login = (props) => {
         </Container>
         <Container>
           <form onSubmit={loginUser}>
-            <p>
+            <div>
               <TextField label="Email" onChange={emailChange} />
-            </p>
-            <p>
+            </div>
+            <div>
               <TextField label="Password" onChange={passwordChange} />
-            </p>
-            <Button color="primary">Login</Button>
+            </div>
+            <div>
+              <Button color="primary" type="submit">Login</Button>
+            </div>
           </form>
         </Container>
       </Paper>

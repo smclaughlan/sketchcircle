@@ -22,6 +22,7 @@ export const sendRegisterReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId);
     dispatch(loginUser(token, currentUserId));
+    window.location.href = `/`
   }
 }
 
@@ -30,7 +31,7 @@ export const sendLoginReq = (userInfo) => async dispatch => {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      username: userInfo.username,
+      email: userInfo.email,
       password: userInfo.password
     }),
   })
@@ -40,6 +41,7 @@ export const sendLoginReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId.toString());
     dispatch(loginUser(token, currentUserId.toString()))
+    window.location.href = `/`
   }
 }
 
