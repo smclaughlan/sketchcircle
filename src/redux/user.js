@@ -1,5 +1,6 @@
 import { apiBaseUrl } from '../config';
 
+
 const LOGIN_USER = 'sketchcircle/login/LOGIN_USER';
 const LOGOUT_USER = 'sketchcircle/logout/LOGOUT_USER';
 
@@ -22,7 +23,6 @@ export const sendRegisterReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId);
     dispatch(loginUser(token, currentUserId));
-    window.location.href = `/`
   }
 }
 
@@ -41,7 +41,6 @@ export const sendLoginReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId.toString());
     dispatch(loginUser(token, currentUserId.toString()))
-    window.location.href = `/`
   }
 }
 

@@ -34,6 +34,7 @@ const Register = (props) => {
   const registerUser = (event) => {
     event.preventDefault();
     props.sendRegisterReq(registerData);
+    props.history.push('/');
   }
 
   return (
@@ -51,7 +52,7 @@ const Register = (props) => {
               <TextField label="Email" onChange={emailChange} />
             </div>
             <div>
-              <TextField label="Password" onChange={passwordChange} />
+              <TextField label="Password" type="password" onChange={passwordChange} />
             </div>
             <div>
               <Button color="primary" type="submit">Register</Button>

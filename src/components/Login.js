@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Container, Paper, TextField } from '@material-ui/core';
 import { sendLoginReq } from '../redux/user';
+import { Redirect } from 'react-router-dom';
 
 const Login = (props) => {
   const [loginData, setLoginData] = React.useState({
@@ -26,6 +27,7 @@ const Login = (props) => {
   const loginUser = (event) => {
     event.preventDefault();
     props.sendLoginReq(loginData);
+    props.history.push('/');
   }
 
   return (
@@ -40,7 +42,7 @@ const Login = (props) => {
               <TextField label="Email" onChange={emailChange} />
             </div>
             <div>
-              <TextField label="Password" onChange={passwordChange} />
+              <TextField label="Password" type="password" onChange={passwordChange} />
             </div>
             <div>
               <Button color="primary" type="submit">Login</Button>
