@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import { getSketchbooksReq } from '../redux/sketchbook';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = (props) => {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    props.getSketchbooksReq();
+  })
 
   return (
     <div>
@@ -46,7 +51,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // sendLogoutReq: () => dispatch(sendLogoutReq()),
+    getSketchbooksReq: () => dispatch(getSketchbooksReq()),
   };
 };
 
