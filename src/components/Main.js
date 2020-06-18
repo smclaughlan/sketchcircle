@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Paper, Grid } from '@material-ui/core';
 import { getSketchbooksReq, getSketchbooks } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
+import MDE from './MDE';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +40,7 @@ const Main = (props) => {
     return (
       <>
         <Container>
+          <MDE />
           <Paper>
             <h3>Starred sketchbooks</h3>
             <Grid container spacing={3}>
