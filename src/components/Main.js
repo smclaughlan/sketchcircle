@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { getSketchbooksReq } from '../redux/sketchbook';
+import { getSketchbooksReq, getSketchbooks } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,10 +18,10 @@ const Main = (props) => {
   const classes = useStyles();
 
   React.useEffect(() => {
-    props.getSketchbooksReq();
-  }, [])
+    const userId = props.currentUserId;
+    props.getSketchbooksReq(userId);
+  }, [props.currentUserId])
 
-  console.log(props.sketchbooks);
   return props.sketchbooks ?
     <Grid container spacing={3}>
       {Object.keys(props.sketchbooks).map(k => {
@@ -43,14 +43,15 @@ const Main = (props) => {
 
 const mapStateToProps = state => {
   return {
-    // currentUserId: state.user.currentUserId,
-    sketchbooks: state.sketchbook,
+    token: state.user.token,
+    currentUserId: state.user.currentUserId,
+    sketchbooks: state.sketchbook.sketchbooks,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSketchbooksReq: () => dispatch(getSketchbooksReq()),
+    getSketchbooksReq: (...args) => dispatch(getSketchbooksReq(...args)),
   };
 };
 

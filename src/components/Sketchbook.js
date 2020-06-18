@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import FollowBtn from './FollowBtn';
 
 const Sketchbook = props => {
 
@@ -11,6 +12,9 @@ const Sketchbook = props => {
     <>
       <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
         <h1>{props.title}</h1>
+        <FollowBtn
+          sketchbook_id={props.sketchbook_id}
+        />
       </NavLink>
       <div>Updated: {timestampDate.toLocaleString()}</div>
     </>
