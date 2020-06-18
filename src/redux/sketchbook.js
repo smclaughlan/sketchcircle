@@ -3,9 +3,11 @@ import { apiBaseUrl } from '../config';
 
 const GET_SKETCHBOOKS = 'sketchcircle/sketchbooks/GET_SKETCHBOOKS';
 const ADD_FOLLOW = 'sketchcircle/sketchbooks/ADD_FOLLOW';
+const DELETE_FOLLOW = 'sketchcircle/sketchbooks/DELETE_FOLLOW';
 
 export const getSketchbooks = (sketchbooks) => ({ type: GET_SKETCHBOOKS, sketchbooks });
 export const addFollow = (newFollow) => ({ type: ADD_FOLLOW, newFollow });
+export const deleteFollow = (removedFollow) => ({ type: DELETE_FOLLOW, removedFollow });
 
 export const getSketchbooksReq = (currentUserId) => async (dispatch) => {
   const res = await fetch(`${apiBaseUrl}/sketchbooks`);
@@ -44,6 +46,22 @@ export const addFollowReq = (token, sketchbook_id) => async dispatch => {
   }
 }
 
+export const deleteFollowReq = (token, sketchbook_id) => async dispatch => {
+  const res = await fetch(`${apiBaseUrl}/sketchbooks/${sketchbook_id}/follow`, {
+    method: "delete",
+    headers: {
+      "x-access-token": `${token}`,
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (res.ok) {
+    const removedFollow = await res.json();
+    console.log(removedFollow);
+    dispatch(deleteFollow(removedFollow));
+  }
+}
+
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case GET_SKETCHBOOKS: {
@@ -58,6 +76,13 @@ export default function reducer(state = {}, action) {
       return {
         ...state,
         follows: newFollows,
+      }
+    }
+    case DELETE_FOLLOW: {
+      const deleteKey = action.removedFollow.sketchbook_id;
+      delete state.follows[deleteKey];
+      return {
+        ...state,
       }
     }
     default: return state;

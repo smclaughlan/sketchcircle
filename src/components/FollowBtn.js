@@ -1,16 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from '@material-ui/core';
-import { addFollowReq } from '../redux/sketchbook';
+import { addFollowReq, deleteFollowReq } from '../redux/sketchbook';
 
 const FollowBtn = (props) => {
+  const [isFollowed, setFollowed] = React.useState(Object.keys(props.follows).includes(props.sketchbook_id.toString()));
 
   const createFollow = () => {
     props.addFollowReq(props.token, props.sketchbook_id);
+    setFollowed(true);
   }
 
-  return (Object.keys(props.follows).includes(props.sketchbook_id.toString()) ?
-    <Button color="primary" onClick={createFollow}>Unstar</Button>
+  const removeFollow = () => {
+    props.deleteFollowReq(props.token, props.sketchbook_id);
+    setFollowed(false);
+  }
+
+  return (isFollowed ?
+    <Button color="primary" onClick={removeFollow}>Unstar</Button>
     :
     <Button color="primary" onClick={createFollow}>Star</Button>
   )
@@ -27,6 +34,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addFollowReq: (...args) => dispatch(addFollowReq(...args)),
+    deleteFollowReq: (...args) => dispatch(deleteFollowReq(...args)),
   }
 }
 
