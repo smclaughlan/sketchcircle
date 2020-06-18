@@ -4,8 +4,6 @@ import { NavLink } from 'react-router-dom';
 import FollowBtn from './FollowBtn';
 
 const Sketchbook = props => {
-
-
   const timestampDate = new Date(props.timestamp);
 
   return ( // TODO: Add user's avatar to display as their sketchbook image
@@ -13,6 +11,7 @@ const Sketchbook = props => {
       <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
         <h1>{props.title}</h1>
         <FollowBtn
+          {...props}
           sketchbook_id={props.sketchbook_id}
         />
       </NavLink>

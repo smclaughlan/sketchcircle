@@ -5,14 +5,15 @@ import { addFollowReq, deleteFollowReq } from '../redux/sketchbook';
 
 const FollowBtn = (props) => {
   const [isFollowed, setFollowed] = React.useState(Object.keys(props.follows).includes(props.sketchbook_id.toString()));
+  const { addFollowReq, deleteFollowReq } = props;
 
   const createFollow = () => {
-    props.addFollowReq(props.token, props.sketchbook_id);
+    addFollowReq(props.token, props.sketchbook_id);
     setFollowed(true);
   }
 
   const removeFollow = () => {
-    props.deleteFollowReq(props.token, props.sketchbook_id);
+    deleteFollowReq(props.token, props.sketchbook_id);
     setFollowed(false);
   }
 

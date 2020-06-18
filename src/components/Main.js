@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import { Container, Paper, Grid } from '@material-ui/core';
 import { getSketchbooksReq, getSketchbooks } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
 
@@ -22,22 +22,97 @@ const Main = (props) => {
     props.getSketchbooksReq(userId);
   }, [props.currentUserId])
 
-  return props.sketchbooks ?
-    <Grid container spacing={3}>
-      {Object.keys(props.sketchbooks).map(k => {
-        return (
-          <Grid key={k} item xs={3}>
-            <Sketchbook
-              sketchbook_id={k}
-              owner_id={props.sketchbooks[k].owner_id}
-              title={props.sketchbooks[k].title}
-              timestamp={props.sketchbooks[k].timestamp} />
-          </Grid>
-        )
-      })}
-    </Grid >
-    :
-    (<h1>Loading...</h1>)
+  const followedSketchbooks = [];
+  if (props.follows) {
+    const followedKeys = Object.keys(props.follows);
+    props.sketchbooks.forEach(book => { //check each from sketchbooks arr...
+      Object.keys(book).forEach(k => { //using the key, which is the sketchbook_id
+        if (followedKeys.includes(k)) { //the sketchbook_id is in followedKeys
+          followedSketchbooks.push(book); //so push the book
+        }
+      })
+    })
+    console.log(followedSketchbooks);
+  }
+
+  if (followedSketchbooks.length > 0 && props.sketchbooks) {
+    return (
+      <>
+        <Container>
+          <Paper>
+            <h3>Starred sketchbooks</h3>
+            <Grid container spacing={3}>
+              {followedSketchbooks.map(book => {
+                return (
+                  Object.keys(book).map(k => {
+                    return (
+                      <Grid key={k} item xs={3}>
+                        <Sketchbook
+                          sketchbook_id={book[k].sketchbook_id}
+                          owner_id={book[k].owner_id}
+                          title={book[k].title}
+                          timestamp={book[k].timestamp} />
+                      </Grid>
+                    )
+                  }))
+              })}
+            </Grid>
+          </Paper>
+        </Container>
+        <Container>
+          <Paper>
+            <Grid container spacing={3}>
+              {props.sketchbooks.map(book => {
+                return (
+                  Object.keys(book).map(k => {
+                    return (
+                      <Grid key={k} item xs={3}>
+                        <Sketchbook
+                          sketchbook_id={k}
+                          owner_id={book[k].owner_id}
+                          title={book[k].title}
+                          timestamp={book[k].timestamp} />
+                      </Grid>
+                    )
+                  })
+                )
+              })}
+            </Grid>
+          </Paper>
+        </Container>
+      </>
+    )
+  }
+
+  if (props.sketchbooks) {
+    return (
+      <>
+        <Container>
+          <Paper>
+            <Grid container spacing={3}>
+              {props.sketchbooks.map(book => {
+                return (
+                  Object.keys(book).map(k => {
+                    return (
+                      <Grid key={k} item xs={3}>
+                        <Sketchbook
+                          sketchbook_id={k}
+                          owner_id={book[k].owner_id}
+                          title={book[k].title}
+                          timestamp={book[k].timestamp} />
+                      </Grid>
+                    )
+                  })
+                )
+              })}
+            </Grid>
+          </Paper>
+        </Container>
+      </>
+    )
+  }
+
+  return <h1>Loading...</h1>
 
 }
 
@@ -46,6 +121,7 @@ const mapStateToProps = state => {
     token: state.user.token,
     currentUserId: state.user.currentUserId,
     sketchbooks: state.sketchbook.sketchbooks,
+    follows: state.sketchbook.follows,
   };
 };
 
