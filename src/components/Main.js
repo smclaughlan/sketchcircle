@@ -24,12 +24,14 @@ const Main = (props) => {
   console.log(props.sketchbooks);
   return props.sketchbooks ?
     <Grid container spacing={3}>
-      {Object.keys(props.sketchbooks).map(key => {
+      {Object.keys(props.sketchbooks).map(k => {
         return (
-          <Grid item xs={3}>
-            <NavLink to={`/sketchbook/${key}`}>
-              <Sketchbook owner_id={props.sketchbooks[key].owner_id} title={props.sketchbooks[key].title} />
-            </NavLink>
+          <Grid key={k} item xs={3}>
+            <Sketchbook
+              sketchbook_id={k}
+              owner_id={props.sketchbooks[k].owner_id}
+              title={props.sketchbooks[k].title}
+              timestamp={props.sketchbooks[k].timestamp} />
           </Grid>
         )
       })}

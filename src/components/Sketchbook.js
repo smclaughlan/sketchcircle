@@ -4,8 +4,16 @@ import { NavLink } from 'react-router-dom';
 
 const Sketchbook = props => {
 
-  return (
-    <h1>{props.title}</h1>
+
+  const timestampDate = new Date(props.timestamp);
+
+  return ( // TODO: Add user's avatar to display as their sketchbook image
+    <>
+      <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
+        <h1>{props.title}</h1>
+      </NavLink>
+      <div>Updated: {timestampDate.toLocaleString()}</div>
+    </>
   )
 }
 
