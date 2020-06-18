@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { getSketchbooksReq } from '../redux/sketchbook';
+import Sketchbook from './Sketchbook';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,34 +19,30 @@ const Main = (props) => {
 
   React.useEffect(() => {
     props.getSketchbooksReq();
-  })
+  }, [])
 
-  return (
-    <div>
-      <Grid container spacing={3}>
-        <Grid item xs={3}>
-          <NavLink to="/">
-            <p color="inherit">Sketchcircle sketchbook</p>
-          </NavLink>
-        </Grid>
-        <Grid item xs={3}>
-          <NavLink to="/">
-            <p color="inherit">Sketchcircle sketchbook</p>
-          </NavLink>
-        </Grid>
-        <Grid item xs={3}>
-          <NavLink to="/">
-            <p color="inherit">Sketchcircle sketchbook</p>
-          </NavLink>
-        </Grid>
-      </Grid>
-    </div>
-  );
+  console.log(props.sketchbooks);
+  return props.sketchbooks ?
+    <Grid container spacing={3}>
+      {Object.keys(props.sketchbooks).map(key => {
+        return (
+          <Grid item xs={3}>
+            <NavLink to={`/sketchbook/${key}`}>
+              <Sketchbook owner_id={props.sketchbooks[key].owner_id} title={props.sketchbooks[key].title} />
+            </NavLink>
+          </Grid>
+        )
+      })}
+    </Grid >
+    :
+    (<h1>Loading...</h1>)
+
 }
 
 const mapStateToProps = state => {
   return {
     // currentUserId: state.user.currentUserId,
+    sketchbooks: state.sketchbook,
   };
 };
 
