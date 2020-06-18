@@ -17,11 +17,6 @@ const useStyles = makeStyles((theme) => ({
 const Main = (props) => {
   const classes = useStyles();
 
-  React.useEffect(() => {
-    const userId = props.currentUserId;
-    props.getSketchbooksReq(userId);
-  }, [props.currentUserId])
-
   const followedSketchbooks = [];
   if (props.follows) {
     const followedKeys = Object.keys(props.follows);
@@ -34,6 +29,11 @@ const Main = (props) => {
     })
     console.log(followedSketchbooks);
   }
+
+  React.useEffect(() => {
+    const userId = props.currentUserId;
+    props.getSketchbooksReq(userId);
+  }, [props.currentUserId])
 
   if (followedSketchbooks.length > 0 && props.sketchbooks) {
     return (
@@ -48,6 +48,7 @@ const Main = (props) => {
                     return (
                       <Grid key={k} item xs={3}>
                         <Sketchbook
+                          {...props}
                           sketchbook_id={book[k].sketchbook_id}
                           owner_id={book[k].owner_id}
                           title={book[k].title}

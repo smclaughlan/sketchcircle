@@ -17,7 +17,7 @@ function App(props) {
       <Switch>
         <Route path="/register" component={Register} currentUserId={props.currentUserId} />
         <Route path="/login" component={Login} currentUserId={props.currentUserId} />
-        <Route path="/" component={Main} currentUserId={props.currentUserId} />
+        <Route path="/" component={Main} {...props} currentUserId={props.currentUserId} />
       </Switch>
     </BrowserRouter>
   );

@@ -10,11 +10,11 @@ const Sketchbook = props => {
     <>
       <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
         <h1>{props.title}</h1>
-        <FollowBtn
-          {...props}
-          sketchbook_id={props.sketchbook_id}
-        />
       </NavLink>
+      <FollowBtn
+        {...props}
+        sketchbook_id={props.sketchbook_id}
+      />
       <div>Updated: {timestampDate.toLocaleString()}</div>
     </>
   )

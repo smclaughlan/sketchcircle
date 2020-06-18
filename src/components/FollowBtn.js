@@ -1,20 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from "react-router-dom";
 import { Button } from '@material-ui/core';
+import history from '../utils/history';
 import { addFollowReq, deleteFollowReq } from '../redux/sketchbook';
 
 const FollowBtn = (props) => {
   const [isFollowed, setFollowed] = React.useState(Object.keys(props.follows).includes(props.sketchbook_id.toString()));
-  const { addFollowReq, deleteFollowReq } = props;
+  const [redirect, setRedirect] = React.useState(false);
+  const { token, sketchbook_id, addFollowReq, deleteFollowReq } = props;
+
 
   const createFollow = () => {
-    addFollowReq(props.token, props.sketchbook_id);
+    addFollowReq(token, sketchbook_id);
     setFollowed(true);
+    console.log(history);
+    // history.push('/');
   }
 
   const removeFollow = () => {
-    deleteFollowReq(props.token, props.sketchbook_id);
+    deleteFollowReq(token, sketchbook_id);
     setFollowed(false);
+    console.log(history);
+    // history.push('/');
+  }
+
+  if (redirect) {
+    return <Redirect to="/" />
   }
 
   return (isFollowed ?
