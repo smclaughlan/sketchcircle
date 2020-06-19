@@ -12,7 +12,6 @@ const preloadedState = {
     token: localStorage.getItem("x-access-token"),
     currentUserId: localStorage.getItem("currentUserId"),
   },
-  posts: [],
 };
 
 const store = configureStore(preloadedState);

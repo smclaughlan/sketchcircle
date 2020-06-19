@@ -32,6 +32,15 @@ export const getSketchbooksReq = (currentUserId) => async (dispatch) => {
   }
 }
 
+export const getPostsReq = (sketchbook_id) => async dispatch => {
+  const res = await fetch(`${apiBaseUrl}/sketchbooks/${sketchbook_id}`);
+  if (res.ok) {
+    const posts = await res.json();
+    console.log(posts);
+    dispatch(addPost(posts));
+  }
+}
+
 export const sendPostReq = (token, sketchbook_id, msgBody) => async dispatch => {
   const res = await fetch(`${apiBaseUrl}/sketchbooks/${sketchbook_id}`, {
     method: "post",
@@ -46,7 +55,7 @@ export const sendPostReq = (token, sketchbook_id, msgBody) => async dispatch => 
     const newPost = await res.json();
     console.log(newPost);
     dispatch(addPost(newPost));
-    // window.location.href = "/"
+    window.location.href = window.location.href;
   }
 }
 
@@ -113,7 +122,13 @@ export default function reducer(state = {}, action) {
       }
       console.log(state.posts);
       console.log(action.newPost);
-      state.posts.push(action.newPost);
+      if (action.newPost.posts) {
+        action.newPost.posts.forEach(post => {
+          state.posts.push(post);
+        })
+      } else {
+        state.posts.push(action.newPost);
+      }
       return {
         ...state,
       }
