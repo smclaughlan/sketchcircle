@@ -5,6 +5,8 @@ import * as Showdown from "showdown";
 import { getPostsReq, sendNewGoalReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
 import { Button, Container, TextField, Paper } from '@material-ui/core';
+import LineGraph from './LineGraph';
+import AddData from './AddData';
 
 const converter = new Showdown.Converter({
   tables: true,
@@ -21,6 +23,8 @@ const InsideSketchbook = (props) => {
     target: 1,
     targetDate: '',
   })
+  const [displayedGoals, setDisplayedGoals] = React.useState();
+
   const sketchbookId = window.location.href.split('/')[4];
 
   React.useEffect(() => {
@@ -38,6 +42,18 @@ const InsideSketchbook = (props) => {
       setDisplayedPosts(sortPosts);
     }
   }, [props.posts])
+
+  React.useEffect(() => {
+    if (props.goals) {
+      const sortGoals = [];
+      props.goals.forEach(goal => {
+        if (goal.sketchbook_id === Number(sketchbookId)) {
+          sortGoals.push(goal);
+        }
+      })
+      setDisplayedGoals(sortGoals);
+    }
+  }, [props.goals])
 
   const titleChange = event => {
     setNewGoalData({
@@ -79,7 +95,29 @@ const InsideSketchbook = (props) => {
 
   return (
     <>
-      <h1>Inside of a sketchbook</h1>
+      <Container>
+        {displayedGoals ?
+          displayedGoals.map(goal => {
+            return (
+              <div key={goal.id}>
+                <LineGraph
+                  id={goal.id}
+                  title={goal.title}
+                  owner_id={goal.owner_id}
+                  sketchbook_id={goal.sketchbook_id}
+                  target={goal.target}
+                  targetDate={goal.targetdate}
+                  timestamp={goal.timestamp} />
+                <AddData
+                  id={goal.id}
+                />
+              </div>
+            )
+          })
+          :
+          <h2>No goals found.</h2>
+        }
+      </Container>
       <Container>
         <form onSubmit={newGoal}>
           <div>
@@ -139,6 +177,7 @@ const mapStateToProps = state => {
     token: state.user.token,
     currentUserId: state.user.currentUserId,
     posts: state.sketchbook.posts,
+    goals: state.sketchbook.goals,
   };
 };
 
