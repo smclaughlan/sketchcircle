@@ -4,10 +4,12 @@ import { apiBaseUrl } from '../config';
 const GET_SKETCHBOOKS = 'sketchcircle/sketchbooks/GET_SKETCHBOOKS';
 const ADD_FOLLOW = 'sketchcircle/sketchbooks/ADD_FOLLOW';
 const DELETE_FOLLOW = 'sketchcircle/sketchbooks/DELETE_FOLLOW';
+const ADD_POST = 'sketchcircle/sketchbooks/ADD_POST';
 
 export const getSketchbooks = (sketchbooks) => ({ type: GET_SKETCHBOOKS, sketchbooks });
 export const addFollow = (newFollow) => ({ type: ADD_FOLLOW, newFollow });
 export const deleteFollow = (removedFollow) => ({ type: DELETE_FOLLOW, removedFollow });
+export const addPost = (newPost) => ({ type: ADD_POST, newPost });
 
 export const getSketchbooksReq = (currentUserId) => async (dispatch) => {
   const res = await fetch(`${apiBaseUrl}/sketchbooks`);
@@ -27,6 +29,24 @@ export const getSketchbooksReq = (currentUserId) => async (dispatch) => {
     sketchbooks['follows'] = newFollows;
 
     dispatch(getSketchbooks(sketchbooks));
+  }
+}
+
+export const sendPostReq = (token, sketchbook_id, msgBody) => async dispatch => {
+  const res = await fetch(`${apiBaseUrl}/sketchbooks/${sketchbook_id}`, {
+    method: "post",
+    body: JSON.stringify({ msgBody }),
+    headers: {
+      "x-access-token": `${token}`,
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (res.ok) {
+    const newPost = await res.json();
+    console.log(newPost);
+    dispatch(addPost(newPost));
+    // window.location.href = "/"
   }
 }
 
@@ -83,6 +103,17 @@ export default function reducer(state = {}, action) {
     case DELETE_FOLLOW: {
       const deleteKey = action.removedFollow.sketchbook_id;
       delete state.follows[deleteKey];
+      return {
+        ...state,
+      }
+    }
+    case ADD_POST: {
+      if (!state.posts) {
+        state.posts = [];
+      }
+      console.log(state.posts);
+      console.log(action.newPost);
+      state.posts.push(action.newPost);
       return {
         ...state,
       }
