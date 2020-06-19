@@ -23,16 +23,13 @@ const InsideSketchbook = (props) => {
 
   React.useEffect(() => {
     if (props.posts) {
-      console.log(props.posts);
       const sortPosts = [];
       props.posts.forEach(post => {
-        console.log(post);
         if (post.sketchbook_id === Number(sketchbookId)) {
           sortPosts.push(post);
         }
       })
       setDisplayedPosts(sortPosts);
-      console.log(displayedPosts);
     }
   }, [props.posts])
 
@@ -42,15 +39,28 @@ const InsideSketchbook = (props) => {
       <Container>
         {displayedPosts ?
           displayedPosts.map(post => {
-            return (
-              <Container key={post.id}>
-                <Paper style={{ margin: '50px' }} >
-                  <h3>{post.username}</h3>
-                  <ReactMarkdown source={post.body} />
-                  <p>{post.timestamp}</p>
-                </Paper>
-              </Container>
-            )
+            if (post.avatar) {
+              return (
+                <Container key={post.id}>
+                  <Paper style={{ margin: '50px' }} >
+                    <img alt={`${post.username}'s avatar`} src={post.avatar} />
+                    <h3>{post.username}</h3>
+                    <ReactMarkdown source={post.body} />
+                    <p>{post.timestamp}</p>
+                  </Paper>
+                </Container>
+              )
+            } else {
+              return (
+                <Container key={post.id}>
+                  <Paper style={{ margin: '50px' }} >
+                    <h3>{post.username}</h3>
+                    <ReactMarkdown source={post.body} />
+                    <p>{post.timestamp}</p>
+                  </Paper>
+                </Container>
+              )
+            }
           })
           :
           <h2>No posts found.</h2>

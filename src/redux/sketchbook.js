@@ -36,7 +36,6 @@ export const getPostsReq = (sketchbook_id) => async dispatch => {
   const res = await fetch(`${apiBaseUrl}/sketchbooks/${sketchbook_id}`);
   if (res.ok) {
     const posts = await res.json();
-    console.log(posts);
     dispatch(addPost(posts));
   }
 }
@@ -120,8 +119,6 @@ export default function reducer(state = {}, action) {
       if (!state.posts) {
         state.posts = [];
       }
-      console.log(state.posts);
-      console.log(action.newPost);
       if (action.newPost.posts) {
         action.newPost.posts.forEach(post => {
           state.posts.push(post);
