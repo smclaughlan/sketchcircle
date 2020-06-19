@@ -7,6 +7,7 @@ import Nav from './components/Nav';
 import Main from './components/Main';
 import Login from './components/Login';
 import Register from './components/Register';
+import InsideSketchbook from './components/InsideSketchbook';
 
 import { ProtectedRoute, AuthRoute } from './authRoutes';
 
@@ -17,6 +18,7 @@ function App(props) {
       <Switch>
         <Route path="/register" component={Register} currentUserId={props.currentUserId} />
         <Route path="/login" component={Login} currentUserId={props.currentUserId} />
+        <Route path="/sketchbook/:sketchbook_id" component={InsideSketchbook} currentUserId={props.currentUserId} />
         <Route path="/" component={Main} {...props} currentUserId={props.currentUserId} />
       </Switch>
     </BrowserRouter>

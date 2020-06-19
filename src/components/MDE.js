@@ -3,6 +3,7 @@ import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { Button } from '@material-ui/core';
 import "react-mde/lib/styles/css/react-mde-all.css";
+import { connect } from 'react-redux';
 
 const converter = new Showdown.Converter({
   tables: true,
@@ -11,12 +12,13 @@ const converter = new Showdown.Converter({
   tasklists: true
 });
 
-export default function App() {
+export function MDE(props) {
   const [value, setValue] = React.useState("**Hello world!!!**");
   const [selectedTab, setSelectedTab] = React.useState("write");
 
   const newPost = () => {
     console.log(value);
+    console.log(props.currentUserId);
   }
 
   return (
@@ -34,3 +36,22 @@ export default function App() {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    currentUserId: state.user.currentUserId,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(
+  MDE
+);
