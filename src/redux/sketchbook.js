@@ -5,21 +5,20 @@ const GET_SKETCHBOOKS = 'sketchcircle/sketchbooks/GET_SKETCHBOOKS';
 const ADD_FOLLOW = 'sketchcircle/sketchbooks/ADD_FOLLOW';
 const DELETE_FOLLOW = 'sketchcircle/sketchbooks/DELETE_FOLLOW';
 const ADD_POST = 'sketchcircle/sketchbooks/ADD_POST';
+const ADD_GOAL = 'sketchcircle/sketchbooks/ADD_GOAL';
 
 export const getSketchbooks = (sketchbooks) => ({ type: GET_SKETCHBOOKS, sketchbooks });
 export const addFollow = (newFollow) => ({ type: ADD_FOLLOW, newFollow });
 export const deleteFollow = (removedFollow) => ({ type: DELETE_FOLLOW, removedFollow });
 export const addPost = (newPost) => ({ type: ADD_POST, newPost });
+export const addGoal = (newGoal) => ({ type: ADD_GOAL, newGoal });
 
 export const getSketchbooksReq = (currentUserId) => async (dispatch) => {
   const res = await fetch(`${apiBaseUrl}/sketchbooks`);
 
   if (res.ok) {
     const sketchbooks = await res.json();
-
-
     const follows = sketchbooks['follows'];
-
     const newFollows = {}
     follows.forEach(follow => {
       if (follow[0] === Number(currentUserId)) {
@@ -27,7 +26,6 @@ export const getSketchbooksReq = (currentUserId) => async (dispatch) => {
       }
     });
     sketchbooks['follows'] = newFollows;
-
     dispatch(getSketchbooks(sketchbooks));
   }
 }
@@ -54,6 +52,23 @@ export const sendPostReq = (token, sketchbook_id, msgBody) => async dispatch => 
     const newPost = await res.json();
     console.log(newPost);
     dispatch(addPost(newPost));
+    window.location.href = window.location.href;
+  }
+}
+
+export const sendNewGoalReq = (token, newGoalData) => async dispatch => {
+  const res = await fetch(`${apiBaseUrl}/goal`, {
+    method: "post",
+    body: JSON.stringify(newGoalData),
+    headers: {
+      "x-access-token": `${token}`,
+      "Content-Type": "application/json"
+    }
+  });
+  if (res.ok) {
+    const newGoal = await res.json();
+    console.log(newGoal);
+    dispatch(addGoal(newGoal));
     window.location.href = window.location.href;
   }
 }
@@ -116,6 +131,8 @@ export default function reducer(state = {}, action) {
       }
     }
     case ADD_POST: {
+
+      //handle posts
       if (!state.posts) {
         state.posts = [];
       }
@@ -125,6 +142,32 @@ export default function reducer(state = {}, action) {
         })
       } else {
         state.posts.push(action.newPost);
+      }
+
+      //handle goals the same way
+      if (!state.goals) {
+        state.goals = [];
+      }
+      if (action.newPost.goals) {
+        action.newPost.goals.forEach(goal => {
+          state.goals.push(goal);
+        })
+      }
+      return {
+        ...state,
+      }
+    }
+    case ADD_GOAL: {
+      console.log('add_goal');
+      if (!state.goals) {
+        state.goals = [];
+      }
+      if (action.newGoal.goals) {
+        action.newGoal.goals.forEach(goal => {
+          state.goals.push(goal);
+        })
+      } else {
+        state.goals.push(action.newGoal);
       }
       return {
         ...state,
