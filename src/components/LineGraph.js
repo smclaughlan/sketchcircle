@@ -37,6 +37,9 @@ const LineGraph = (props) => {
     }
   }
 
+  const userData = [];
+
+
   const data = {
     labels: dateLabels,
     datasets: [
@@ -75,7 +78,7 @@ const LineGraph = (props) => {
 
 const mapStateToProps = state => {
   return {
-
+    datapoints: state.sketchbook.datapoints,
   };
 };
 

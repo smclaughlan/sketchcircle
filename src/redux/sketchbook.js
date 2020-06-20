@@ -174,16 +174,10 @@ export default function reducer(state = {}, action) {
       }
 
       //and datapoints
-      if (!state.datapoints) {
-        state.datapoints = [];
-      }
-      if (action.newPost.datapoints) {
-        action.newPost.datapoints.forEach(datapoint => {
-          state.datapoints.push(datapoint);
-        })
-      }
+      console.log(action.newPost.datapoints);
       return {
         ...state,
+        datapoints: { ...action.newPost.datapoints },
       }
     }
     case ADD_GOAL: {
@@ -202,16 +196,17 @@ export default function reducer(state = {}, action) {
       }
     }
     case ADD_DATAPOINT: {
-      if (!state.datapoints) {
-        state.datapoints = [];
-      }
-      if (action.newDataPoint.datapoints) {
-        action.newDataPoint.datapoints.forEach(datapoint => {
-          state.datapoints.push(datapoint);
-        })
-      } else {
-        state.datapoints.push(action.newDataPoint);
-      }
+      // if (!state.datapoints) {
+      //   state.datapoints = {};
+      // }
+      // if (action.newDataPoint.datapoints) {
+      //   console.log(action.newDataPoint.datapoints);
+      //   // action.newDataPoint.datapoints.forEach(datapoint => {
+      //   //   state.datapoints.push(datapoint);
+      //   // })
+      // } else {
+      //   // state.datapoints.push(action.newDataPoint);
+      // }
       return {
         ...state,
       }
