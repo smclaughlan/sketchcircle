@@ -32,26 +32,14 @@ const InsideSketchbook = (props) => {
   }, [])
 
   React.useEffect(() => {
-    if (props.posts) {
-      const sortPosts = [];
-      props.posts.forEach(post => {
-        if (post.sketchbook_id === Number(sketchbookId)) {
-          sortPosts.push(post);
-        }
-      })
-      setDisplayedPosts(sortPosts);
+    if (props.posts && props.posts[sketchbookId]) {
+      setDisplayedPosts(props.posts[sketchbookId]);
     }
   }, [props.posts])
 
   React.useEffect(() => {
-    if (props.goals) {
-      const sortGoals = [];
-      props.goals.forEach(goal => {
-        if (goal.sketchbook_id === Number(sketchbookId)) {
-          sortGoals.push(goal);
-        }
-      })
-      setDisplayedGoals(sortGoals);
+    if (props.goals && props.goals[sketchbookId]) {
+      setDisplayedGoals(props.goals[sketchbookId]);
     }
   }, [props.goals])
 
@@ -93,24 +81,32 @@ const InsideSketchbook = (props) => {
     props.sendNewGoalReq(props.token, newGoalData);
   }
 
+  console.log(displayedGoals);
+  console.log(displayedPosts);
   return (
     <>
       <Container>
         {displayedGoals ?
-          displayedGoals.map(goal => {
+          Object.keys(displayedGoals).map(k => {
             return (
-              <div key={goal.id}>
-                <LineGraph
-                  id={goal.id}
-                  title={goal.title}
-                  owner_id={goal.owner_id}
-                  sketchbook_id={goal.sketchbook_id}
-                  target={goal.target}
-                  targetDate={goal.targetdate}
-                  timestamp={goal.timestamp} />
-                <AddData
-                  id={goal.id}
-                />
+              <div key={displayedGoals[k].id}>
+                <Paper style={{ margin: "20px" }}>
+                  <LineGraph
+                    id={displayedGoals[k].id}
+                    title={displayedGoals[k].title}
+                    owner_id={displayedGoals[k].owner_id}
+                    sketchbook_id={displayedGoals[k].sketchbook_id}
+                    target={displayedGoals[k].target}
+                    targetDate={displayedGoals[k].targetdate}
+                    timestamp={displayedGoals[k].timestamp} />
+                  {sketchbookId === props.currentUserId ?
+                    <AddData
+                      id={displayedGoals[k].id}
+                    />
+                    :
+                    <> </>
+                  }
+                </Paper>
               </div>
             )
           })
@@ -118,46 +114,53 @@ const InsideSketchbook = (props) => {
           <h2>No goals found.</h2>
         }
       </Container>
-      <Container>
-        <form onSubmit={newGoal}>
-          <div>
-            <TextField label="Title" onChange={titleChange} />
-          </div>
-          <div>
-            <TextField label="Description" multiline onChange={descriptionChange} />
-          </div>
-          <div>
-            <TextField label="Target Value" onChange={targetChange} />
-          </div>
-          <div>
-            <TextField label="Target Date" type="date" onChange={targetDateChange} />
-          </div>
-          <div>
-            <Button color="primary" type="submit">Create new goal</Button>
-          </div>
-        </form>
-      </Container>
+      {sketchbookId === props.currentUserId ?
+        <Container>
+          <Paper style={{ margin: "20px" }}>
+            <form onSubmit={newGoal}>
+              <div>
+                <TextField label="Title" onChange={titleChange} />
+              </div>
+              <div>
+                <TextField label="Description" multiline onChange={descriptionChange} />
+              </div>
+              <div>
+                <TextField label="Target Value" onChange={targetChange} />
+              </div>
+              <div>
+                <TextField label="Target Date" type="date" InputLabelProps={{ shrink: true }} onChange={targetDateChange} />
+              </div>
+              <div>
+                <Button color="primary" type="submit">Create new goal</Button>
+              </div>
+            </form>
+          </Paper>
+        </Container>
+        :
+        <>
+        </>
+      }
       <Container>
         {displayedPosts ?
-          displayedPosts.map(post => {
-            if (post.avatar) {
+          Object.keys(displayedPosts).map(k => {
+            if (displayedPosts[k].avatar) {
               return (
-                <Container key={post.id}>
+                <Container key={displayedPosts[k].id}>
                   <Paper style={{ margin: '50px' }} >
-                    <img alt={`${post.username}'s avatar`} src={post.avatar} />
-                    <h3>{post.username}</h3>
-                    <ReactMarkdown source={post.body} />
-                    <p>{post.timestamp}</p>
+                    <img alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+                    <h3>{displayedPosts[k].username}</h3>
+                    <ReactMarkdown source={displayedPosts[k].body} />
+                    <p>{displayedPosts[k].timestamp}</p>
                   </Paper>
                 </Container>
               )
             } else {
               return (
-                <Container key={post.id}>
+                <Container key={displayedPosts[k].id}>
                   <Paper style={{ margin: '50px' }} >
-                    <h3>{post.username}</h3>
-                    <ReactMarkdown source={post.body} />
-                    <p>{post.timestamp}</p>
+                    <h3>{displayedPosts[k].username}</h3>
+                    <ReactMarkdown source={displayedPosts[k].body} />
+                    <p>{displayedPosts[k].timestamp}</p>
                   </Paper>
                 </Container>
               )

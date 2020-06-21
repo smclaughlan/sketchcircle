@@ -150,63 +150,21 @@ export default function reducer(state = {}, action) {
       }
     }
     case ADD_POST: {
+      console.log(action.newPost);
 
-      //handle posts
-      if (!state.posts) {
-        state.posts = [];
-      }
-      if (action.newPost.posts) {
-        action.newPost.posts.forEach(post => {
-          state.posts.push(post);
-        })
-      } else {
-        state.posts.push(action.newPost);
-      }
-
-      //handle goals the same way
-      if (!state.goals) {
-        state.goals = [];
-      }
-      if (action.newPost.goals) {
-        action.newPost.goals.forEach(goal => {
-          state.goals.push(goal);
-        })
-      }
-
-      //and datapoints
-      console.log(action.newPost.datapoints);
       return {
         ...state,
-        datapoints: { ...action.newPost.datapoints },
+        ...action.newPost,
       }
     }
     case ADD_GOAL: {
-      if (!state.goals) {
-        state.goals = [];
-      }
-      if (action.newGoal.goals) {
-        action.newGoal.goals.forEach(goal => {
-          state.goals.push(goal);
-        })
-      } else {
-        state.goals.push(action.newGoal);
-      }
       return {
         ...state,
+        ...action.newGoal,
       }
     }
     case ADD_DATAPOINT: {
-      // if (!state.datapoints) {
-      //   state.datapoints = {};
-      // }
-      // if (action.newDataPoint.datapoints) {
-      //   console.log(action.newDataPoint.datapoints);
-      //   // action.newDataPoint.datapoints.forEach(datapoint => {
-      //   //   state.datapoints.push(datapoint);
-      //   // })
-      // } else {
-      //   // state.datapoints.push(action.newDataPoint);
-      // }
+
       return {
         ...state,
       }
