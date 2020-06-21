@@ -88,7 +88,7 @@ export const sendAddDataPointReq = (token, goalId, value) => async dispatch => {
     const newDataPoint = await res.json();
     console.log(newDataPoint);
     dispatch(addDataPoint(newDataPoint));
-    // window.location.href = window.location.href;
+    window.location.href = window.location.href;
   }
 }
 
