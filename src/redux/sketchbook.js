@@ -150,7 +150,6 @@ export default function reducer(state = {}, action) {
       }
     }
     case ADD_POST: {
-      console.log(action.newPost);
 
       return {
         ...state,

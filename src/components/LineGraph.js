@@ -2,11 +2,47 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
+import { Container, Paper } from '@material-ui/core';
+import AddData from './AddData';
 
 const LineGraph = (props) => {
-
   const dateFromTargetDate = new Date(props.targetDate);
   const dateFromTimestamp = new Date(props.timestamp);
+  const sketchbookId = window.location.href.split('/')[4];
+
+  //check first if value of all relevant datapoints is larger than target
+  //and if so, return a completed message for that goal instead
+  let total = 0;
+  if (props.id in props.datapoints) {
+    const datapointForGraphs = props.datapoints[props.id];
+    Object.keys(datapointForGraphs).forEach(k => {
+      const currDatapoint = datapointForGraphs[k];
+      const currValue = currDatapoint.value;
+      total += currValue;
+    });
+  }
+  if (total > props.target) {
+    return (
+      <Container style={{ margin: "20px" }}>
+        <Paper style={{ margin: "20px" }}>
+          <div>{props.targetDate} {props.title} completed!</div>
+        </Paper>
+      </Container>
+    )
+  }
+
+  //then check if the current date is past the the targetdate
+  //and if so, return a failed message for that goal instead
+  const currentDate = new Date();
+  if (currentDate > dateFromTargetDate) {
+    return (
+      <Container style={{ margin: "20px" }}>
+        <Paper style={{ margin: "20px" }}>
+          <div>{props.targetDate} {props.title} failed!</div>
+        </Paper>
+      </Container>
+    )
+  }
 
   const dateLabels = [];
   if (dateFromTargetDate > dateFromTimestamp) {
@@ -33,9 +69,9 @@ const LineGraph = (props) => {
 
   const userData = [];
   if (props.id in props.datapoints) {
-    const datapointForGraph = props.datapoints[props.id];
-    Object.keys(datapointForGraph).forEach(k => {
-      const currDatapoint = datapointForGraph[k];
+    const datapointForGraphs = props.datapoints[props.id];
+    Object.keys(datapointForGraphs).forEach(k => {
+      const currDatapoint = datapointForGraphs[k];
       //get value
       const currValue = currDatapoint.value;
       //get timestamp
@@ -59,9 +95,6 @@ const LineGraph = (props) => {
       }
     })
   }
-
-  console.log(userData);
-  console.log(idealData);
 
   const data = {
     labels: dateLabels,
@@ -114,7 +147,15 @@ const LineGraph = (props) => {
   return (
     <div>
       <h2>{props.title}</h2>
+      <div>{props.description}</div>
       <Line data={data} />
+      {sketchbookId === props.currentUserId ?
+        <AddData
+          id={props.id}
+        />
+        :
+        <> </>
+      }
     </div>
   )
 }
@@ -122,6 +163,7 @@ const LineGraph = (props) => {
 
 const mapStateToProps = state => {
   return {
+    currentUserId: state.user.currentUserId,
     datapoints: state.sketchbook.datapoints,
   };
 };

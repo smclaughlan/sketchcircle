@@ -6,7 +6,7 @@ import { getPostsReq, sendNewGoalReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
 import { Button, Container, TextField, Paper } from '@material-ui/core';
 import LineGraph from './LineGraph';
-import AddData from './AddData';
+
 
 const converter = new Showdown.Converter({
   tables: true,
@@ -81,8 +81,6 @@ const InsideSketchbook = (props) => {
     props.sendNewGoalReq(props.token, newGoalData);
   }
 
-  console.log(displayedGoals);
-  console.log(displayedPosts);
   return (
     <>
       <Container>
@@ -94,18 +92,12 @@ const InsideSketchbook = (props) => {
                   <LineGraph
                     id={displayedGoals[k].id}
                     title={displayedGoals[k].title}
+                    description={displayedGoals[k].description}
                     owner_id={displayedGoals[k].owner_id}
                     sketchbook_id={displayedGoals[k].sketchbook_id}
                     target={displayedGoals[k].target}
                     targetDate={displayedGoals[k].targetdate}
                     timestamp={displayedGoals[k].timestamp} />
-                  {sketchbookId === props.currentUserId ?
-                    <AddData
-                      id={displayedGoals[k].id}
-                    />
-                    :
-                    <> </>
-                  }
                 </Paper>
               </div>
             )
