@@ -10,6 +10,7 @@ import TimelineContent from '@material-ui/lab/TimelineContent';
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import Typography from '@material-ui/core/Typography';
+import moment from 'moment';
 
 const SketchTimeline = (props) => {
 
@@ -40,7 +41,10 @@ const SketchTimeline = (props) => {
       });
 
       if (currImgUrls.length > 0) { //if currImgUrls has anything
-        currImgUrls.push(currPost.timestamp); //will have timestamp at end
+        currImgUrls.push(moment(currPost.timestamp)
+          .toDate()
+          .toLocaleString()
+          .split(',')[0]); //will have timestamp at end
         imgUrls.push(currImgUrls); //add it to imgUrls
       }
     });
