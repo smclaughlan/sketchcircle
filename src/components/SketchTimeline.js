@@ -58,22 +58,22 @@ const SketchTimeline = (props) => {
           imgUrls.map(imgUrlArr => {
             const dateForPost = imgUrlArr.pop();
             return (
-              imgUrlArr.map(url => {
-                return (
-                  <TimelineItem key={url}>
-                    <TimelineOppositeContent>
-                      <Typography color="textSecondary">{dateForPost}</Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot />
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <img style={{ maxWidth: "500px" }} src={`${url}`} alt="Timeline image" />
-                    </TimelineContent>
-                  </TimelineItem>
-                )
-              })
+              <TimelineItem>
+                <TimelineOppositeContent>
+                  <Typography color="textSecondary">{dateForPost}</Typography>
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
+                  {imgUrlArr.map(url => {
+                    return (
+                      <img key={url} style={{ maxWidth: "500px" }} src={`${url}`} alt="Timeline image" />
+                    )
+                  })}
+                </TimelineContent>
+              </TimelineItem>
             )
           })
           :
