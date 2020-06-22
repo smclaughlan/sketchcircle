@@ -23,26 +23,30 @@ const SketchTimeline = (props) => {
   const imgUrls = [];
   if (props.posts && props.posts[sketchbookId]) {
     const skbPosts = props.posts[sketchbookId];
-    const imgRe = /(((https:\/\/www)|(https:\/\/)|(www)|(http:\/\/www)|(http:\/\/))[-a-zA-Z0-9@:%+.~#?&//=_]+)[.](jpg|jpeg|gif|png|bmp|tiff|tga|svg)/g;
+    const imgRe = /(((https:\/\/www)|(https:\/\/)|(www)|(http:\/\/www)|(http:\/\/))[-a-zA-Z0-9@:%+.~#?&//=_]+)[.](jpg|jpeg|gif|png|bmp|tiff|tga|svg)/;
     Object.keys(skbPosts).forEach(k => {
       const currPost = skbPosts[k];
-      const sectionsBody = currPost.body.split(' ');
+      const postSplitOnReturns = currPost.body.split('\n').join(' ');
+      const sectionsBody = postSplitOnReturns.split(' ');
+      console.log(sectionsBody);
       let currImgUrls = [];
-      sectionsBody.forEach(section => {
-        // console.log(section);
-        let matches = imgRe.exec(section);
-        // console.log(matches);
-        if (matches) {
-          currImgUrls.push(matches[0]);
+
+      sectionsBody.forEach(section => { //for each section, check
+        let matches = imgRe.exec(section); //if it's a url
+
+        if (matches) { //if it is
+          currImgUrls.push(matches[0]); //push the url here
+          // console.log(currImgUrls);
         }
-      })
-      if (currImgUrls.length > 0) {
+      });
+
+      if (currImgUrls.length > 0) { //if currImgUrls has anything
         currImgUrls.push(currPost.timestamp); //will have timestamp at end
-        imgUrls.push(currImgUrls);
+        imgUrls.push(currImgUrls); //add it to imgUrls
       }
     });
   }
-  // console.log(imgUrls);
+  console.log(imgUrls);
 
 
   return (
