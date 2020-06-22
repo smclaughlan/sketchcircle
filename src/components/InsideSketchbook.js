@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { MemoryRouter as Router } from 'react-router';
 import MDE from './MDE';
 import * as Showdown from "showdown";
 import { getPostsReq, sendNewGoalReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
-import { Button, Container, TextField, Paper } from '@material-ui/core';
+import { Button, Container, TextField, Link, Paper } from '@material-ui/core';
 import LineGraph from './LineGraph';
-
+import Timeline from './SketchTimeline';
 
 const converter = new Showdown.Converter({
   tables: true,
@@ -110,6 +111,7 @@ const InsideSketchbook = (props) => {
         <Container>
           <Paper style={{ margin: "20px" }}>
             <form onSubmit={newGoal}>
+              <h2>New Goal</h2>
               <div>
                 <TextField label="Title" onChange={titleChange} />
               </div>
@@ -133,6 +135,7 @@ const InsideSketchbook = (props) => {
         </>
       }
       <Container>
+        <Button color="primary" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
         {displayedPosts ?
           Object.keys(displayedPosts).map(k => {
             if (displayedPosts[k].avatar) {

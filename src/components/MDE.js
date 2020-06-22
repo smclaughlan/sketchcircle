@@ -14,13 +14,10 @@ const converter = new Showdown.Converter({
 });
 
 export function MDE(props) {
-  const [value, setValue] = React.useState("**Hello world!!!**");
+  const [value, setValue] = React.useState("");
   const [selectedTab, setSelectedTab] = React.useState("write");
 
   const newPost = () => {
-    // console.log(value);
-    // console.log(props.currentUserId);
-    // console.log(props.sketchbook_id);
     props.sendPostReq(props.token, props.sketchbook_id, value);
   }
 
