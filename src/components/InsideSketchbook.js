@@ -142,7 +142,7 @@ const InsideSketchbook = (props) => {
               return (
                 <Container key={displayedPosts[k].id}>
                   <Paper style={{ margin: '50px' }} >
-                    <img alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+                    <img maxWidth="100" maxHeight="100" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
                     <h3>{displayedPosts[k].username}</h3>
                     <ReactMarkdown source={displayedPosts[k].body} />
                     <p>{displayedPosts[k].timestamp}</p>

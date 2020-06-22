@@ -36,7 +36,6 @@ const SketchTimeline = (props) => {
 
         if (matches) { //if it is
           currImgUrls.push(matches[0]); //push the url here
-          // console.log(currImgUrls);
         }
       });
 
@@ -46,7 +45,6 @@ const SketchTimeline = (props) => {
       }
     });
   }
-  console.log(imgUrls);
 
 
   return (

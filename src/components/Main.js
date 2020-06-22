@@ -28,7 +28,6 @@ const Main = (props) => {
         }
       })
     })
-    console.log(followedSketchbooks);
   }
 
   React.useEffect(() => {
@@ -40,7 +39,6 @@ const Main = (props) => {
     return (
       <>
         <Container>
-          <MDE />
           <Paper>
             <h3>Starred sketchbooks</h3>
             <Grid container spacing={3}>
