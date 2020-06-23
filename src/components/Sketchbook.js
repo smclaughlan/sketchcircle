@@ -8,9 +8,9 @@ const Sketchbook = props => {
   const timestampDate = new Date(props.timestamp);
 
   return (
-    <Card variant="outlined">
+    <Card style={{ margin: "5px" }} variant="outlined">
       <CardContent>
-        <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
+        < NavLink to={`/sketchbook/${props.sketchbook_id}`}>
           <h1>{props.title}</h1>
           {props.avatar ?
             <img className="sketchbookCover" alt="Sketchbook cover" src={props.avatar} />
@@ -28,8 +28,8 @@ const Sketchbook = props => {
         <div>
           Last updated: {timestampDate.toLocaleString()}
         </div>
-      </CardContent>
-    </Card>
+      </CardContent >
+    </Card >
   )
 }
 

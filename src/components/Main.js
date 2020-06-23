@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Paper, Grid } from '@material-ui/core';
 import { getSketchbooksReq } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
-import MDE from './MDE';
+import MDE from './MDE'; //TODO: Let admin users update a front page message?
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,8 +38,7 @@ const Main = (props) => {
     return (
       <>
         <Container style={{ marginTop: "5%" }}>
-          <Paper>
-            <h3>Starred sketchbooks</h3>
+          <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
               {followedSketchbooks.map(book => {
                 return (
@@ -62,7 +60,7 @@ const Main = (props) => {
           </Paper>
         </Container>
         <Container>
-          <Paper>
+          <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
               {props.sketchbooks.map(book => {
                 return (
@@ -91,7 +89,7 @@ const Main = (props) => {
     return (
       <>
         <Container style={{ marginTop: "5%" }}>
-          <Paper>
+          <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
               {props.sketchbooks.map(book => {
                 return (
