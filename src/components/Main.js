@@ -38,7 +38,7 @@ const Main = (props) => {
   if (followedSketchbooks.length > 0 && props.sketchbooks) {
     return (
       <>
-        <Container>
+        <Container style={{ marginTop: "5%" }}>
           <Paper>
             <h3>Starred sketchbooks</h3>
             <Grid container spacing={3}>
@@ -90,7 +90,7 @@ const Main = (props) => {
   if (props.sketchbooks) {
     return (
       <>
-        <Container>
+        <Container style={{ marginTop: "5%" }}>
           <Paper>
             <Grid container spacing={3}>
               {props.sketchbooks.map(book => {
@@ -101,6 +101,7 @@ const Main = (props) => {
                         <Sketchbook
                           sketchbook_id={k}
                           owner_id={book[k].owner_id}
+                          avatar={book[k].avatar}
                           title={book[k].title}
                           timestamp={book[k].timestamp} />
                       </Grid>
