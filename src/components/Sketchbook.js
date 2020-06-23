@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import FollowBtn from './FollowBtn';
+import { Card, CardContent } from '@material-ui/core';
 
 const Sketchbook = props => {
   const timestampDate = new Date(props.timestamp);
 
   return (
-    <>
-      <div>
+    <Card variant="outlined">
+      <CardContent>
         <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
           <h1>{props.title}</h1>
           {props.avatar ?
@@ -18,15 +19,17 @@ const Sketchbook = props => {
             </>
           }
         </NavLink>
-      </div>
-      <div>
-        <FollowBtn
-          {...props}
-          sketchbook_id={props.sketchbook_id}
-        />
-      </div>
-      <div>Updated: {timestampDate.toLocaleString()}</div>
-    </>
+        <div>
+          <FollowBtn
+            {...props}
+            sketchbook_id={props.sketchbook_id}
+          />
+        </div>
+        <div>
+          Last updated: {timestampDate.toLocaleString()}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
