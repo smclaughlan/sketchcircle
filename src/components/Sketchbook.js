@@ -11,7 +11,12 @@ const Sketchbook = props => {
       <div>
         <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
           <h1>{props.title}</h1>
-          <img className="sketchbookCover" alt="Sketchbook cover" src={props.avatar} />
+          {props.avatar ?
+            <img className="sketchbookCover" alt="Sketchbook cover" src={props.avatar} />
+            :
+            <>
+            </>
+          }
         </NavLink>
       </div>
       <div>
