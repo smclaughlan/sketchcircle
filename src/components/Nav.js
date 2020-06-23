@@ -46,6 +46,9 @@ const NavBar = (props) => {
         <NavLink style={{ color: 'white' }} to="/">
           <Button color="inherit" onClick={logOut}>Logout</Button>
         </NavLink>
+        <NavLink style={{ color: 'white' }} to="/update">
+          <Button color="inherit">Edit Account</Button>
+        </NavLink>
       </Grid>
     </Grid >
   ) : (

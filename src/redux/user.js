@@ -50,6 +50,21 @@ export const sendLogoutReq = () => async dispatch => {
   dispatch(logoutUser())
 }
 
+export const sendUpdateReq = (token, updateData) => async dispatch => {
+  const res = await fetch(`${apiBaseUrl}/users`, {
+    method: "put",
+    body: JSON.stringify(updateData),
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": `${token}`,
+    }
+  });
+
+  if (res.ok) {
+    window.location.href = "/";
+  }
+}
+
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case LOGIN_USER: {
