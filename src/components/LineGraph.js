@@ -100,7 +100,7 @@ const LineGraph = (props) => {
     labels: dateLabels,
     datasets: [
       {
-        label: 'Suggested pacing',
+        label: 'Suggested pace',
         fill: false,
         lineTension: 0.1,
         backgroundColor: 'rgba(0,0,0,0.4)',

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import history from '../utils/history';
 import { addFollowReq, deleteFollowReq } from '../redux/sketchbook';
+import { Star, StarBorder } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -30,9 +30,9 @@ const FollowBtn = (props) => {
   }
 
   return (isFollowed ?
-    <Button color="primary" onClick={removeFollow}>Unstar</Button>
+    <Star color="primary" onClick={removeFollow} />
     :
-    <Button color="primary" onClick={createFollow}>Star</Button>
+    <StarBorder color="primary" onClick={createFollow} />
   )
 }
 

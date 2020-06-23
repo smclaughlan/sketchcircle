@@ -37,7 +37,7 @@ const Main = (props) => {
   if (followedSketchbooks.length > 0 && props.sketchbooks) {
     return (
       <>
-        <Container style={{ marginTop: "5%" }}>
+        <Container style={{ marginTop: "10%" }}>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
               {followedSketchbooks.map(book => {
@@ -88,7 +88,7 @@ const Main = (props) => {
   if (props.sketchbooks) {
     return (
       <>
-        <Container style={{ marginTop: "5%" }}>
+        <Container style={{ marginTop: "10%" }}>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
               {props.sketchbooks.map(book => {
