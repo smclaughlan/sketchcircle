@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Paper, Grid } from '@material-ui/core';
-import { getSketchbooksReq, getSketchbooks } from '../redux/sketchbook';
+import { getSketchbooksReq } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
 import MDE from './MDE';
 
@@ -50,6 +50,7 @@ const Main = (props) => {
                         <Sketchbook
                           {...props}
                           sketchbook_id={book[k].sketchbook_id}
+                          avatar={book[k].avatar}
                           owner_id={book[k].owner_id}
                           title={book[k].title}
                           timestamp={book[k].timestamp} />
@@ -71,6 +72,7 @@ const Main = (props) => {
                         <Sketchbook
                           sketchbook_id={k}
                           owner_id={book[k].owner_id}
+                          avatar={book[k].avatar}
                           title={book[k].title}
                           timestamp={book[k].timestamp} />
                       </Grid>

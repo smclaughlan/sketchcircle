@@ -6,15 +6,20 @@ import FollowBtn from './FollowBtn';
 const Sketchbook = props => {
   const timestampDate = new Date(props.timestamp);
 
-  return ( // TODO: Add user's avatar to display as their sketchbook image
+  return (
     <>
-      <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
-        <h1>{props.title}</h1>
-      </NavLink>
-      <FollowBtn
-        {...props}
-        sketchbook_id={props.sketchbook_id}
-      />
+      <div>
+        <NavLink to={`/sketchbook/${props.sketchbook_id}`}>
+          <h1>{props.title}</h1>
+          <img className="sketchbookCover" alt="Sketchbook cover" src={props.avatar} />
+        </NavLink>
+      </div>
+      <div>
+        <FollowBtn
+          {...props}
+          sketchbook_id={props.sketchbook_id}
+        />
+      </div>
       <div>Updated: {timestampDate.toLocaleString()}</div>
     </>
   )

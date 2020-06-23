@@ -2,3 +2,8 @@
 img {
   max-width: 800px;
 }
+
+.sketchbookCover {
+  max-width: 300px;
+  max-height: 300px;
+}
