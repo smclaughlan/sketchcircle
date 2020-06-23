@@ -7,7 +7,6 @@ import { getPostsReq, sendNewGoalReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
 import { Button, Container, TextField, Link, Paper } from '@material-ui/core';
 import LineGraph from './LineGraph';
-import Timeline from './SketchTimeline';
 
 const converter = new Showdown.Converter({
   tables: true,
@@ -84,7 +83,7 @@ const InsideSketchbook = (props) => {
 
   return (
     <>
-      <Container>
+      <Container style={{ marginTop: "5%" }}>
         {displayedGoals ?
           Object.keys(displayedGoals).map(k => {
             return (
@@ -135,7 +134,9 @@ const InsideSketchbook = (props) => {
         </>
       }
       <Container>
-        <Button color="primary" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
+        <Container>
+          <Button style={{ margin: '50px' }} color="primary" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
+        </Container>
         {displayedPosts ?
           Object.keys(displayedPosts).map(k => {
             if (displayedPosts[k].avatar) {

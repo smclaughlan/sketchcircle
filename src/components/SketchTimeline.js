@@ -1,6 +1,7 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Paper } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { getPostsReq } from '../redux/sketchbook';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
@@ -53,7 +54,10 @@ const SketchTimeline = (props) => {
 
   return (
     <div>
-      <Timeline align="alternate">
+      <Timeline align="alternate" style={{ marginTop: "5%" }}>
+        <NavLink to={`/sketchbook/${sketchbookId}`}>
+          <Button color="primary">Back to sketchbook</Button>
+        </NavLink>
         {imgUrls ?
           imgUrls.map(imgUrlArr => {
             const dateForPost = imgUrlArr.pop();
@@ -81,6 +85,9 @@ const SketchTimeline = (props) => {
             No images found.
         </div>
         }
+        <NavLink to={`/sketchbook/${sketchbookId}`}>
+          <Button color="primary">Back to sketchbook</Button>
+        </NavLink>
       </Timeline>
     </div>
   )
