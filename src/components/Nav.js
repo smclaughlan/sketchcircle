@@ -10,20 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import { sendLogoutReq } from '../redux/user';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundImage: theme.gradientBackground,
-    marginBottom: 64
+  bar: {
+    backgroundColor: theme.primaryColor,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  logout: {
-    marginLeft: 100,
-  }
 }));
 
 const NavBar = (props) => {
@@ -67,10 +56,10 @@ const NavBar = (props) => {
 
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.root}>
+    <div >
+      <AppBar className={classes.bar} position="fixed">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" color="inherit" aria-label="menu">
           </IconButton>
           {navigation}
         </Toolbar>

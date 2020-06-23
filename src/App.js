@@ -15,17 +15,19 @@ import { ProtectedRoute, AuthRoute } from './authRoutes';
 
 function App(props) {
   return (
-    <BrowserRouter>
-      <Nav />
-      <Switch>
-        <Route path="/register" component={Register} currentUserId={props.currentUserId} />
-        <Route path="/login" component={Login} currentUserId={props.currentUserId} />
-        <Route path="/update" component={UserUpdate} currentUserId={props.currentUserId} />
-        <Route path="/sketchbook/:sketchbook_id/timeline" component={SketchTimeline} currentUserId={props.currentUserId} />
-        <Route path="/sketchbook/:sketchbook_id" component={InsideSketchbook} currentUserId={props.currentUserId} />
-        <Route path="/" component={Main} {...props} currentUserId={props.currentUserId} />
-      </Switch>
-    </BrowserRouter>
+    <Theme>
+      <BrowserRouter>
+        <Nav />
+        <Switch>
+          <Route path="/register" component={Register} currentUserId={props.currentUserId} />
+          <Route path="/login" component={Login} currentUserId={props.currentUserId} />
+          <Route path="/update" component={UserUpdate} currentUserId={props.currentUserId} />
+          <Route path="/sketchbook/:sketchbook_id/timeline" component={SketchTimeline} currentUserId={props.currentUserId} />
+          <Route path="/sketchbook/:sketchbook_id" component={InsideSketchbook} currentUserId={props.currentUserId} />
+          <Route path="/" component={Main} {...props} currentUserId={props.currentUserId} />
+        </Switch>
+      </BrowserRouter>
+    </Theme>
   );
 }
 
