@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { addFollowReq, deleteFollowReq } from '../redux/sketchbook';
+import { addFollowReq, deleteFollowReq, getSketchbooksReq } from '../redux/sketchbook';
 import { Star, StarBorder } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,16 +18,31 @@ const FollowBtn = (props) => {
   const [isFollowed, setFollowed] = React.useState(Object.keys(props.follows).includes(props.sketchbook_id.toString()));
   const { token, sketchbook_id, addFollowReq, deleteFollowReq } = props;
 
-
   const createFollow = () => {
-    addFollowReq(token, sketchbook_id);
-    setFollowed(true);
+    (async () => {
+      await addFollowReq(token, sketchbook_id);
+      setFollowed(true);
+      const userId = props.currentUserId;
+      await props.getSketchbooksReq(userId);
+    })();
   }
 
   const removeFollow = () => {
-    deleteFollowReq(token, sketchbook_id);
-    setFollowed(false);
+    (async () => {
+      await deleteFollowReq(token, sketchbook_id);
+      setFollowed(false);
+      const userId = props.currentUserId;
+      await props.getSketchbooksReq(userId);
+    })();
   }
+
+  React.useEffect(() => {
+    if (Object.keys(props.follows).includes(props.sketchbook_id.toString())) {
+      setFollowed(true);
+    } else {
+      setFollowed(false);
+    }
+  }, [props.follows]);
 
   return (isFollowed ?
     <Star color="primary" onClick={removeFollow} />
@@ -39,6 +54,7 @@ const FollowBtn = (props) => {
 
 const mapStateToProps = state => {
   return {
+    currentUserId: state.user.currentUserId,
     token: state.user.token,
     follows: state.sketchbook.follows,
   }
@@ -48,6 +64,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addFollowReq: (...args) => dispatch(addFollowReq(...args)),
     deleteFollowReq: (...args) => dispatch(deleteFollowReq(...args)),
+    getSketchbooksReq: (...args) => dispatch(getSketchbooksReq(...args)),
   }
 }
 
