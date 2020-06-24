@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Paper, Grid } from '@material-ui/core';
+import { Button, Container, Paper, Grid } from '@material-ui/core';
 import { getSketchbooksReq } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
 import MDE from './MDE'; //TODO: Let admin users update a front page message?
@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
 const Main = (props) => {
   const classes = useStyles();
 
+  const [pageNum, setPageNum] = React.useState(1);
+  const skbPerPage = 12;
+  let totalPages = 0;
+
   const followedSketchbooks = [];
   if (props.follows) {
     const followedKeys = Object.keys(props.follows);
@@ -29,10 +33,32 @@ const Main = (props) => {
     })
   }
 
+  const displayedSketchbooks = [];
+  if (props.sketchbooks) {
+    totalPages = props.sketchbooks.length / skbPerPage;
+    if (totalPages < 1) {
+      totalPages = 1;
+    }
+    for (let i = pageNum * skbPerPage - skbPerPage; i < pageNum * skbPerPage; i++) {
+      if (props.sketchbooks[i]) {
+        displayedSketchbooks.push(props.sketchbooks[i]);
+      }
+    }
+  }
+  console.log(displayedSketchbooks);
+
   React.useEffect(() => {
     const userId = props.currentUserId;
     props.getSketchbooksReq(userId);
   }, [props.currentUserId])
+
+  const prevPage = () => {
+    setPageNum(pageNum - 1);
+  }
+
+  const nextPage = () => {
+    setPageNum(pageNum + 1);
+  }
 
   if (followedSketchbooks.length > 0 && props.sketchbooks) {
     return (
@@ -62,7 +88,7 @@ const Main = (props) => {
         <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
-              {props.sketchbooks.map(book => {
+              {displayedSketchbooks.map(book => {
                 return (
                   Object.keys(book).map(k => {
                     return (
@@ -80,6 +106,20 @@ const Main = (props) => {
               })}
             </Grid>
           </Paper>
+          <Container>
+            {pageNum > 1 ?
+              <Button color="primary" onClick={prevPage}>Prev</Button>
+              :
+              <>
+              </>
+            }
+            {pageNum < totalPages ?
+              <Button color="primary" onClick={nextPage}>Next</Button>
+              :
+              <>
+              </>
+            }
+          </Container>
         </Container>
       </>
     )
@@ -91,7 +131,7 @@ const Main = (props) => {
         <Container style={{ marginTop: "10%" }}>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
-              {props.sketchbooks.map(book => {
+              {displayedSketchbooks.map(book => {
                 return (
                   Object.keys(book).map(k => {
                     return (
@@ -109,6 +149,20 @@ const Main = (props) => {
               })}
             </Grid>
           </Paper>
+          <Container>
+            {pageNum > 1 ?
+              <Button color="primary" onClick={prevPage}>Prev</Button>
+              :
+              <>
+              </>
+            }
+            {pageNum < totalPages ?
+              <Button color="primary" onClick={nextPage}>Next</Button>
+              :
+              <>
+              </>
+            }
+          </Container>
         </Container>
       </>
     )
