@@ -35,7 +35,7 @@ const Main = (props) => {
 
   const displayedSketchbooks = [];
   if (props.sketchbooks) {
-    totalPages = props.sketchbooks.length / skbPerPage;
+    totalPages = Math.ceil(props.sketchbooks.length / skbPerPage);
     if (totalPages < 1) {
       totalPages = 1;
     }
@@ -45,12 +45,15 @@ const Main = (props) => {
       }
     }
   }
-  console.log(displayedSketchbooks);
 
   React.useEffect(() => {
     const userId = props.currentUserId;
     props.getSketchbooksReq(userId);
   }, [props.currentUserId])
+
+  const firstPage = () => {
+    setPageNum(1);
+  }
 
   const prevPage = () => {
     setPageNum(pageNum - 1);
@@ -58,6 +61,10 @@ const Main = (props) => {
 
   const nextPage = () => {
     setPageNum(pageNum + 1);
+  }
+
+  const lastPage = () => {
+    setPageNum(totalPages);
   }
 
   if (followedSketchbooks.length > 0 && props.sketchbooks) {
@@ -108,6 +115,12 @@ const Main = (props) => {
           </Paper>
           <Container>
             {pageNum > 1 ?
+              <Button color="primary" onClick={firstPage}>First</Button>
+              :
+              <>
+              </>
+            }
+            {pageNum > 1 ?
               <Button color="primary" onClick={prevPage}>Prev</Button>
               :
               <>
@@ -115,6 +128,12 @@ const Main = (props) => {
             }
             {pageNum < totalPages ?
               <Button color="primary" onClick={nextPage}>Next</Button>
+              :
+              <>
+              </>
+            }
+            {pageNum < totalPages ?
+              <Button color="primary" onClick={lastPage}>Last</Button>
               :
               <>
               </>
@@ -151,6 +170,12 @@ const Main = (props) => {
           </Paper>
           <Container>
             {pageNum > 1 ?
+              <Button color="primary" onClick={firstPage}>First</Button>
+              :
+              <>
+              </>
+            }
+            {pageNum > 1 ?
               <Button color="primary" onClick={prevPage}>Prev</Button>
               :
               <>
@@ -158,6 +183,12 @@ const Main = (props) => {
             }
             {pageNum < totalPages ?
               <Button color="primary" onClick={nextPage}>Next</Button>
+              :
+              <>
+              </>
+            }
+            {pageNum < totalPages ?
+              <Button color="primary" onClick={lastPage}>Last</Button>
               :
               <>
               </>

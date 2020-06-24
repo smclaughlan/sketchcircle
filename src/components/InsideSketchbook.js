@@ -5,7 +5,7 @@ import MDE from './MDE';
 import * as Showdown from "showdown";
 import { getPostsReq, sendNewGoalReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
-import { Button, Container, TextField, Link, Paper } from '@material-ui/core';
+import { Button, Container, TextField, Paper } from '@material-ui/core';
 import LineGraph from './LineGraph';
 
 const converter = new Showdown.Converter({
@@ -16,7 +16,7 @@ const converter = new Showdown.Converter({
 });
 
 const InsideSketchbook = (props) => {
-  const [displayedPosts, setDisplayedPosts] = React.useState();
+  const displayedPosts = [];
   const [newGoalData, setNewGoalData] = React.useState({
     title: '',
     description: '',
@@ -25,17 +25,32 @@ const InsideSketchbook = (props) => {
   })
   const [displayedGoals, setDisplayedGoals] = React.useState();
 
+  const [pageNum, setPageNum] = React.useState(1);
+  const postsPerPage = 5;
+  let totalPages = 0;
+
   const sketchbookId = window.location.href.split('/')[4];
+
+  if (props.posts && props.posts[sketchbookId]) {
+    let skbPosts = props.posts[sketchbookId];
+    console.log(skbPosts);
+    totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
+    console.log(totalPages);
+    if (totalPages < 1) {
+      totalPages = 1;
+    }
+    const postKeys = Object.keys(skbPosts);
+    for (let i = pageNum * postsPerPage - postsPerPage; i < pageNum * postsPerPage; i++) {
+      if (skbPosts[postKeys[i]]) {
+        displayedPosts.push(skbPosts[postKeys[i]]);
+      }
+    }
+    console.log(displayedPosts);
+  }
 
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
   }, [])
-
-  React.useEffect(() => {
-    if (props.posts && props.posts[sketchbookId]) {
-      setDisplayedPosts(props.posts[sketchbookId]);
-    }
-  }, [props.posts])
 
   React.useEffect(() => {
     if (props.goals && props.goals[sketchbookId]) {
@@ -81,6 +96,22 @@ const InsideSketchbook = (props) => {
     props.sendNewGoalReq(props.token, newGoalData);
   }
 
+  const firstPage = () => {
+    setPageNum(1);
+  }
+
+  const prevPage = () => {
+    setPageNum(pageNum - 1);
+  }
+
+  const nextPage = () => {
+    setPageNum(pageNum + 1);
+  }
+
+  const lastPage = () => {
+    setPageNum(totalPages);
+  }
+
   return (
     <>
       <Container style={{ marginTop: "5%" }}>
@@ -107,8 +138,8 @@ const InsideSketchbook = (props) => {
         }
       </Container>
       {sketchbookId === props.currentUserId ?
-        <Container>
-          <Paper style={{ margin: "20px" }}>
+        <Container style={{ marginTop: "10px" }}>
+          <Paper style={{ margin: "20px", padding: "15px" }}>
             <form onSubmit={newGoal}>
               <h2>New Goal</h2>
               <div>
@@ -135,38 +166,92 @@ const InsideSketchbook = (props) => {
       }
       <Container>
         <Container>
-          <Button style={{ margin: '50px' }} color="primary" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
+          <Button color="primary" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
+        </Container>
+        <Container>
+          {pageNum > 1 ?
+            <Button color="primary" onClick={firstPage}>First</Button>
+            :
+            <>
+            </>
+          }
+          {pageNum > 1 ?
+            <Button color="primary" onClick={prevPage}>Prev</Button>
+            :
+            <>
+            </>
+          }
+          {pageNum < totalPages ?
+            <Button color="primary" onClick={nextPage}>Next</Button>
+            :
+            <>
+            </>
+          }
+          {pageNum < totalPages ?
+            <Button color="primary" onClick={lastPage}>Last</Button>
+            :
+            <>
+            </>
+          }
         </Container>
         {displayedPosts ?
           Object.keys(displayedPosts).map(k => {
             if (displayedPosts[k].avatar) {
               return (
-                <Container key={displayedPosts[k].id}>
-                  <Paper style={{ margin: '50px' }} >
+                <Paper style={{ margin: '50px' }} >
+                  <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
                     <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
                     <h3>{displayedPosts[k].username}</h3>
                     <ReactMarkdown source={displayedPosts[k].body} />
                     <p>{displayedPosts[k].timestamp}</p>
-                  </Paper>
-                </Container>
+                  </Container>
+                </Paper>
               )
             } else {
               return (
-                <Container key={displayedPosts[k].id}>
-                  <Paper style={{ margin: '50px' }} >
+                <Paper style={{ margin: '50px' }} >
+                  <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
                     <h3>{displayedPosts[k].username}</h3>
                     <ReactMarkdown source={displayedPosts[k].body} />
                     <p>{displayedPosts[k].timestamp}</p>
-                  </Paper>
-                </Container>
+                  </Container>
+                </Paper>
               )
             }
           })
           :
           <h2>No posts found.</h2>
         }
+        <Container>
+          {pageNum > 1 ?
+            <Button color="primary" onClick={firstPage}>First</Button>
+            :
+            <>
+            </>
+          }
+          {pageNum > 1 ?
+            <Button color="primary" onClick={prevPage}>Prev</Button>
+            :
+            <>
+            </>
+          }
+          {pageNum < totalPages ?
+            <Button color="primary" onClick={nextPage}>Next</Button>
+            :
+            <>
+            </>
+          }
+          {pageNum < totalPages ?
+            <Button color="primary" onClick={lastPage}>Last</Button>
+            :
+            <>
+            </>
+          }
+        </Container>
       </Container>
-      <MDE sketchbook_id={sketchbookId} />
+      <Container>
+        <MDE sketchbook_id={sketchbookId} />
+      </Container>
     </>
   )
 }

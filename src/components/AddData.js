@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TextField, Button } from '@material-ui/core';
+import { Container, TextField, Button } from '@material-ui/core';
 import { sendAddDataPointReq } from '../redux/sketchbook';
 
 const AddData = (props) => {
@@ -22,10 +22,12 @@ const AddData = (props) => {
   }
 
   return (
-    <form onSubmit={createDataPoint}>
-      <TextField label="Value" type="number" onChange={valueChange} />
-      <Button type="submit">Add data</Button>
-    </form>
+    <Container style={{ padding: "15px" }}>
+      <form onSubmit={createDataPoint}>
+        <TextField label="Value" type="number" onChange={valueChange} />
+        <Button type="submit">Add data</Button>
+      </form>
+    </Container>
   )
 }
 
@@ -39,7 +41,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     sendAddDataPointReq: (...args) => dispatch(sendAddDataPointReq(...args)),
-    // sendNewGoalReq: (...args) => dispatch(sendNewGoalReq(...args)),
   };
 };
 

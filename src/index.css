@@ -9,6 +9,7 @@ img {
 }
 
 .sketchbookCover {
-  max-width: 300px;
-  max-height: 300px;
+  margin: 0 auto;
+  max-width: 230px;
+  max-height: 230px;
 }

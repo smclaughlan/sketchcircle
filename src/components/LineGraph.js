@@ -145,7 +145,7 @@ const LineGraph = (props) => {
   };
 
   return (
-    <div>
+    <Container style={{ margin: "10px" }}>
       <h2>{props.title}</h2>
       <div>{props.description}</div>
       <Line data={data} />
@@ -156,7 +156,7 @@ const LineGraph = (props) => {
         :
         <> </>
       }
-    </div>
+    </Container>
   )
 }
 
