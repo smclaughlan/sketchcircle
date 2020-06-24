@@ -87,10 +87,10 @@ const LineGraph = (props) => {
           userData[idxToAddValue] += currValue;
         } else {
           userData[idxToAddValue] = currValue;
-        }
-        if (idxToAddValue > 0) { //add previous value to this value, making
-          //...each date's values add up over time
-          userData[idxToAddValue] += userData[idxToAddValue - 1];
+          if (idxToAddValue > 0) { //add previous value to this value, making
+            //...each date's values add up over time
+            userData[idxToAddValue] += userData[idxToAddValue - 1];
+          }
         }
       }
     })
