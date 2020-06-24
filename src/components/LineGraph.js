@@ -81,6 +81,7 @@ const LineGraph = (props) => {
         .split(',')[0]; //gives e.g."6/20/2020" as with dateLabels[]
       //if timestamp matches index of dateLabels[] then add it to userData[]
       //...at that index in userData
+
       if (dateLabels.indexOf(currTimestamp) !== -1) {
         const idxToAddValue = dateLabels.indexOf(currTimestamp);
         if (userData[idxToAddValue]) {
@@ -89,11 +90,23 @@ const LineGraph = (props) => {
           userData[idxToAddValue] = currValue;
           if (idxToAddValue > 0) { //add previous value to this value, making
             //...each date's values add up over time
-            userData[idxToAddValue] += userData[idxToAddValue - 1];
+            if (userData[idxToAddValue - 1] === undefined) {
+              userData[idxToAddValue] += 0;
+            } else {
+              userData[idxToAddValue] += userData[idxToAddValue - 1];
+            }
           }
         }
       }
+      console.log(userData);
+
     })
+    for (let i = 0; i < userData.length; i++) {
+      if (userData[i] === undefined) {
+        userData[i] = userData[i - 1];
+      }
+    }
+
   }
 
   const data = {

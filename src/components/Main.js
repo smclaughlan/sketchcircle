@@ -72,6 +72,7 @@ const Main = (props) => {
       <>
         <Container style={{ marginTop: "10%" }}>
           <Paper style={{ margin: "20px" }} elevation={3}>
+            <h3>Starred Sketchbooks</h3>
             <Grid container spacing={3}>
               {followedSketchbooks.map(book => {
                 return (
@@ -94,6 +95,7 @@ const Main = (props) => {
         </Container>
         <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
+            <h3>All Sketchbooks</h3>
             <Grid container spacing={3}>
               {displayedSketchbooks.map(book => {
                 return (
