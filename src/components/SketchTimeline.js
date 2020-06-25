@@ -21,7 +21,6 @@ const SketchTimeline = (props) => {
     props.getPostsReq(sketchbookId);
   }, [])
 
-  // console.log(props.posts);
   const imgUrls = [];
   if (props.posts && props.posts[sketchbookId]) {
     const skbPosts = props.posts[sketchbookId];
@@ -30,7 +29,6 @@ const SketchTimeline = (props) => {
       const currPost = skbPosts[k];
       const postSplitOnReturns = currPost.body.split('\n').join(' ');
       const sectionsBody = postSplitOnReturns.split(' ');
-      console.log(sectionsBody);
       let currImgUrls = [];
 
       sectionsBody.forEach(section => { //for each section, check

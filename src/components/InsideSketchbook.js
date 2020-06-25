@@ -34,9 +34,7 @@ const InsideSketchbook = (props) => {
 
   if (props.posts && props.posts[sketchbookId]) {
     let skbPosts = props.posts[sketchbookId];
-    console.log(skbPosts);
     totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
-    console.log(totalPages);
     if (totalPages < 1) {
       totalPages = 1;
     }
@@ -46,7 +44,6 @@ const InsideSketchbook = (props) => {
         displayedPosts.push(skbPosts[postKeys[i]]);
       }
     }
-    console.log(displayedPosts);
   }
 
   React.useEffect(() => {
@@ -81,7 +78,7 @@ const InsideSketchbook = (props) => {
         target: num
       })
     } catch {
-      console.log('Not a number');
+      console.log('Goal target must be number');
     }
   }
 

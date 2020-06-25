@@ -52,7 +52,6 @@ export const sendPostReq = (token, sketchbook_id, msgBody) => async dispatch => 
 
   if (res.ok) {
     const newPost = await res.json();
-    console.log(newPost);
     dispatch(addPost(newPost));
     window.location.href = window.location.href;
   }
@@ -69,7 +68,6 @@ export const sendNewGoalReq = (token, newGoalData) => async dispatch => {
   });
   if (res.ok) {
     const newGoal = await res.json();
-    console.log(newGoal);
     dispatch(addGoal(newGoal));
     window.location.href = window.location.href;
   }
@@ -86,7 +84,6 @@ export const sendAddDataPointReq = (token, goalId, value) => async dispatch => {
   });
   if (res.ok) {
     const newDataPoint = await res.json();
-    console.log(newDataPoint);
     dispatch(addDataPoint(newDataPoint));
     window.location.href = window.location.href;
   }
@@ -103,7 +100,6 @@ export const addFollowReq = (token, sketchbook_id) => async dispatch => {
 
   if (res.ok) {
     const newFollow = await res.json();
-    console.log(newFollow);
     dispatch(addFollow(newFollow));
     // window.location.href = "/"
   }
@@ -120,9 +116,8 @@ export const deleteFollowReq = (token, sketchbook_id) => async dispatch => {
 
   if (res.ok) {
     const removedFollow = await res.json();
-    console.log(removedFollow);
     dispatch(deleteFollow(removedFollow));
-    // window.location.href = "/"
+    // window.location.href = "/" //if the async await calls don't work, backup
   }
 }
 

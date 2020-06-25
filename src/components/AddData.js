@@ -11,9 +11,8 @@ const AddData = (props) => {
       const num = Number(e.target.value);
       setValue(num);
     } catch {
-      console.log('Not a number');
+      console.log('Value for data must be number');
     }
-    console.log(value);
   }
 
   const createDataPoint = (e) => {

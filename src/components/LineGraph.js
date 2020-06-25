@@ -98,8 +98,6 @@ const LineGraph = (props) => {
           }
         }
       }
-      console.log(userData);
-
     })
     for (let i = 0; i < userData.length; i++) { //test for empty days
       if (userData[i] === undefined) {
