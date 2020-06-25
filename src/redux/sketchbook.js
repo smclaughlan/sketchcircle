@@ -105,7 +105,7 @@ export const addFollowReq = (token, sketchbook_id) => async dispatch => {
     const newFollow = await res.json();
     console.log(newFollow);
     dispatch(addFollow(newFollow));
-    // window.location.href = "/"
+    window.location.href = "/"
   }
 }
 
@@ -122,7 +122,7 @@ export const deleteFollowReq = (token, sketchbook_id) => async dispatch => {
     const removedFollow = await res.json();
     console.log(removedFollow);
     dispatch(deleteFollow(removedFollow));
-    // window.location.href = "/"
+    window.location.href = "/"
   }
 }
 
