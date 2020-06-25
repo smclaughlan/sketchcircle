@@ -23,7 +23,7 @@ const FollowBtn = (props) => {
       await addFollowReq(token, sketchbook_id);
       setFollowed(true);
       const userId = props.currentUserId;
-      await props.getSketchbooksReq(userId);
+      setTimeout(props.getSketchbooksReq(userId), 2000);
     })();
   }
 
@@ -32,7 +32,7 @@ const FollowBtn = (props) => {
       await deleteFollowReq(token, sketchbook_id);
       setFollowed(false);
       const userId = props.currentUserId;
-      await props.getSketchbooksReq(userId);
+      setTimeout(props.getSketchbooksReq(userId), 2000);
     })();
   }
 
