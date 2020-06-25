@@ -31,7 +31,7 @@ const Sketchbook = props => {
           }
         </div>
         <div>
-          Last updated: {timestampDate.toLocaleString()}
+          Updated: {timestampDate.toLocaleString()}
         </div>
       </CardContent >
     </Card >
