@@ -101,9 +101,9 @@ const LineGraph = (props) => {
       console.log(userData);
 
     })
-    for (let i = 0; i < userData.length; i++) {
+    for (let i = 0; i < userData.length; i++) { //test for empty days
       if (userData[i] === undefined) {
-        userData[i] = userData[i - 1];
+        userData[i] = userData[i - 1]; //if day is empty, use previous day's value. Flat line on graph.
       }
     }
 
