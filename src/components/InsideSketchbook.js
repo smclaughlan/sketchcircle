@@ -211,7 +211,9 @@ const InsideSketchbook = (props) => {
               return (
                 <Paper style={{ margin: '50px' }} >
                   <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                    <h3>{displayedPosts[k].username}</h3>
+                    <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
+                      <h3>{displayedPosts[k].username}</h3>
+                    </NavLink>
                     <ReactMarkdown source={displayedPosts[k].body} />
                     <p>{displayedPosts[k].timestamp}</p>
                   </Container>
