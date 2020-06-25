@@ -23,6 +23,7 @@ export const sendRegisterReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId);
     dispatch(loginUser(token, currentUserId));
+    window.location.href = "/"
   }
 }
 
@@ -41,6 +42,7 @@ export const sendLoginReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId.toString());
     dispatch(loginUser(token, currentUserId.toString()))
+    window.location.href = "/"
   }
 }
 
@@ -48,6 +50,7 @@ export const sendLogoutReq = () => async dispatch => {
   window.localStorage.removeItem("x-access-token");
   window.localStorage.removeItem("currentUserId");
   dispatch(logoutUser())
+  window.location.href = "/"
 }
 
 export const sendUpdateReq = (token, updateData) => async dispatch => {
