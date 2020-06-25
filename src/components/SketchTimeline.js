@@ -23,7 +23,13 @@ const SketchTimeline = (props) => {
 
   const imgUrls = [];
   if (props.posts && props.posts[sketchbookId]) {
-    const skbPosts = props.posts[sketchbookId];
+    const allSkbPosts = props.posts[sketchbookId];
+    const skbPosts = [];
+    Object.keys(allSkbPosts).forEach(k => {
+      if (allSkbPosts[k].user_id === parseInt(sketchbookId)) {
+        skbPosts.push(allSkbPosts[k]);
+      }
+    })
     const imgRe = /(((https:\/\/www)|(https:\/\/)|(www)|(http:\/\/www)|(http:\/\/))[-a-zA-Z0-9@:%+.~#?&//=_]+)[.](jpg|jpeg|gif|png|bmp|tiff|tga|svg)/;
     Object.keys(skbPosts).forEach(k => {
       const currPost = skbPosts[k];
@@ -60,7 +66,7 @@ const SketchTimeline = (props) => {
           imgUrls.map(imgUrlArr => {
             const dateForPost = imgUrlArr.pop();
             return (
-              <TimelineItem>
+              <TimelineItem key={imgUrlArr}>
                 <TimelineOppositeContent>
                   <Typography color="textSecondary">{dateForPost}</Typography>
                 </TimelineOppositeContent>
