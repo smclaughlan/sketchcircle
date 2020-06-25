@@ -20,10 +20,15 @@ const Sketchbook = props => {
           }
         </NavLink>
         <div>
-          <FollowBtn
-            {...props}
-            sketchbook_id={props.sketchbook_id}
-          />
+          {props.token ?
+            <FollowBtn
+              {...props}
+              sketchbook_id={props.sketchbook_id}
+            />
+            :
+            <>
+            </>
+          }
         </div>
         <div>
           Last updated: {timestampDate.toLocaleString()}
@@ -36,6 +41,7 @@ const Sketchbook = props => {
 
 const mapStateToProps = state => {
   return {
+    token: state.user.token,
     currentUserId: state.user.currentUserId,
   };
 };
