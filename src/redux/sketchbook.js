@@ -139,6 +139,23 @@ export const sendDeletePostReq = (token, postId) => async dispatch => {
   }
 }
 
+export const sendUpdatePostReq = (token, postId, text, skbId) => async dispatch => {
+  const res = await fetch(`${apiBaseUrl}/posts/${postId}`, {
+    method: "put",
+    body: JSON.stringify({ "body": `${text}` }),
+    headers: {
+      "x-access-token": `${token}`,
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (res.ok) {
+    const updRes = await res.json();
+    console.log(updRes);
+    window.location.href = `/sketchbook/${skbId}`;
+  }
+}
+
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case GET_SKETCHBOOKS: {

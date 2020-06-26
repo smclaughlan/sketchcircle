@@ -10,6 +10,7 @@ import Register from './components/Register';
 import InsideSketchbook from './components/InsideSketchbook';
 import SketchTimeline from './components/SketchTimeline';
 import UserUpdate from './components/UserUpdate';
+import EditPost from './components/EditPost';
 
 import { ProtectedRoute, AuthRoute } from './authRoutes';
 
@@ -22,6 +23,7 @@ function App(props) {
           <Route path="/register" component={Register} currentUserId={props.currentUserId} />
           <Route path="/login" component={Login} currentUserId={props.currentUserId} />
           <Route path="/update" component={UserUpdate} currentUserId={props.currentUserId} />
+          <Route path="/sketchbook/:sketchbook_id/post/:post_id/edit" component={EditPost} currentUserId={props.currentUserId} />
           <Route path="/sketchbook/:sketchbook_id/timeline" component={SketchTimeline} currentUserId={props.currentUserId} />
           <Route path="/sketchbook/:sketchbook_id" component={InsideSketchbook} currentUserId={props.currentUserId} />
           <Route path="/" component={Main} {...props} currentUserId={props.currentUserId} />

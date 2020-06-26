@@ -211,7 +211,9 @@ const InsideSketchbook = (props) => {
                     <ReactMarkdown source={displayedPosts[k].body} />
                     {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                       <>
-                        <Edit color="primary" />
+                        <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
+                          <Edit color="primary" />
+                        </NavLink>
                         <DeleteForever color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
                       </>
                       :
@@ -232,7 +234,9 @@ const InsideSketchbook = (props) => {
                     <ReactMarkdown source={displayedPosts[k].body} />
                     {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                       <>
-                        <Edit color="primary" />
+                        <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
+                          <Edit color="primary" />
+                        </NavLink>
                         <DeleteForever color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
                       </>
                       :
