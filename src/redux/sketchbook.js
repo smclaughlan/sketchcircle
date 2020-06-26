@@ -5,13 +5,16 @@ const GET_SKETCHBOOKS = 'sketchcircle/sketchbooks/GET_SKETCHBOOKS';
 const ADD_FOLLOW = 'sketchcircle/sketchbooks/ADD_FOLLOW';
 const DELETE_FOLLOW = 'sketchcircle/sketchbooks/DELETE_FOLLOW';
 const ADD_POST = 'sketchcircle/sketchbooks/ADD_POST';
+const DELETE_POST = 'sketchcircle/sketchbooks/DELETE_POST';
 const ADD_GOAL = 'sketchcircle/sketchbooks/ADD_GOAL';
 const ADD_DATAPOINT = 'sketchcircle/sketchbooks/ADD_DATAPOINT';
+
 
 export const getSketchbooks = (sketchbooks) => ({ type: GET_SKETCHBOOKS, sketchbooks });
 export const addFollow = (newFollow) => ({ type: ADD_FOLLOW, newFollow });
 export const deleteFollow = (removedFollow) => ({ type: DELETE_FOLLOW, removedFollow });
 export const addPost = (newPost) => ({ type: ADD_POST, newPost });
+export const delPost = () => ({ type: DELETE_POST });
 export const addGoal = (newGoal) => ({ type: ADD_GOAL, newGoal });
 export const addDataPoint = (newDataPoint) => ({ type: ADD_DATAPOINT, newDataPoint });
 
@@ -118,6 +121,21 @@ export const deleteFollowReq = (token, sketchbook_id) => async dispatch => {
     const removedFollow = await res.json();
     dispatch(deleteFollow(removedFollow));
     // window.location.href = "/" //if the async await calls don't work, backup
+  }
+}
+
+export const sendDeletePostReq = (token, postId) => async dispatch => {
+  const res = await fetch(`${apiBaseUrl}/posts/${postId}`, {
+    method: "delete",
+    headers: {
+      "x-access-token": `${token}`,
+      "Content-Type": "application/json"
+    }
+  });
+  if (res.ok) {
+    const delRes = await res.json();
+    console.log(delRes);
+    // dispatch(delPost());
   }
 }
 

@@ -4,9 +4,10 @@ import { MemoryRouter as Router } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import MDE from './MDE';
 import * as Showdown from "showdown";
-import { getPostsReq, sendNewGoalReq } from '../redux/sketchbook';
+import { getPostsReq, sendNewGoalReq, sendDeletePostReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
 import { Button, Container, TextField, Paper } from '@material-ui/core';
+import { Edit, DeleteForever } from '@material-ui/icons';
 import LineGraph from './LineGraph';
 
 const converter = new Showdown.Converter({
@@ -92,6 +93,11 @@ const InsideSketchbook = (props) => {
   const newGoal = (e) => {
     e.preventDefault();
     props.sendNewGoalReq(props.token, newGoalData);
+  }
+
+  const deletePost = async (postId) => {
+    await props.sendDeletePostReq(props.token, postId);
+    await props.getPostsReq(sketchbookId);
   }
 
   const firstPage = () => {
@@ -203,6 +209,15 @@ const InsideSketchbook = (props) => {
                       <h3>{displayedPosts[k].username}</h3>
                     </NavLink>
                     <ReactMarkdown source={displayedPosts[k].body} />
+                    {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                      <>
+                        <Edit color="primary" />
+                        <DeleteForever color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                      </>
+                      :
+                      <>
+                      </>
+                    }
                     <p>{displayedPosts[k].timestamp}</p>
                   </Container>
                 </Paper>
@@ -215,6 +230,15 @@ const InsideSketchbook = (props) => {
                       <h3>{displayedPosts[k].username}</h3>
                     </NavLink>
                     <ReactMarkdown source={displayedPosts[k].body} />
+                    {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                      <>
+                        <Edit color="primary" />
+                        <DeleteForever color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                      </>
+                      :
+                      <>
+                      </>
+                    }
                     <p>{displayedPosts[k].timestamp}</p>
                   </Container>
                 </Paper>
@@ -276,6 +300,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getPostsReq: (...args) => dispatch(getPostsReq(...args)),
     sendNewGoalReq: (...args) => dispatch(sendNewGoalReq(...args)),
+    sendDeletePostReq: (...args) => dispatch(sendDeletePostReq(...args)),
   };
 };
 
