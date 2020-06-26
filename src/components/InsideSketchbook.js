@@ -6,7 +6,7 @@ import MDE from './MDE';
 import * as Showdown from "showdown";
 import { getPostsReq, sendNewGoalReq, sendDeletePostReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
-import { Button, Container, TextField, Paper } from '@material-ui/core';
+import { Button, Container, TextField, Paper, Grid } from '@material-ui/core';
 import { Edit, DeleteForever } from '@material-ui/icons';
 import LineGraph from './LineGraph';
 
@@ -138,7 +138,8 @@ const InsideSketchbook = (props) => {
             )
           })
           :
-          <h2>No goals found.</h2>
+          <>
+          </>
         }
       </Container>
       {sketchbookId === props.currentUserId ?
@@ -204,23 +205,29 @@ const InsideSketchbook = (props) => {
               return (
                 <Paper style={{ margin: '50px' }} >
                   <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                    <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
-                      <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
-                      <h3>{displayedPosts[k].username}</h3>
-                    </NavLink>
+                    <Grid container>
+                      <Grid item xs={11}>
+                        <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
+                          <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+                          <h3>{displayedPosts[k].username}</h3>
+                        </NavLink>
+                      </Grid>
+                      <Grid item xs={1}>
+                        <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                      </Grid>
+                    </Grid>
                     <ReactMarkdown source={displayedPosts[k].body} />
+                    <p>{displayedPosts[k].timestamp}</p>
                     {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                       <>
                         <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
                           <Edit color="primary" />
                         </NavLink>
-                        <DeleteForever color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
                       </>
                       :
                       <>
                       </>
                     }
-                    <p>{displayedPosts[k].timestamp}</p>
                   </Container>
                 </Paper>
               )
@@ -228,22 +235,28 @@ const InsideSketchbook = (props) => {
               return (
                 <Paper style={{ margin: '50px' }} >
                   <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                    <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
-                      <h3>{displayedPosts[k].username}</h3>
-                    </NavLink>
+                    <Grid container>
+                      <Grid item xs={11}>
+                        <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
+                          <h3>{displayedPosts[k].username}</h3>
+                        </NavLink>
+                      </Grid>
+                      <Grid item xs={1}>
+                        <DeleteForever color="primary" className="deleteButton" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                      </Grid>
+                    </Grid>
                     <ReactMarkdown source={displayedPosts[k].body} />
+                    <p>{displayedPosts[k].timestamp}</p>
                     {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                       <>
                         <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
                           <Edit color="primary" />
                         </NavLink>
-                        <DeleteForever color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
                       </>
                       :
                       <>
                       </>
                     }
-                    <p>{displayedPosts[k].timestamp}</p>
                   </Container>
                 </Paper>
               )

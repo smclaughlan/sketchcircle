@@ -13,3 +13,7 @@ img {
   max-width: 230px;
   max-height: 230px;
 }
+
+.deleteButton:hover {
+  cursor: pointer;
+}
