@@ -68,6 +68,7 @@ const LineGraph = (props) => {
   }
 
   const userData = [];
+  let goalDisplayTotal = 0;
   if (props.id in props.datapoints) {
     const datapointForGraphs = props.datapoints[props.id];
     Object.keys(datapointForGraphs).forEach(k => {
@@ -75,6 +76,7 @@ const LineGraph = (props) => {
       //get value
       const currValue = currDatapoint.value;
       //get timestamp
+      goalDisplayTotal += currValue; //this will be displayed below, no further math here
       const currTimestamp = moment(currDatapoint.timestamp)
         .toDate()
         .toLocaleString()
@@ -104,8 +106,8 @@ const LineGraph = (props) => {
         userData[i] = userData[i - 1]; //if day is empty, use previous day's value. Flat line on graph.
       }
     }
-
   }
+
 
   const data = {
     labels: dateLabels,
@@ -167,6 +169,10 @@ const LineGraph = (props) => {
         :
         <> </>
       }
+      <h3>Goal target: {props.target}</h3>
+      <h3>Completed: {goalDisplayTotal} ({((goalDisplayTotal / props.target) * 100).toFixed(0)}%)</h3>
+      <h3>Remaining: {props.target - goalDisplayTotal}</h3>
+      <h3>Due date: {props.targetDate}</h3>
     </Container>
   )
 }
