@@ -213,7 +213,12 @@ const InsideSketchbook = (props) => {
                         </NavLink>
                       </Grid>
                       <Grid item xs={1}>
-                        <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                        {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                          <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                          :
+                          <>
+                          </>
+                        }
                       </Grid>
                     </Grid>
                     <ReactMarkdown source={displayedPosts[k].body} />
@@ -242,7 +247,12 @@ const InsideSketchbook = (props) => {
                         </NavLink>
                       </Grid>
                       <Grid item xs={1}>
-                        <DeleteForever color="primary" className="deleteButton" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                        {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                          <DeleteForever color="primary" className="deleteButton" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                          :
+                          <>
+                          </>
+                        }
                       </Grid>
                     </Grid>
                     <ReactMarkdown source={displayedPosts[k].body} />
