@@ -76,13 +76,15 @@ const LineGraph = (props) => {
       //get value
       const currValue = currDatapoint.value;
       //get timestamp
-      goalDisplayTotal += currValue; //this will be displayed below, no further math here
+      goalDisplayTotal += currValue; //this will be displayed below, no further math with gDT
       const currTimestamp = moment(currDatapoint.timestamp)
         .toDate()
         .toLocaleString()
         .split(',')[0]; //gives e.g."6/20/2020" as with dateLabels[]
       //if timestamp matches index of dateLabels[] then add it to userData[]
       //...at that index in userData
+
+
 
       if (dateLabels.indexOf(currTimestamp) !== -1) {
         const idxToAddValue = dateLabels.indexOf(currTimestamp);
@@ -92,20 +94,27 @@ const LineGraph = (props) => {
           userData[idxToAddValue] = currValue;
           if (idxToAddValue > 0) { //add previous value to this value, making
             //...each date's values add up over time
-            if (userData[idxToAddValue - 1] === undefined) {
-              userData[idxToAddValue] += 0;
-            } else {
+            if (userData[idxToAddValue - 1] !== undefined) {
               userData[idxToAddValue] += userData[idxToAddValue - 1];
             }
           }
         }
       }
     })
+
+    console.log(userData);
     for (let i = 0; i < userData.length; i++) { //test for empty days
       if (userData[i] === undefined) {
         userData[i] = userData[i - 1]; //if day is empty, use previous day's value. Flat line on graph.
+        for (let j = i + 1; j < userData.length; j++) { //add current value to all the rest of the userData
+          if (userData[j] === undefined) {
+            break;
+          }
+          userData[j] += userData[i];
+        }
       }
     }
+    console.log(userData);
   }
 
 
