@@ -21,7 +21,7 @@ const SketchTimeline = (props) => {
     props.getPostsReq(sketchbookId);
   }, [])
 
-  const imgUrls = [];
+  const imgUrls = {}; //key will be date, value will be array of urls
   if (props.posts && props.posts[sketchbookId]) {
     const allSkbPosts = props.posts[sketchbookId];
     const skbPosts = [];
@@ -46,11 +46,15 @@ const SketchTimeline = (props) => {
       });
 
       if (currImgUrls.length > 0) { //if currImgUrls has anything
-        currImgUrls.push(moment(currPost.timestamp)
+        let currDate = moment(currPost.timestamp)
           .toDate()
           .toLocaleString()
-          .split(',')[0]); //will have timestamp at end
-        imgUrls.push(currImgUrls); //add it to imgUrls
+          .split(',')[0]; //will use timestamp for key
+        if (imgUrls[currDate]) {
+          imgUrls[currDate] = imgUrls[currDate].push(currImgUrls);
+        } else {
+          imgUrls[currDate] = currImgUrls; //add it to imgUrls
+        }
       }
     });
   }
@@ -63,10 +67,10 @@ const SketchTimeline = (props) => {
           <Button color="primary">Back to sketchbook</Button>
         </NavLink>
         {imgUrls ?
-          imgUrls.map(imgUrlArr => {
-            const dateForPost = imgUrlArr.pop();
+          Object.keys(imgUrls).map(imgKeyDate => {
+            const dateForPost = imgKeyDate;
             return (
-              <TimelineItem key={imgUrlArr}>
+              <TimelineItem key={dateForPost}>
                 <TimelineOppositeContent>
                   <Typography color="textSecondary">{dateForPost}</Typography>
                 </TimelineOppositeContent>
@@ -75,7 +79,7 @@ const SketchTimeline = (props) => {
                   <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent>
-                  {imgUrlArr.map(url => {
+                  {imgUrls[dateForPost].map(url => {
                     return (
                       <img key={url} style={{ maxWidth: "500px" }} src={`${url}`} alt="Timeline image" />
                     )
