@@ -51,7 +51,9 @@ const SketchTimeline = (props) => {
           .toLocaleString()
           .split(',')[0]; //will use timestamp for key
         if (imgUrls[currDate]) {
-          imgUrls[currDate] = imgUrls[currDate].push(currImgUrls);
+          let currDateImgUrls = imgUrls[currDate];
+          currDateImgUrls.push(...currImgUrls); //spread to prevent nested arrays
+          imgUrls[currDate] = currDateImgUrls;
         } else {
           imgUrls[currDate] = currImgUrls; //add it to imgUrls
         }
