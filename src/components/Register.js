@@ -9,12 +9,24 @@ const Register = (props) => {
     email: '',
     password: '',
   });
+  const [registerEnabled, setRegisterEnabled] = React.useState(false);
+
+  const checkRegisterButton = () => {
+    if (registerData.username.length > 0 && registerData.password.length > 0
+      && registerData.email.indexOf("@") !== -1
+      && registerData.email.indexOf(".") !== -1) {
+      setRegisterEnabled(true);
+    } else {
+      setRegisterEnabled(false);
+    }
+  }
 
   const userNameChange = (event) => {
     setRegisterData({
       ...registerData,
       username: event.target.value,
     });
+    checkRegisterButton();
   }
 
   const passwordChange = (event) => {
@@ -22,6 +34,7 @@ const Register = (props) => {
       ...registerData,
       password: event.target.value,
     });
+    checkRegisterButton();
   }
 
   const emailChange = (event) => {
@@ -29,6 +42,7 @@ const Register = (props) => {
       ...registerData,
       email: event.target.value,
     });
+    checkRegisterButton();
   }
 
   const registerUser = (event) => {
@@ -55,7 +69,11 @@ const Register = (props) => {
               <TextField label="Password" type="password" onChange={passwordChange} />
             </div>
             <div>
-              <Button color="primary" type="submit">Register</Button>
+              {registerEnabled ?
+                <Button color="primary" type="submit">Register</Button>
+                :
+                <Button color="primary" type="submit" disabled>Register</Button>
+              }
             </div>
           </form>
         </Container>
