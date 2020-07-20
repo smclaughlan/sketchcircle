@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Container, Paper, TextField } from '@material-ui/core';
 import { sendRegisterReq } from '../redux/user';
+import { Redirect } from 'react-router-dom';
 
 const Register = (props) => {
   const [registerData, setRegisterData] = React.useState({
@@ -48,16 +49,22 @@ const Register = (props) => {
   const registerUser = (event) => {
     event.preventDefault();
     props.sendRegisterReq(registerData);
-    props.history.push('/');
   }
 
-  return (
+  return (props.token ?
+    <Redirect to='/' />
+    :
     <Container>
       <Paper>
         <Container>
           <h1>Register:</h1>
         </Container>
         <Container>
+          {props.errorMsg ?
+            <p>{props.errorMsg}</p>
+            :
+            <></>
+          }
           <form onSubmit={registerUser}>
             <div>
               <TextField label="Username" onChange={userNameChange} />
@@ -85,6 +92,7 @@ const Register = (props) => {
 const mapStateToProps = state => {
   return {
     token: state.user.token,
+    errorMsg: state.user.registerError,
   }
 }
 

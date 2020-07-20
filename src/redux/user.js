@@ -4,10 +4,12 @@ import { apiBaseUrl } from '../config';
 const LOGIN_USER = 'sketchcircle/login/LOGIN_USER';
 const LOGOUT_USER = 'sketchcircle/logout/LOGOUT_USER';
 const LOGIN_ERROR = 'sketchcircle/login/LOGIN_ERROR';
+const REGISTER_ERROR = 'sketchcircle/login/REGISTER_ERROR';
 
 export const loginUser = (token, currentUserId) => ({ type: LOGIN_USER, token, currentUserId });
 export const logoutUser = () => ({ type: LOGOUT_USER });
 export const loginError = (message) => ({ type: LOGIN_ERROR, message });
+export const registerError = (message) => ({ type: REGISTER_ERROR, message });
 
 export const sendRegisterReq = (userInfo) => async dispatch => {
   const res = await fetch(`${apiBaseUrl}/users`, {
@@ -25,7 +27,9 @@ export const sendRegisterReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId);
     dispatch(loginUser(token, currentUserId));
-    window.location.href = "/"
+  } else {
+    const response = await res.json();
+    dispatch(registerError(response.message));
   }
 }
 
@@ -45,7 +49,6 @@ export const sendLoginReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId.toString());
     dispatch(loginUser(token, currentUserId.toString()))
-    // window.location.href = "/"
   } else {
     const response = await res.json();
     dispatch(loginError(response.message));
@@ -95,6 +98,15 @@ export default function reducer(state = {}, action) {
       return {
         loginError: action.message,
         ...state
+      }
+    }
+    case REGISTER_ERROR: {
+      if (state && state.registerError) {
+        delete state.registerError;
+      }
+      return {
+        registerError: action.message,
+        ...state,
       }
     }
 
