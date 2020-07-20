@@ -3,9 +3,11 @@ import { apiBaseUrl } from '../config';
 
 const LOGIN_USER = 'sketchcircle/login/LOGIN_USER';
 const LOGOUT_USER = 'sketchcircle/logout/LOGOUT_USER';
+const LOGIN_ERROR = 'sketchcircle/login/LOGIN_ERROR';
 
 export const loginUser = (token, currentUserId) => ({ type: LOGIN_USER, token, currentUserId });
 export const logoutUser = () => ({ type: LOGOUT_USER });
+export const loginError = (message) => ({ type: LOGIN_ERROR, message });
 
 export const sendRegisterReq = (userInfo) => async dispatch => {
   const res = await fetch(`${apiBaseUrl}/users`, {
@@ -38,11 +40,15 @@ export const sendLoginReq = (userInfo) => async dispatch => {
   })
 
   if (res.ok) {
-    const { token, currentUserId } = await res.json()
+    const response = await res.json();
+    const { token, currentUserId } = response;
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId.toString());
     dispatch(loginUser(token, currentUserId.toString()))
     window.location.href = "/"
+  } else {
+    const response = await res.json();
+    dispatch(loginError(response.message));
   }
 }
 
@@ -71,6 +77,7 @@ export const sendUpdateReq = (token, updateData) => async dispatch => {
 export default function reducer(state = {}, action) {
   switch (action.type) {
     case LOGIN_USER: {
+      delete state.loginError;
       return {
         ...state,
         token: action.token,
@@ -82,6 +89,12 @@ export default function reducer(state = {}, action) {
       delete state.currentUserId;
       return {
         ...state,
+      }
+    }
+    case LOGIN_ERROR: {
+      return {
+        loginError: action.message,
+        ...state
       }
     }
 
