@@ -38,6 +38,11 @@ const Login = (props) => {
           <h1>Login:</h1>
         </Container>
         <Container>
+          {props.errorMsg ?
+            <p>{props.errorMsg}</p>
+            :
+            <></>
+          }
           <form onSubmit={loginUser}>
             <div>
               <TextField label="Email" onChange={emailChange} />
@@ -59,6 +64,7 @@ const mapStateToProps = state => {
   return {
     token: state.user.token,
     currentUserId: state.user.currentUserId,
+    errorMsg: state.user.loginError,
   }
 }
 
