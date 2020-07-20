@@ -45,7 +45,7 @@ export const sendLoginReq = (userInfo) => async dispatch => {
     window.localStorage.setItem("x-access-token", token);
     window.localStorage.setItem("currentUserId", currentUserId.toString());
     dispatch(loginUser(token, currentUserId.toString()))
-    window.location.href = "/"
+    // window.location.href = "/"
   } else {
     const response = await res.json();
     dispatch(loginError(response.message));

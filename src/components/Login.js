@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Button, Container, Paper, TextField } from '@material-ui/core';
 import { sendLoginReq } from '../redux/user';
-import { Redirect } from 'react-router-dom';
 
 const Login = (props) => {
   const [loginData, setLoginData] = React.useState({
@@ -27,10 +27,11 @@ const Login = (props) => {
   const loginUser = (event) => {
     event.preventDefault();
     props.sendLoginReq(loginData);
-    props.history.push('/');
   }
 
-  return (
+  return (props.token && props.currentUserId ?
+    <Redirect to="/" />
+    :
     <Container>
       <Paper>
         <Container>
@@ -57,6 +58,7 @@ const Login = (props) => {
 const mapStateToProps = state => {
   return {
     token: state.user.token,
+    currentUserId: state.user.currentUserId,
   }
 }
 
