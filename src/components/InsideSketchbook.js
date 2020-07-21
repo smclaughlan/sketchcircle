@@ -147,6 +147,10 @@ const InsideSketchbook = (props) => {
           <Paper style={{ margin: "20px", padding: "15px" }}>
             <form onSubmit={newGoal}>
               <h2>New Goal</h2>
+              <p>Create a new goal with a title, description, target value to reach, and a target date.
+              For example, a title might be "Draw 5 portrait sketches in 7 days", which would have a target value of 5,
+              and a target date 7 days from now.
+              </p>
               <div>
                 <TextField label="Title" onChange={titleChange} />
               </div>
