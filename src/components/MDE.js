@@ -27,11 +27,9 @@ export function MDE(props) {
   }
 
 
-  if (props.posts && props.posts[props.sketchbookId] && props.posts[props.sketchbookId][props.editPost] && postLoaded == false) {
+  if (props.posts && props.posts[props.sketchbookId] && props.posts[props.sketchbookId][props.editPost] && postLoaded === false) {
     setValue(props.posts[props.sketchbookId][props.editPost].body);
     setPostLoaded(true);
-    console.log(props.posts[props.sketchbookId]);
-    console.log(props.posts[props.sketchbookId][props.editPost]);
   }
 
 
