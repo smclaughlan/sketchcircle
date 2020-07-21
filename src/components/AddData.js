@@ -22,6 +22,10 @@ const AddData = (props) => {
 
   return (
     <Container style={{ padding: "15px" }}>
+      <p>Adding a value automatically adds it to the current date, and the value is added to already existing data
+      for that date. For example, to record having drawn 1 sketch, enter 1 and add the value. To record drawing a second
+      sketch, enter another 1 on the same day. The graph will display 2.
+      </p>
       <form onSubmit={createDataPoint}>
         <TextField label="Value" type="number" onChange={valueChange} />
         <Button type="submit">Add data</Button>
