@@ -19,6 +19,7 @@ const converter = new Showdown.Converter({
 
 const InsideSketchbook = (props) => {
   const displayedPosts = [];
+  let justPosted = window.localStorage.getItem("justPosted");
   const [newGoalData, setNewGoalData] = React.useState({
     title: '',
     description: '',
@@ -114,6 +115,12 @@ const InsideSketchbook = (props) => {
 
   const lastPage = () => {
     setPageNum(totalPages);
+  }
+
+  if (justPosted === "true") {
+    justPosted = "false";
+    window.localStorage.setItem("justPosted", false);
+    lastPage();
   }
 
   return (
