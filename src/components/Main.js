@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Container, Paper, Grid } from '@material-ui/core';
 import { getSketchbooksReq } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
-import MDE from './MDE'; //TODO: Let admin users update a front page message?
+// import MDE from './MDE'; //TODO: Let admin users update a front page message?
 
 const useStyles = makeStyles((theme) => ({
   root: {
