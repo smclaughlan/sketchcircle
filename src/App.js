@@ -12,8 +12,6 @@ import SketchTimeline from './components/SketchTimeline';
 import UserUpdate from './components/UserUpdate';
 import EditPost from './components/EditPost';
 
-import { ProtectedRoute, AuthRoute } from './authRoutes';
-
 function App(props) {
   return (
     <Theme>

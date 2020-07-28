@@ -19,7 +19,7 @@ const SketchTimeline = (props) => {
 
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
-  }, [])
+  }, []);
 
   const imgUrls = {}; //key will be date, value will be array of urls
   if (props.posts && props.posts[sketchbookId]) {
@@ -83,7 +83,7 @@ const SketchTimeline = (props) => {
                 <TimelineContent>
                   {imgUrls[dateForPost].map(url => {
                     return (
-                      <img key={url} style={{ maxWidth: "500px" }} src={`${url}`} alt="Timeline image" />
+                      <img key={url} style={{ maxWidth: "500px" }} src={`${url}`} alt="Timeline art" />
                     )
                   })}
                 </TimelineContent>

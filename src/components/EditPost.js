@@ -1,12 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { MemoryRouter as Router } from 'react-router';
-import { NavLink } from 'react-router-dom';
 import MDE from './MDE';
 import * as Showdown from "showdown";
-import { getPostsReq, sendNewGoalReq, sendDeletePostReq } from '../redux/sketchbook';
-import ReactMarkdown from 'react-markdown';
-import { Button, Container, TextField, Paper } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 
 
 const converter = new Showdown.Converter({

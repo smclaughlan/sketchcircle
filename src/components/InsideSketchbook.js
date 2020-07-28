@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { MemoryRouter as Router } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import MDE from './MDE';
 import * as Showdown from "showdown";
