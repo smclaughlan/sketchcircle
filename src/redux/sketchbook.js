@@ -56,7 +56,6 @@ export const sendPostReq = (token, sketchbook_id, msgBody) => async dispatch => 
   if (res.ok) {
     const newPost = await res.json();
     dispatch(addPost(newPost));
-    // window.location.href = window.location.href;
   }
 }
 
