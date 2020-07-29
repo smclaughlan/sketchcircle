@@ -6,16 +6,16 @@ import { getSketchbooksReq } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
 // import MDE from './MDE'; //TODO: Let admin users update a front page message?
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundImage: theme.gradientBackground,
-    marginBottom: 64
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//     backgroundImage: theme.gradientBackground,
+//     marginBottom: 64
+//   },
+// }));
 
 const Main = (props) => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [pageNum, setPageNum] = React.useState(1);
   const skbPerPage = 12;
