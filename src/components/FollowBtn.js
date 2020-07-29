@@ -5,15 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { addFollowReq, deleteFollowReq, getSketchbooksReq } from '../redux/sketchbook';
 import { Star, StarBorder } from '@material-ui/icons';
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    color: theme.primaryColor,
-  },
-}));
-
 const FollowBtn = (props) => {
-  const classes = useStyles();
-
   const [isFollowed, setFollowed] = React.useState(Object.keys(props.follows).includes(props.sketchbook_id.toString()));
   const { token, sketchbook_id, addFollowReq, deleteFollowReq } = props;
 
