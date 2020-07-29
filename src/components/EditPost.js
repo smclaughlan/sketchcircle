@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MDE from './MDE';
-import * as Showdown from "showdown";
+// import * as Showdown from "showdown";
 import { Container } from '@material-ui/core';
 
 
-const converter = new Showdown.Converter({
-  tables: true,
-  simplifiedAutoLink: true,
-  strikethrough: true,
-  tasklists: true
-});
+// const converter = new Showdown.Converter({
+//   tables: true,
+//   simplifiedAutoLink: true,
+//   strikethrough: true,
+//   tasklists: true
+// });
 
 const EditPost = (props) => {
 
