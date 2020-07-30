@@ -35,9 +35,9 @@ const FollowBtn = (props) => {
   }, [props.follows]);
 
   return (isFollowed ?
-    <Star color="primary" onClick={removeFollow} />
+    <Star color="primary" style={{ cursor: "pointer" }} onClick={removeFollow} />
     :
-    <StarBorder color="primary" onClick={createFollow} />
+    <StarBorder color="primary" style={{ cursor: "pointer" }} onClick={createFollow} />
   )
 }
 
