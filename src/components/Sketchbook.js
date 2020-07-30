@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import FollowBtn from './FollowBtn';
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, Divider, Typography } from '@material-ui/core';
 
 const Sketchbook = props => {
   const timestampDate = new Date(props.timestamp);
@@ -11,7 +11,7 @@ const Sketchbook = props => {
     <Card style={{ margin: "5px" }} variant="outlined">
       <CardContent>
         < NavLink to={`/sketchbook/${props.sketchbook_id}`}>
-          <h1>{props.title}</h1>
+          <Typography variant="h6">{props.title}</Typography>
           {props.avatar ?
             <img className="sketchbookCover" alt="Sketchbook cover" src={props.avatar} />
             :
@@ -30,8 +30,9 @@ const Sketchbook = props => {
             </>
           }
         </div>
+        <Divider variant="Middle"></Divider>
         <div>
-          Updated: {timestampDate.toLocaleString()}
+          <Typography style={{ fontSize: "12px", padding: "10px" }}>Updated: {timestampDate.toLocaleString()}</Typography>
         </div>
       </CardContent >
     </Card >

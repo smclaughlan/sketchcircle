@@ -7,7 +7,7 @@ const theme = createMuiTheme({
   primaryColor: '#d33232',
   secondaryColor: '#f9ac5e',
   typography: {
-    fontFamily: "Verdana"
+    fontFamily: "Verdana",
   }
 });
 

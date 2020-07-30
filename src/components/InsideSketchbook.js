@@ -5,7 +5,7 @@ import MDE from './MDE';
 import * as Showdown from "showdown";
 import { getPostsReq, sendNewGoalReq, sendDeletePostReq } from '../redux/sketchbook';
 import ReactMarkdown from 'react-markdown';
-import { Button, Container, TextField, Paper, Grid } from '@material-ui/core';
+import { Button, Container, Divider, TextField, Typography, Paper, Grid } from '@material-ui/core';
 import { Edit, DeleteForever } from '@material-ui/icons';
 import LineGraph from './LineGraph';
 
@@ -152,11 +152,11 @@ const InsideSketchbook = (props) => {
         <Container style={{ marginTop: "10px" }}>
           <Paper style={{ margin: "20px", padding: "15px" }}>
             <form onSubmit={newGoal}>
-              <h2>New Goal</h2>
-              <p>Create a new goal with a title, description, target value to reach, and a target date.
+              <Typography variant="h2">New Goal</Typography>
+              <Typography>Create a new goal with a title, description, target value to reach, and a target date.
               For example, a title might be "Draw 5 portrait sketches in 7 days", which would have a target value of 5,
               and a target date 7 days from now.
-              </p>
+              </Typography>
               <div>
                 <TextField label="Title" onChange={titleChange} />
               </div>
@@ -219,7 +219,7 @@ const InsideSketchbook = (props) => {
                       <Grid item xs={11}>
                         <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
                           <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
-                          <h3>{displayedPosts[k].username}</h3>
+                          <Typography>{displayedPosts[k].username}</Typography>
                         </NavLink>
                       </Grid>
                       <Grid item xs={1}>
@@ -231,7 +231,9 @@ const InsideSketchbook = (props) => {
                         }
                       </Grid>
                     </Grid>
+                    <Divider variant="middle"></Divider>
                     <ReactMarkdown source={displayedPosts[k].body} />
+                    <Divider variant="middle"></Divider>
                     <p>{displayedPosts[k].timestamp}</p>
                     {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                       <>
@@ -253,7 +255,7 @@ const InsideSketchbook = (props) => {
                     <Grid container>
                       <Grid item xs={11}>
                         <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
-                          <h3>{displayedPosts[k].username}</h3>
+                          <Typography>{displayedPosts[k].username}</Typography>
                         </NavLink>
                       </Grid>
                       <Grid item xs={1}>
@@ -265,8 +267,10 @@ const InsideSketchbook = (props) => {
                         }
                       </Grid>
                     </Grid>
+                    <Divider variant="middle"></Divider>
                     <ReactMarkdown source={displayedPosts[k].body} />
-                    <p>{displayedPosts[k].timestamp}</p>
+                    <Divider variant="middle"></Divider>
+                    <Typography>{displayedPosts[k].timestamp}</Typography>
                     {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                       <>
                         <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
@@ -283,7 +287,7 @@ const InsideSketchbook = (props) => {
             }
           })
           :
-          <h2>No posts found.</h2>
+          <Typography>No posts found.</Typography>
         }
         <Container>
           {pageNum > 1 ?
