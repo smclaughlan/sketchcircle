@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import { makeStyles } from '@material-ui/core/styles';
-import { Button, Container, Paper, Grid } from '@material-ui/core';
+import { Button, Container, Paper, Grid, Typography } from '@material-ui/core';
 import { getSketchbooksReq } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
 // import MDE from './MDE'; //TODO: Let admin users update a front page message?
@@ -72,7 +72,7 @@ const Main = (props) => {
       <>
         <Container style={{ marginTop: "10%" }}>
           <Paper style={{ margin: "20px" }} elevation={3}>
-            <h3>Starred Sketchbooks</h3>
+            <Typography>Starred Sketchbooks</Typography>
             <Grid container spacing={3}>
               {followedSketchbooks.map(book => {
                 return (
@@ -95,7 +95,7 @@ const Main = (props) => {
         </Container>
         <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
-            <h3>All Sketchbooks</h3>
+            <Typography>All Sketchbooks</Typography>
             <Grid container spacing={3}>
               {displayedSketchbooks.map(book => {
                 return (
