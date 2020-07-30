@@ -7,6 +7,14 @@ p {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+a {
+  color: "#d33232";
+}
+
+a:visited {
+  color: "#d33232";
+}
+
 .postAvatar {
   max-width: 100px;
   max-height: 100px;

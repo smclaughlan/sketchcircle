@@ -10,7 +10,7 @@ const Sketchbook = props => {
   return (
     <Card style={{ margin: "5px" }} variant="outlined">
       <CardContent>
-        < NavLink to={`/sketchbook/${props.sketchbook_id}`}>
+        <NavLink style={{ color: "#d33232" }} to={`/sketchbook/${props.sketchbook_id}`}>
           <Typography variant="h6">{props.title}</Typography>
           {props.avatar ?
             <img className="sketchbookCover" alt="Sketchbook cover" src={props.avatar} />

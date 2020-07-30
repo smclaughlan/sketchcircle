@@ -124,7 +124,7 @@ const InsideSketchbook = (props) => {
 
   return (
     <>
-      <Container style={{ marginTop: "5%" }}>
+      <Container style={{ marginTop: "100px" }}>
         {displayedGoals ?
           Object.keys(displayedGoals).map(k => {
             return (
@@ -152,7 +152,7 @@ const InsideSketchbook = (props) => {
         <Container style={{ marginTop: "10px" }}>
           <Paper style={{ margin: "20px", padding: "15px" }}>
             <form onSubmit={newGoal}>
-              <Typography variant="h2">New Goal</Typography>
+              <Typography variant="h5">New Goal</Typography>
               <Typography>Create a new goal with a title, description, target value to reach, and a target date.
               For example, a title might be "Draw 5 portrait sketches in 7 days", which would have a target value of 5,
               and a target date 7 days from now.
@@ -211,80 +211,52 @@ const InsideSketchbook = (props) => {
         </Container>
         {displayedPosts ?
           Object.keys(displayedPosts).map(k => {
-            if (displayedPosts[k].avatar) {
-              return (
-                <Paper style={{ margin: '50px' }} >
-                  <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                    <Grid container>
-                      <Grid item xs={11}>
-                        <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
+            return (
+              <Paper style={{ margin: '50px' }} >
+                <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
+                  <Grid container>
+                    <Grid item xs={11}>
+                      <NavLink
+                        style={{ color: "#d33232" }}
+                        onClick={() => {
+                          props.getPostsReq(displayedPosts[k].user_id);
+                          firstPage();
+                        }}
+                        to={`/sketchbook/${displayedPosts[k].user_id}`}>
+                        {displayedPosts[k].avatar ?
                           <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
-                          <Typography>{displayedPosts[k].username}</Typography>
-                        </NavLink>
-                      </Grid>
-                      <Grid item xs={1}>
-                        {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                          <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
                           :
-                          <>
-                          </>
+                          <></>
                         }
-                      </Grid>
+                        <Typography>{displayedPosts[k].username}</Typography>
+                      </NavLink>
                     </Grid>
-                    <Divider variant="middle"></Divider>
-                    <ReactMarkdown source={displayedPosts[k].body} />
-                    <Divider variant="middle"></Divider>
-                    <p>{displayedPosts[k].timestamp}</p>
-                    {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                      <>
-                        <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                          <Edit color="primary" />
-                        </NavLink>
-                      </>
-                      :
-                      <>
-                      </>
-                    }
-                  </Container>
-                </Paper>
-              )
-            } else {
-              return (
-                <Paper style={{ margin: '50px' }} >
-                  <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                    <Grid container>
-                      <Grid item xs={11}>
-                        <NavLink to={`/${displayedPosts[k].sketchbook_id}`}>
-                          <Typography>{displayedPosts[k].username}</Typography>
-                        </NavLink>
-                      </Grid>
-                      <Grid item xs={1}>
-                        {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                          <DeleteForever color="primary" className="deleteButton" onClick={() => { deletePost(displayedPosts[k].id) }} />
-                          :
-                          <>
-                          </>
-                        }
-                      </Grid>
+                    <Grid item xs={1}>
+                      {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                        <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                        :
+                        <>
+                        </>
+                      }
                     </Grid>
-                    <Divider variant="middle"></Divider>
-                    <ReactMarkdown source={displayedPosts[k].body} />
-                    <Divider variant="middle"></Divider>
-                    <Typography>{displayedPosts[k].timestamp}</Typography>
-                    {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                      <>
-                        <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                          <Edit color="primary" />
-                        </NavLink>
-                      </>
-                      :
-                      <>
-                      </>
-                    }
-                  </Container>
-                </Paper>
-              )
-            }
+                  </Grid>
+                  <Divider variant="middle"></Divider>
+                  <ReactMarkdown source={displayedPosts[k].body} />
+                  <Divider variant="middle"></Divider>
+                  <p>{displayedPosts[k].timestamp}</p>
+                  {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                    <>
+                      <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
+                        <Edit color="primary" />
+                      </NavLink>
+                    </>
+                    :
+                    <>
+                    </>
+                  }
+                </Container>
+              </Paper>
+            )
           })
           :
           <Typography>No posts found.</Typography>
