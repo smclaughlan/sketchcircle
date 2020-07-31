@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
-import { Container, Paper } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import AddData from './AddData';
 
 const LineGraph = (props) => {
@@ -24,9 +24,7 @@ const LineGraph = (props) => {
   if (total > props.target) {
     return (
       <Container style={{ margin: "20px" }}>
-        <Paper style={{ margin: "20px" }}>
-          <div>{props.targetDate} {props.title} completed!</div>
-        </Paper>
+        <Typography>{props.targetDate} {props.title} completed!</Typography>
       </Container>
     )
   }
@@ -37,9 +35,7 @@ const LineGraph = (props) => {
   if (currentDate > dateFromTargetDate) {
     return (
       <Container style={{ margin: "20px" }}>
-        <Paper style={{ margin: "20px" }}>
-          <div>{props.targetDate} {props.title} failed!</div>
-        </Paper>
+        <Typography>{props.targetDate} {props.title} failed!</Typography>
       </Container>
     )
   }
@@ -82,7 +78,7 @@ const LineGraph = (props) => {
         .toLocaleString()
         .split(',')[0]; //gives e.g."6/20/2020" as with dateLabels[]
       //if timestamp matches index of dateLabels[] then add it to userData[]
-      //...at that index in userData
+      //at that index in userData
 
 
 
@@ -166,8 +162,8 @@ const LineGraph = (props) => {
 
   return (
     <Container style={{ margin: "10px" }}>
-      <h2>{props.title}</h2>
-      <div>{props.description}</div>
+      <Typography variant="h5">{props.title}</Typography>
+      <Typography>{props.description}</Typography>
       <Line data={data} />
       {sketchbookId === props.currentUserId ?
         <AddData
@@ -176,10 +172,10 @@ const LineGraph = (props) => {
         :
         <> </>
       }
-      <h3>Goal target: {props.target}</h3>
-      <h3>Completed: {goalDisplayTotal} ({((goalDisplayTotal / props.target) * 100).toFixed(0)}%)</h3>
-      <h3>Remaining: {props.target - goalDisplayTotal}</h3>
-      <h3>Due date: {props.targetDate}</h3>
+      <Typography>Goal target: {props.target}</Typography>
+      <Typography>Completed: {goalDisplayTotal} ({((goalDisplayTotal / props.target) * 100).toFixed(0)}%)</Typography>
+      <Typography>Remaining: {props.target - goalDisplayTotal}</Typography>
+      <Typography style={{ paddingBottom: "10px" }}>Due date: {props.targetDate}</Typography>
     </Container>
   )
 }
