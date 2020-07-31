@@ -170,7 +170,7 @@ const InsideSketchbook = (props) => {
                 <TextField label="Target Date" type="date" InputLabelProps={{ shrink: true }} onChange={targetDateChange} />
               </div>
               <div>
-                <Button color="primary" type="submit">Create new goal</Button>
+                <Button variant="contained" type="submit" style={{ marginTop: "10px" }}>Create new goal</Button>
               </div>
             </form>
           </Paper>
@@ -181,29 +181,32 @@ const InsideSketchbook = (props) => {
       }
       <Container>
         <Container>
-          <Button color="primary" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
+          {displayedPosts.length > 0 ?
+            <Button variant="contained" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
+            :
+            <></>}
         </Container>
         <Container>
           {pageNum > 1 ?
-            <Button color="primary" onClick={firstPage}>First</Button>
+            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={firstPage}>First</Button>
             :
             <>
             </>
           }
           {pageNum > 1 ?
-            <Button color="primary" onClick={prevPage}>Prev</Button>
+            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={prevPage}>Prev</Button>
             :
             <>
             </>
           }
           {pageNum < totalPages ?
-            <Button color="primary" onClick={nextPage}>Next</Button>
+            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={nextPage}>Next</Button>
             :
             <>
             </>
           }
           {pageNum < totalPages ?
-            <Button color="primary" onClick={lastPage}>Last</Button>
+            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={lastPage}>Last</Button>
             :
             <>
             </>
@@ -263,31 +266,32 @@ const InsideSketchbook = (props) => {
         }
         <Container>
           {pageNum > 1 ?
-            <Button color="primary" onClick={firstPage}>First</Button>
+            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={firstPage}>First</Button>
             :
             <>
             </>
           }
           {pageNum > 1 ?
-            <Button color="primary" onClick={prevPage}>Prev</Button>
+            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={prevPage}>Prev</Button>
             :
             <>
             </>
           }
           {pageNum < totalPages ?
-            <Button color="primary" onClick={nextPage}>Next</Button>
+            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={nextPage}>Next</Button>
             :
             <>
             </>
           }
-          {pageNum < totalPages ?
-            <Button color="primary" onClick={lastPage}>Last</Button>
-            :
-            <>
-            </>
+          {
+            pageNum < totalPages ?
+              <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={lastPage}>Last</Button>
+              :
+              <>
+              </>
           }
-        </Container>
-      </Container>
+        </Container >
+      </Container >
       <Container>
         {props.token ?
           <MDE sketchbook_id={sketchbookId} />
