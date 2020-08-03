@@ -71,6 +71,9 @@ const Main = (props) => {
     return (
       <>
         <Container style={{ marginTop: "10%" }}>
+          <Typography variant="h4">SketchCircle</Typography>
+        </Container>
+        <Container style={{ marginTop: "10%" }}>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Typography variant="h5" style={{ padding: "10px" }}>Starred Sketchbooks</Typography>
             <Grid container spacing={3}>
@@ -149,6 +152,9 @@ const Main = (props) => {
   if (props.sketchbooks) {
     return (
       <>
+        <Container style={{ marginTop: "10%" }}>
+          <Typography variant="h4">SketchCircle</Typography>
+        </Container>
         <Container style={{ marginTop: "10%" }}>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
