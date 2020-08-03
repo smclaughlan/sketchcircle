@@ -51,7 +51,7 @@ const Login = (props) => {
               <TextField label="Password" type="password" onChange={passwordChange} />
             </div>
             <div>
-              <Button color="primary" type="submit">Login</Button>
+              <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} type="submit">Login</Button>
             </div>
           </form>
         </Container>

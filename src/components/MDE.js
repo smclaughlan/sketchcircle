@@ -47,9 +47,9 @@ export function MDE(props) {
         }
       />
       {props.editPost ?
-        <Button color="primary" onClick={updatePost}>Update Post</Button>
+        <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={updatePost}>Update Post</Button>
         :
-        <Button color="primary" onClick={newPost}>Post</Button>
+        <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={newPost}>Post</Button>
       }
     </div>
   );

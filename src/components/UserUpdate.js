@@ -36,7 +36,7 @@ const UserUpdate = (props) => {
               <TextField label="Avatar Url" onChange={avatarChange} />
             </div>
             <div>
-              <Button color="primary" type="submit">Update</Button>
+              <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} type="submit">Update</Button>
             </div>
           </form>
         </Container>

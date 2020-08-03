@@ -25,7 +25,7 @@ const AddData = (props) => {
       <form onSubmit={createDataPoint}>
         <TextField label="Value" type="number" onChange={valueChange} />
         <div>
-          <Button color="primary" type="submit">Add data</Button>
+          <Button variant="outlined" color="primary" type="submit">Add data</Button>
         </div>
       </form>
       <Typography>Adding a value automatically adds it to the current date, and the value is added to already existing data

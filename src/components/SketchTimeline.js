@@ -66,7 +66,7 @@ const SketchTimeline = (props) => {
     <div>
       <Timeline align="alternate" style={{ marginTop: "5%" }}>
         <NavLink to={`/sketchbook/${sketchbookId}`}>
-          <Button color="primary">Back to sketchbook</Button>
+          <Button variant="outlined" color="primary">Back to sketchbook</Button>
         </NavLink>
         {imgUrls ?
           Object.keys(imgUrls).map(imgKeyDate => {
@@ -96,7 +96,7 @@ const SketchTimeline = (props) => {
         </div>
         }
         <NavLink to={`/sketchbook/${sketchbookId}`}>
-          <Button color="primary">Back to sketchbook</Button>
+          <Button variant="outlined" color="primary">Back to sketchbook</Button>
         </NavLink>
       </Timeline>
     </div>

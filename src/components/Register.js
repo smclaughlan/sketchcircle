@@ -77,9 +77,9 @@ const Register = (props) => {
             </div>
             <div>
               {registerEnabled ?
-                <Button color="primary" type="submit">Register</Button>
+                <Button variant="outlined" color="primary" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} type="submit">Register</Button>
                 :
-                <Button color="primary" type="submit" disabled>Register</Button>
+                <Button variant="outlined" color="primary" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} type="submit" disabled>Register</Button>
               }
             </div>
           </form>

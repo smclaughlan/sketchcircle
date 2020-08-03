@@ -266,26 +266,26 @@ const InsideSketchbook = (props) => {
         }
         <Container>
           {pageNum > 1 ?
-            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={firstPage}>First</Button>
+            <Button variant="outlined" style={{ marginRight: "10px", marginBottom: "10px" }} onClick={firstPage}>First</Button>
             :
             <>
             </>
           }
           {pageNum > 1 ?
-            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={prevPage}>Prev</Button>
+            <Button variant="outlined" style={{ marginRight: "10px", marginBottom: "10px" }} onClick={prevPage}>Prev</Button>
             :
             <>
             </>
           }
           {pageNum < totalPages ?
-            <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={nextPage}>Next</Button>
+            <Button variant="outlined" style={{ marginRight: "10px", marginBottom: "10px" }} onClick={nextPage}>Next</Button>
             :
             <>
             </>
           }
           {
             pageNum < totalPages ?
-              <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={lastPage}>Last</Button>
+              <Button variant="outlined" style={{ marginRight: "10px", marginBottom: "10px" }} onClick={lastPage}>Last</Button>
               :
               <>
               </>
