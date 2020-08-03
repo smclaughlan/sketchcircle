@@ -70,10 +70,11 @@ const Main = (props) => {
   if (followedSketchbooks.length > 0 && props.sketchbooks) {
     return (
       <>
-        <Container style={{ marginTop: "10%" }}>
-          <Typography variant="h4">SketchCircle</Typography>
+        <Container style={{ marginTop: "100px" }}>
+          <Typography variant="h3" align="center">SketchCircle</Typography>
+          <Typography align="center">A community for developing artists reaching goals together</Typography>
         </Container>
-        <Container style={{ marginTop: "10%" }}>
+        <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Typography variant="h5" style={{ padding: "10px" }}>Starred Sketchbooks</Typography>
             <Grid container spacing={3}>
@@ -152,10 +153,11 @@ const Main = (props) => {
   if (props.sketchbooks) {
     return (
       <>
-        <Container style={{ marginTop: "10%" }}>
-          <Typography variant="h4">SketchCircle</Typography>
+        <Container style={{ marginTop: "100px" }}>
+          <Typography variant="h3" align="center">SketchCircle</Typography>
+          <Typography align="center">A community for developing artists reaching goals together</Typography>
         </Container>
-        <Container style={{ marginTop: "10%" }}>
+        <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>
               {displayedSketchbooks.map(book => {
