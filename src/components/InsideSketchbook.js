@@ -212,7 +212,7 @@ const InsideSketchbook = (props) => {
             </>
           }
         </Container>
-        {displayedPosts ?
+        {displayedPosts.length > 0 ?
           Object.keys(displayedPosts).map(k => {
             return (
               <Paper style={{ margin: '50px' }} >
@@ -262,7 +262,7 @@ const InsideSketchbook = (props) => {
             )
           })
           :
-          <Typography>No posts found.</Typography>
+          <Typography style={{ marginTop: "100px", marginBottom: "10px" }}>No posts found. Introduce yourself or welcome the new user!</Typography>
         }
         <Container>
           {pageNum > 1 ?
