@@ -29,6 +29,13 @@ const Login = (props) => {
     props.sendLoginReq(loginData);
   }
 
+  const guestData = () => {
+    props.sendLoginReq({
+      email: 'Guest@email.com',
+      password: 'pass'
+    });
+  }
+
   return (props.token && props.currentUserId ?
     <Redirect to="/" />
     :
@@ -51,9 +58,12 @@ const Login = (props) => {
               <TextField label="Password" type="password" onChange={passwordChange} />
             </div>
             <div>
-              <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} type="submit">Login</Button>
+              <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} type="submit">Login</Button>
             </div>
           </form>
+          <div>
+            <Button variant="outlined" color="primary" style={{ marginTop: "10px", marginRight: "10px", marginBottom: "10px" }} onClick={guestData}>Guest Login</Button>
+          </div>
         </Container>
       </Paper>
     </Container>
