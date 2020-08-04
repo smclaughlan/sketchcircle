@@ -262,7 +262,12 @@ const InsideSketchbook = (props) => {
             )
           })
           :
+          <></>
+        }
+        {props.token ?
           <Typography style={{ marginTop: "100px", marginBottom: "10px" }}>No posts found. Introduce yourself or welcome the new user!</Typography>
+          :
+          <Typography style={{ marginTop: "100px", marginBottom: "10px" }}>No posts found. Register/sign in to post!</Typography>
         }
         <Container>
           {pageNum > 1 ?
