@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Button, Container, Paper, Grid, Typography } from '@material-ui/core';
 import { getSketchbooksReq } from '../redux/sketchbook';
 import Sketchbook from './Sketchbook';
+import ShoutBox from './ShoutBox';
 // import MDE from './MDE'; //TODO: Let admin users update a front page message?
 
 // const useStyles = makeStyles((theme) => ({
@@ -74,6 +75,7 @@ const Main = (props) => {
           <Typography variant="h3" align="center">SketchCircle</Typography>
           <Typography align="center">A community for developing artists reaching goals together</Typography>
         </Container>
+        <ShoutBox />
         <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Typography variant="h5" style={{ padding: "10px" }}>Starred Sketchbooks</Typography>
@@ -157,6 +159,7 @@ const Main = (props) => {
           <Typography variant="h3" align="center">SketchCircle</Typography>
           <Typography align="center">A community for developing artists reaching goals together</Typography>
         </Container>
+        <ShoutBox />
         <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>

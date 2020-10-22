@@ -6,15 +6,17 @@ import { Card, CardContent, Divider, Typography } from '@material-ui/core';
 const ShoutBox = props => {
 
   return (
-    <Card>
-      <ul id="chatMessages">
-        <li>Message</li>
-        <li>Message 2</li>
-      </ul>
-      <form action="">
-        <input autoComplete="off" />
-        <button>Send</button>
-      </form>
+    <Card style={{ margin: "5px auto", maxWidth: "300px" }} variant="outlined">
+      <CardContent>
+        <ul id="chatMessages">
+          <li>Message</li>
+          <li>Message 2</li>
+        </ul>
+        <form action="">
+          <input autoComplete="off" />
+          <button type="button">Send</button>
+        </form>
+      </CardContent>
     </Card>
   )
 }
