@@ -14,17 +14,25 @@ const ShoutBox = props => {
   async function getChats() {
     const res = await fetch(`${apiBaseUrl}/chatmessages`);
     if (res.ok) {
-      setChatMessages(res.json());
+      let chats = await res.json()
+      setChatMessages(chats);
       console.log(chatMessages);
     }
   }
+
+  // async function sendChat()
 
   return (
     <Card style={{ margin: "5px auto", maxWidth: "300px" }} variant="outlined">
       <CardContent>
         <ul id="chatMessages" style={{ listStyleType: "none" }}>
           {chatMessages ?
-            <li>Loaded!</li> :
+            Object.keys(chatMessages).map((chId) => {
+              return (
+                <li>{chatMessages[chId]["username"]}: {chatMessages[chId]["body"]}</li>
+              )
+            })
+            :
             <li>Loading...</li>}
         </ul>
         <form action="">
