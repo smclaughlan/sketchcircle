@@ -7,6 +7,18 @@ import { apiBaseUrl } from '../config';
 const ShoutBox = props => {
   const [chatMessages, setChatMessages] = React.useState();
 
+  React.useEffect(() => {
+    getChats();
+  }, []);
+
+  async function getChats() {
+    const res = await fetch(`${apiBaseUrl}/chatmessages`);
+    if (res.ok) {
+      setChatMessages(res.json());
+      console.log(chatMessages);
+    }
+  }
+
   return (
     <Card style={{ margin: "5px auto", maxWidth: "300px" }} variant="outlined">
       <CardContent>
