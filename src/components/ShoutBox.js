@@ -6,9 +6,11 @@ import { apiBaseUrl } from '../config';
 
 const ShoutBox = props => {
   const [chatMessages, setChatMessages] = React.useState();
+  const [sendMsg, setSendMsg] = React.useState();
 
   React.useEffect(() => {
     getChats();
+    console.log(chatMessages);
   }, []);
 
   async function getChats() {
@@ -16,11 +18,34 @@ const ShoutBox = props => {
     if (res.ok) {
       let chats = await res.json()
       setChatMessages(chats);
-      console.log(chatMessages);
     }
   }
 
-  // async function sendChat()
+  async function sendChat() {
+    const res = await fetch(`${apiBaseUrl}/chatmessages`, {
+      method: 'post',
+      body: JSON.stringify(sendMsg),
+      headers: {
+        "x-access-token": `${props.token}`,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (res.ok) {
+      const newPost = await res.json();
+      getChats();
+    }
+  }
+
+  function inputChange(event) {
+    setSendMsg({
+      body: event.target.value,
+    });
+  }
+
+  function inputCheck(event) {
+    if (event.keyCode === 13) sendChat();
+  }
 
   return (
     <Card style={{ margin: "5px auto", maxWidth: "300px" }} variant="outlined">
@@ -35,10 +60,14 @@ const ShoutBox = props => {
             :
             <li>Loading...</li>}
         </ul>
-        <form action="">
-          <input autoComplete="off" />
-          <button type="button">Send</button>
-        </form>
+        {props.token ?
+          <form action="#">
+            <input id="send" autoComplete="off" onChange={inputChange} onKeyUp={inputCheck} />
+            <button type="button" onClick={sendChat}>Send</button>
+          </form>
+          :
+          <>
+          </>}
       </CardContent>
     </Card>
   )
