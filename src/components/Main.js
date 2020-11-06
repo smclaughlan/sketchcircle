@@ -159,7 +159,7 @@ const Main = (props) => {
           <Typography variant="h3" align="center">SketchCircle</Typography>
           <Typography align="center">A community for developing artists reaching goals together</Typography>
         </Container>
-        <ShoutBox />
+        <ShoutBox {...props} />
         <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Grid container spacing={3}>

@@ -3,17 +3,16 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Card, CardContent, Divider, Typography } from '@material-ui/core';
 import { apiBaseUrl, localBaseUrl } from '../config';
-import openSocket from 'socket.io-client';
+
 
 const ShoutBox = props => {
-  const [socket, setSocket] = React.useState(null);
+  const [socket, setSocket] = React.useState(props.socket);
   const [socketConnected, setSocketConnected] = React.useState(false);
   const [chatMessages, setChatMessages] = React.useState();
   const [sendMsg, setSendMsg] = React.useState();
   const [localIdNum, setLocalIdNum] = React.useState();
 
   React.useEffect(() => {
-    setSocket(openSocket(`${localBaseUrl}`));
     getChats();
   }, []);
 
@@ -22,9 +21,11 @@ const ShoutBox = props => {
 
     socket.on('connect', () => {
       setSocketConnected(socket.connected);
+      console.log('connected!')
     });
     socket.on('disconnect', () => {
       setSocketConnected(socket.connected);
+      console.log('disconnected!')
     });
 
   }, [socket]);

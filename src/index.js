@@ -6,6 +6,13 @@ import App from './App';
 import { Provider } from 'react-redux';
 import configureStore from './redux/configureStore';
 import history from "./utils/history";
+import openSocket from 'socket.io-client';
+import { apiBaseUrl, localBaseUrl } from './config';
+
+const socket = openSocket(`${localBaseUrl}`);
+socket.on('error', (error) => {
+  console.error(error);
+});
 
 const preloadedState = {
   user: {
@@ -16,10 +23,11 @@ const preloadedState = {
 
 const store = configureStore(preloadedState);
 
+
 ReactDOM.render(
   <Router history={history}>
     <Provider store={store}>
-      <App />
+      <App socket={socket} />
     </Provider>
   </Router>,
   document.getElementById('root')
