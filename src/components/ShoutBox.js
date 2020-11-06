@@ -2,15 +2,32 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { Card, CardContent, Divider, Typography } from '@material-ui/core';
-import { apiBaseUrl } from '../config';
+import { apiBaseUrl, localBaseUrl } from '../config';
+import openSocket from 'socket.io-client';
 
 const ShoutBox = props => {
+  const [socket, setSocket] = React.useState(null);
+  const [socketConnected, setSocketConnected] = React.useState(false);
   const [chatMessages, setChatMessages] = React.useState();
   const [sendMsg, setSendMsg] = React.useState();
+  const [localIdNum, setLocalIdNum] = React.useState();
 
   React.useEffect(() => {
+    setSocket(openSocket(`${localBaseUrl}`));
     getChats();
   }, []);
+
+  React.useEffect(() => {
+    if (!socket) return;
+
+    socket.on('connect', () => {
+      setSocketConnected(socket.connected);
+    });
+    socket.on('disconnect', () => {
+      setSocketConnected(socket.connected);
+    });
+
+  }, [socket]);
 
   async function getChats() {
     const res = await fetch(`${apiBaseUrl}/chatmessages`);
@@ -48,6 +65,7 @@ const ShoutBox = props => {
 
   return (
     <Card style={{ margin: "5px auto", maxWidth: "300px" }} variant="outlined">
+      {socketConnected ? <p>Connected</p> : <p>Disconnected</p>}
       <CardContent>
         <ul id="chatMessages" style={{ listStyleType: "none" }}>
           {chatMessages ?
