@@ -10,7 +10,6 @@ const ShoutBox = props => {
 
   React.useEffect(() => {
     getChats();
-    console.log(chatMessages);
   }, []);
 
   async function getChats() {
@@ -33,7 +32,7 @@ const ShoutBox = props => {
 
     if (res.ok) {
       const newPost = await res.json();
-      getChats();
+      // getChats(); //socket.io will handle this
     }
   }
 
