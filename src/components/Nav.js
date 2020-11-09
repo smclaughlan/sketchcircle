@@ -33,6 +33,8 @@ const NavBar = (props) => {
         <NavLink style={{ color: 'white' }} to="/">
           <Button className={classes.barButton} color="inherit">Sketchcircle</Button>
         </NavLink>
+      </Grid>
+      <Grid item xs={2}>
         <NavLink style={{ color: 'white' }} to="/">
           <Button className={classes.barButton} color="inherit" onClick={logOut}>Logout</Button>
         </NavLink>
@@ -42,17 +44,21 @@ const NavBar = (props) => {
       </Grid>
     </Grid >
   ) : (
-      <>
-        <NavLink style={{ color: 'white' }} to="/">
-          <Button className={classes.barButton} color="inherit">Sketchcircle</Button>
-        </NavLink>
-        <NavLink style={{ color: 'white' }} to="/register">
-          <Button className={classes.barButton} color="inherit">Register</Button>
-        </NavLink>
-        <NavLink style={{ color: 'white' }} to="/login">
-          <Button className={classes.barButton} color="inherit">Login</Button>
-        </NavLink>
-      </>
+      <Grid container spacing={3}>
+        <Grid item xs={10}>
+          <NavLink style={{ color: 'white' }} to="/">
+            <Button className={classes.barButton} color="inherit">Sketchcircle</Button>
+          </NavLink>
+        </Grid>
+        <Grid item xs={2}>
+          <NavLink style={{ color: 'white' }} to="/register">
+            <Button className={classes.barButton} color="inherit">Register</Button>
+          </NavLink>
+          <NavLink style={{ color: 'white' }} to="/login">
+            <Button className={classes.barButton} color="inherit">Login</Button>
+          </NavLink>
+        </Grid>
+      </Grid >
     )
 
 
