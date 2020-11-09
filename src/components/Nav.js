@@ -23,15 +23,11 @@ const NavBar = (props) => {
   }
 
   const navigation = props.currentUserId ? (
-
     <Grid container spacing={3}>
       <Grid item xs={10}>
         <NavLink style={{ color: 'white' }} to="/">
           <Button color="inherit">Sketchcircle</Button>
         </NavLink>
-        {/* <NavLink style={{ color: 'white' }} to={`/profile/${props.currentUserId}`}>
-          <Button color="inherit">My Sketchbook</Button>
-        </NavLink> */}
         <NavLink style={{ color: 'white' }} to="/">
           <Button color="inherit" onClick={logOut}>Logout</Button>
         </NavLink>
@@ -59,8 +55,6 @@ const NavBar = (props) => {
     <div >
       <AppBar className={classes.bar} position="fixed">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-          </IconButton>
           {navigation}
         </Toolbar>
       </AppBar>
