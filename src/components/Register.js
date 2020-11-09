@@ -13,9 +13,12 @@ const Register = (props) => {
   const [registerEnabled, setRegisterEnabled] = React.useState(false);
 
   const checkRegisterButton = () => {
-    if (registerData.username.length > 0 && registerData.password.length > 0
-      && registerData.email.indexOf("@") !== -1
-      && registerData.email.indexOf(".") !== -1) {
+    let userHasEnteredAName = registerData.username.length > 0;
+    let userHasEnteredAPassword = registerData.password.length > 0;
+    let emailHasNecessaryPunctuation = registerData.email.indexOf("@") !== -1
+      && registerData.email.indexOf(".") !== -1
+    if (userHasEnteredAName && userHasEnteredAPassword
+      && emailHasNecessaryPunctuation) {
       setRegisterEnabled(true);
     } else {
       setRegisterEnabled(false);
