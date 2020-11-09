@@ -264,10 +264,17 @@ const InsideSketchbook = (props) => {
           :
           <></>
         }
-        {props.token ?
+        {displayedPosts.length === 0 && props.token ?
           <Typography style={{ marginTop: "100px", marginBottom: "10px" }}>No posts found. Introduce yourself or welcome the new user!</Typography>
           :
+          <>
+          </>
+        }
+        {displayedPosts.length === 0 && !props.token ?
           <Typography style={{ marginTop: "100px", marginBottom: "10px" }}>No posts found. Register/sign in to post!</Typography>
+          :
+          <>
+          </>
         }
         <Container>
           {pageNum > 1 ?
