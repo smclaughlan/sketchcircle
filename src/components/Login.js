@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Button, Container, Paper, TextField } from '@material-ui/core';
+import { Button, Container, Paper, TextField, Typography } from '@material-ui/core';
 import { sendLoginReq } from '../redux/user';
 
 const Login = (props) => {
@@ -39,10 +39,10 @@ const Login = (props) => {
   return (props.token && props.currentUserId ?
     <Redirect to="/" />
     :
-    <Container>
+    <Container style={{ marginTop: '100px' }}>
       <Paper>
         <Container>
-          <h1>Login:</h1>
+          <Typography variant="h6">Login:</Typography>
         </Container>
         <Container>
           {props.errorMsg ?

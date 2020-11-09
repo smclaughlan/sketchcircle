@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Container, Paper, TextField } from '@material-ui/core';
+import { Button, Container, Paper, TextField, Typography } from '@material-ui/core';
 import { sendRegisterReq } from '../redux/user';
 import { Redirect } from 'react-router-dom';
 
@@ -57,10 +57,10 @@ const Register = (props) => {
   return (props.token ?
     <Redirect to='/' />
     :
-    <Container>
+    <Container style={{ marginTop: '100px' }}>
       <Paper>
         <Container>
-          <h1>Register:</h1>
+          <Typography variant="h6">Register:</Typography>
         </Container>
         <Container>
           {props.errorMsg ?
