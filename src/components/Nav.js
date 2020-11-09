@@ -13,6 +13,11 @@ const useStyles = makeStyles((theme) => ({
   bar: {
     backgroundColor: theme.primaryColor,
   },
+  barButton: {
+    '&:hover': {
+      backgroundColor: '#990000',
+    }
+  }
 }));
 
 const NavBar = (props) => {
@@ -23,35 +28,37 @@ const NavBar = (props) => {
   }
 
   const navigation = props.currentUserId ? (
-
     <Grid container spacing={3}>
       <Grid item xs={10}>
         <NavLink style={{ color: 'white' }} to="/">
-          <Button color="inherit">Sketchcircle</Button>
+          <Button className={classes.barButton} color="inherit">Sketchcircle</Button>
         </NavLink>
-        {/* <NavLink style={{ color: 'white' }} to={`/profile/${props.currentUserId}`}>
-          <Button color="inherit">My Sketchbook</Button>
-        </NavLink> */}
+      </Grid>
+      <Grid item xs={2}>
         <NavLink style={{ color: 'white' }} to="/">
-          <Button color="inherit" onClick={logOut}>Logout</Button>
+          <Button className={classes.barButton} color="inherit" onClick={logOut}>Logout</Button>
         </NavLink>
         <NavLink style={{ color: 'white' }} to="/update">
-          <Button color="inherit">Edit Account</Button>
+          <Button className={classes.barButton} color="inherit">Edit Account</Button>
         </NavLink>
       </Grid>
     </Grid >
   ) : (
-      <>
-        <NavLink style={{ color: 'white' }} to="/">
-          <Button color="inherit">Sketchcircle</Button>
-        </NavLink>
-        <NavLink style={{ color: 'white' }} to="/register">
-          <Button color="inherit">Register</Button>
-        </NavLink>
-        <NavLink style={{ color: 'white' }} to="/login">
-          <Button color="inherit">Login</Button>
-        </NavLink>
-      </>
+      <Grid container spacing={3}>
+        <Grid item xs={10}>
+          <NavLink style={{ color: 'white' }} to="/">
+            <Button className={classes.barButton} color="inherit">Sketchcircle</Button>
+          </NavLink>
+        </Grid>
+        <Grid item xs={2}>
+          <NavLink style={{ color: 'white' }} to="/register">
+            <Button className={classes.barButton} color="inherit">Register</Button>
+          </NavLink>
+          <NavLink style={{ color: 'white' }} to="/login">
+            <Button className={classes.barButton} color="inherit">Login</Button>
+          </NavLink>
+        </Grid>
+      </Grid >
     )
 
 
@@ -59,8 +66,6 @@ const NavBar = (props) => {
     <div >
       <AppBar className={classes.bar} position="fixed">
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="menu">
-          </IconButton>
           {navigation}
         </Toolbar>
       </AppBar>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Container, Paper, TextField } from '@material-ui/core';
+import { Button, Container, Paper, TextField, Typography } from '@material-ui/core';
 import { sendRegisterReq } from '../redux/user';
 import { Redirect } from 'react-router-dom';
 
@@ -13,9 +13,12 @@ const Register = (props) => {
   const [registerEnabled, setRegisterEnabled] = React.useState(false);
 
   const checkRegisterButton = () => {
-    if (registerData.username.length > 0 && registerData.password.length > 0
-      && registerData.email.indexOf("@") !== -1
-      && registerData.email.indexOf(".") !== -1) {
+    let userHasEnteredAName = registerData.username.length > 0;
+    let userHasEnteredAPassword = registerData.password.length > 0;
+    let emailHasNecessaryPunctuation = registerData.email.indexOf("@") !== -1
+      && registerData.email.indexOf(".") !== -1
+    if (userHasEnteredAName && userHasEnteredAPassword
+      && emailHasNecessaryPunctuation) {
       setRegisterEnabled(true);
     } else {
       setRegisterEnabled(false);
@@ -54,10 +57,10 @@ const Register = (props) => {
   return (props.token ?
     <Redirect to='/' />
     :
-    <Container>
+    <Container style={{ marginTop: '100px' }}>
       <Paper>
         <Container>
-          <h1>Register:</h1>
+          <Typography variant="h6">Register:</Typography>
         </Container>
         <Container>
           {props.errorMsg ?
