@@ -26,6 +26,7 @@ const InsideSketchbook = (props) => {
     targetDate: '',
   })
   const [displayedGoals, setDisplayedGoals] = React.useState();
+  const pageButtons = React.useRef(null);
 
   const [pageNum, setPageNum] = React.useState(1);
   const postsPerPage = 5;
@@ -100,20 +101,28 @@ const InsideSketchbook = (props) => {
     await props.getPostsReq(sketchbookId);
   }
 
+  const scrollToPageButtons = () => {
+    pageButtons.current.scrollIntoView();
+  }
+
   const firstPage = () => {
     setPageNum(1);
+    scrollToPageButtons();
   }
 
   const prevPage = () => {
     setPageNum(pageNum - 1);
+    scrollToPageButtons();
   }
 
   const nextPage = () => {
     setPageNum(pageNum + 1);
+    scrollToPageButtons();
   }
 
   const lastPage = () => {
     setPageNum(totalPages);
+    scrollToPageButtons();
   }
 
   if (justPosted === "true") {
@@ -179,14 +188,14 @@ const InsideSketchbook = (props) => {
         <>
         </>
       }
-      <Container>
+      <Container ref={pageButtons}>
         <Container>
           {displayedPosts.length > 0 ?
             <Button variant="contained" href={`/sketchbook/${sketchbookId}/timeline`}>View Timeline</Button>
             :
             <></>}
         </Container>
-        <Container>
+        <Container style={{ marginTop: '30px' }}>
           {pageNum > 1 ?
             <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={firstPage}>First</Button>
             :
@@ -264,10 +273,17 @@ const InsideSketchbook = (props) => {
           :
           <></>
         }
-        {props.token ?
+        {displayedPosts.length === 0 && props.token ?
           <Typography style={{ marginTop: "100px", marginBottom: "10px" }}>No posts found. Introduce yourself or welcome the new user!</Typography>
           :
+          <>
+          </>
+        }
+        {displayedPosts.length === 0 && !props.token ?
           <Typography style={{ marginTop: "100px", marginBottom: "10px" }}>No posts found. Register/sign in to post!</Typography>
+          :
+          <>
+          </>
         }
         <Container>
           {pageNum > 1 ?
