@@ -19,6 +19,9 @@ const converter = new Showdown.Converter({
 const InsideSketchbook = (props) => {
   const displayedPosts = [];
   let justPosted = window.localStorage.getItem("justPosted");
+  let winXLoc = window.localStorage.getItem("pageXOffset");
+  let winYLoc = window.localStorage.getItem("pageYOffset");
+
   const [newGoalData, setNewGoalData] = React.useState({
     title: '',
     description: '',
@@ -26,6 +29,7 @@ const InsideSketchbook = (props) => {
     targetDate: '',
   })
   const [displayedGoals, setDisplayedGoals] = React.useState();
+
   const pageButtons = React.useRef(null);
 
   const [pageNum, setPageNum] = React.useState(1);
@@ -103,6 +107,11 @@ const InsideSketchbook = (props) => {
 
   const scrollToPageButtons = () => {
     pageButtons.current.scrollIntoView();
+  }
+
+  const saveWindowPos = () => {
+    window.localStorage.setItem("pageXOffset", window.pageXOffset);
+    window.localStorage.setItem("pageYOffset", window.pageYOffset);
   }
 
   const firstPage = () => {
@@ -259,7 +268,7 @@ const InsideSketchbook = (props) => {
                   {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                     <>
                       <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                        <Edit color="primary" />
+                        <Edit color="primary" onClick={() => { saveWindowPos() }} />
                       </NavLink>
                     </>
                     :
@@ -315,7 +324,7 @@ const InsideSketchbook = (props) => {
       </Container >
       <Container>
         {props.token ?
-          <MDE sketchbook_id={sketchbookId} />
+          <MDE lastPage={lastPage} sketchbook_id={sketchbookId} />
           :
           <>
           </>
