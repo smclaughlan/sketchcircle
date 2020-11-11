@@ -19,8 +19,8 @@ const converter = new Showdown.Converter({
 const InsideSketchbook = (props) => {
   const displayedPosts = [];
   let justPosted = window.localStorage.getItem("justPosted");
-  let winXLoc = window.localStorage.getItem("pageXOffset");
-  let winYLoc = window.localStorage.getItem("pageYOffset");
+  let scrollID = window.localStorage.getItem("focusID");
+  console.log("scrollID", scrollID);
 
   const [newGoalData, setNewGoalData] = React.useState({
     title: '',
@@ -37,7 +37,7 @@ const InsideSketchbook = (props) => {
   const postsPerPage = 5;
   let totalPages = 0;
 
-  const sketchbookId = window.location.href.split('/')[4];
+  let sketchbookId = window.location.href.split('/')[4];
 
   if (props.posts && props.posts[sketchbookId]) {
     let skbPosts = props.posts[sketchbookId];
@@ -53,8 +53,18 @@ const InsideSketchbook = (props) => {
     }
   }
 
+  let refs = displayedPosts.reduce((acc, value) => {
+    acc[value.id] = React.createRef();
+    return acc;
+  }, {})
+
+
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
+  }, [])
+
+  React.useEffect(() => {
+
   }, [])
 
   React.useEffect(() => {
@@ -114,9 +124,13 @@ const InsideSketchbook = (props) => {
     pageBottom.current.scrollIntoView();
   }
 
-  const saveWindowPos = () => {
-    window.localStorage.setItem("pageXOffset", window.pageXOffset);
-    window.localStorage.setItem("pageYOffset", window.pageYOffset);
+  const saveFocusID = (id) => {
+    window.localStorage.setItem("focusID", id);
+  }
+
+  const clearFocusID = () => {
+    window.localStorage.setItem("focusID", null);
+    scrollID = null;
   }
 
   const firstPage = () => {
@@ -144,10 +158,16 @@ const InsideSketchbook = (props) => {
     scrollToPageBottom();
   }
 
+  const scrollToPostRef = (refID) => {
+    console.log(refs);
+    refs[refID].current.scrollIntoView();
+  }
+
   if (justPosted === "true") {
     justPosted = "false";
     window.localStorage.setItem("justPosted", false);
     lastPageBottom();
+    clearFocusID();
   }
 
   return (
@@ -243,8 +263,8 @@ const InsideSketchbook = (props) => {
         {displayedPosts.length > 0 ?
           Object.keys(displayedPosts).map(k => {
             return (
-              <Paper style={{ margin: '50px' }} >
-                <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
+              <Paper ref={refs[displayedPosts[k].id]} style={{ margin: '50px' }} key={displayedPosts[k].id} >
+                <Container style={{ margin: '10px', padding: '10px' }} >
                   <Grid container>
                     <Grid item xs={11}>
                       <NavLink
@@ -278,7 +298,7 @@ const InsideSketchbook = (props) => {
                   {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
                     <>
                       <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                        <Edit color="primary" onClick={() => { saveWindowPos() }} />
+                        <Edit color="primary" onClick={() => { saveFocusID(displayedPosts[k].id) }} />
                       </NavLink>
                     </>
                     :
