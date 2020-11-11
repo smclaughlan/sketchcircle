@@ -31,6 +31,7 @@ const InsideSketchbook = (props) => {
   const [displayedGoals, setDisplayedGoals] = React.useState();
 
   const pageButtons = React.useRef(null);
+  const pageBottom = React.useRef(null);
 
   const [pageNum, setPageNum] = React.useState(1);
   const postsPerPage = 5;
@@ -109,6 +110,10 @@ const InsideSketchbook = (props) => {
     pageButtons.current.scrollIntoView();
   }
 
+  const scrollToPageBottom = () => {
+    pageBottom.current.scrollIntoView();
+  }
+
   const saveWindowPos = () => {
     window.localStorage.setItem("pageXOffset", window.pageXOffset);
     window.localStorage.setItem("pageYOffset", window.pageYOffset);
@@ -134,10 +139,15 @@ const InsideSketchbook = (props) => {
     scrollToPageButtons();
   }
 
+  const lastPageBottom = () => {
+    setPageNum(totalPages);
+    scrollToPageBottom();
+  }
+
   if (justPosted === "true") {
     justPosted = "false";
     window.localStorage.setItem("justPosted", false);
-    lastPage();
+    lastPageBottom();
   }
 
   return (
@@ -294,7 +304,7 @@ const InsideSketchbook = (props) => {
           <>
           </>
         }
-        <Container>
+        <Container ref={pageBottom}>
           {pageNum > 1 ?
             <Button variant="outlined" style={{ marginRight: "10px", marginBottom: "10px" }} onClick={firstPage}>First</Button>
             :
