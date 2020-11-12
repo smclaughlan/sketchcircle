@@ -174,8 +174,10 @@ const InsideSketchbook = (props) => {
 
     let justEdited = window.localStorage.getItem("justEdited");
     if (justEdited === "true" && refs && refs[scrollID]) {
+      props.getPostsReq(sketchbookId);
+      let goToPage = Number(window.localStorage.getItem("pageNum"));
+      setPageNum(goToPage);
       justEdited = "false";
-      setPageNum(Number(window.localStorage.getItem("pageNum")));
       window.localStorage.setItem("justEdited", false);
       window.localStorage.setItem("scrollID", null);
       window.localStorage.setItem("pageNum", 1);
