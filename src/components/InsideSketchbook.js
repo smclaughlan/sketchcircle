@@ -31,6 +31,8 @@ const InsideSketchbook = (props) => {
 
   const pageButtons = React.useRef(null);
   const pageBottom = React.useRef(null);
+  let refs;
+
 
   const [pageNum, setPageNum] = React.useState(1);
   const postsPerPage = 5;
@@ -51,6 +53,17 @@ const InsideSketchbook = (props) => {
       }
     }
   }
+
+  if (props.posts) {
+    // console.log(props.posts[sketchbookId]);
+    refs = Object.keys(props.posts[sketchbookId]).reduce((acc, value) => {
+      let id = props.posts[sketchbookId][value]["id"];
+      acc[id] = React.createRef();
+      // console.log(acc);
+      return acc;
+    }, {})
+  }
+  console.log(refs);
 
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
@@ -113,6 +126,8 @@ const InsideSketchbook = (props) => {
     pageBottom.current.scrollIntoView();
   }
 
+
+
   const firstPage = () => {
     setPageNum(1);
     scrollToPageButtons();
@@ -142,12 +157,29 @@ const InsideSketchbook = (props) => {
     window.localStorage.setItem("scrollID", id);
   }
 
-  if (justPosted === "true") {
-    justPosted = "false";
-    window.localStorage.setItem("justPosted", false);
-    setTimeout(() => { lastPageBottom() }, 1000);
-    // lastPageBottom();
+  const scrollToPost = () => {
+    console.log(refs);
+    if (refs && refs[scrollID] && refs[scrollID]["current"]) {
+      console.log(refs[scrollID]);
+      refs[scrollID]["current"].scrollIntoView();
+    }
   }
+
+  React.useEffect(() => {
+    if (justPosted === "true" && refs && refs[scrollID]) {
+      console.log(refs[scrollID]);
+      justPosted = "false";
+
+      window.localStorage.setItem("justPosted", false);
+      window.localStorage.setItem("scrollID", null);
+      scrollToPost();
+      // setTimeout((scrollID) => { scrollToPost(scrollID); }, 1000);
+      // setTimeout(() => { lastPageBottom() }, 1000);
+      // lastPageBottom();
+    }
+  }, [refs])
+
+
 
   return (
     <>
@@ -242,7 +274,7 @@ const InsideSketchbook = (props) => {
         {displayedPosts.length > 0 ?
           Object.keys(displayedPosts).map(k => {
             return (
-              <Paper style={{ margin: '50px' }} >
+              <Paper ref={refs[displayedPosts[k].id]} style={{ margin: '50px' }} >
                 <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
                   <Grid container>
                     <Grid item xs={11}>
