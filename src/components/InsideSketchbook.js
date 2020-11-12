@@ -54,13 +54,16 @@ const InsideSketchbook = (props) => {
     }
   }
 
-  if (props.posts) {
-    refs = Object.keys(props.posts[sketchbookId]).reduce((acc, value) => {
-      let id = props.posts[sketchbookId][value]["id"];
-      acc[id] = React.createRef();
-      return acc;
-    }, {})
+  const updateRefs = () => {
+    if (props.posts) {
+      refs = Object.keys(props.posts[sketchbookId]).reduce((acc, value) => {
+        let id = props.posts[sketchbookId][value]["id"];
+        acc[id] = React.createRef();
+        return acc;
+      }, {})
+    }
   }
+  updateRefs();
 
 
   React.useEffect(() => {
@@ -127,26 +130,31 @@ const InsideSketchbook = (props) => {
   const firstPage = () => {
     setPageNum(1);
     scrollToPageButtons();
+    updateRefs();
   }
 
   const prevPage = () => {
     setPageNum(pageNum - 1);
     scrollToPageButtons();
+    updateRefs();
   }
 
   const nextPage = () => {
     setPageNum(pageNum + 1);
     scrollToPageButtons();
+    updateRefs();
   }
 
   const lastPage = () => {
     setPageNum(totalPages);
     scrollToPageButtons();
+    updateRefs();
   }
 
   const lastPageBottom = () => {
     setPageNum(totalPages);
     scrollToPageBottom();
+    updateRefs();
   }
 
   const saveScrollID = (id) => {
@@ -154,23 +162,26 @@ const InsideSketchbook = (props) => {
     window.localStorage.setItem("pageNum", pageNum);
   }
 
-  const scrollToPost = () => {
-    if (refs && refs[scrollID] && refs[scrollID]["current"]) {
-      refs[scrollID]["current"].scrollIntoView({ behavior: 'smooth' });
-    }
-  }
+
 
   React.useEffect(() => {
+
+    const scrollToPost = () => {
+      if (refs && refs[scrollID] && refs[scrollID]["current"]) {
+        refs[scrollID]["current"].scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
     let justEdited = window.localStorage.getItem("justEdited");
     if (justEdited === "true" && refs && refs[scrollID]) {
       justEdited = "false";
-      scrollToPost();
       setPageNum(Number(window.localStorage.getItem("pageNum")));
       window.localStorage.setItem("justEdited", false);
       window.localStorage.setItem("scrollID", null);
       window.localStorage.setItem("pageNum", 1);
+      scrollToPost();
     }
-  }, [refs])
+  }, [refs, scrollID, pageNum])
 
   React.useEffect(() => {
     let justPosted = window.localStorage.getItem("justPosted");
