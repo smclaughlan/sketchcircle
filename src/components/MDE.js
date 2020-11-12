@@ -29,7 +29,7 @@ export function MDE(props) {
 
   const updatePost = () => {
     props.sendUpdatePostReq(props.token, props.editPost, value, props.sketchbookId);
-    window.localStorage.setItem("justPosted", true);
+    window.localStorage.setItem("justEdited", true);
   }
 
 

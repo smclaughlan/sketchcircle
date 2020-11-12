@@ -18,7 +18,7 @@ const converter = new Showdown.Converter({
 
 const InsideSketchbook = (props) => {
   const displayedPosts = [];
-  let justPosted = window.localStorage.getItem("justPosted");
+
   let scrollID = window.localStorage.getItem("scrollID");
 
   const [newGoalData, setNewGoalData] = React.useState({
@@ -55,15 +55,13 @@ const InsideSketchbook = (props) => {
   }
 
   if (props.posts) {
-    // console.log(props.posts[sketchbookId]);
     refs = Object.keys(props.posts[sketchbookId]).reduce((acc, value) => {
       let id = props.posts[sketchbookId][value]["id"];
       acc[id] = React.createRef();
-      // console.log(acc);
       return acc;
     }, {})
   }
-  console.log(refs);
+
 
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
@@ -126,8 +124,6 @@ const InsideSketchbook = (props) => {
     pageBottom.current.scrollIntoView();
   }
 
-
-
   const firstPage = () => {
     setPageNum(1);
     scrollToPageButtons();
@@ -155,29 +151,35 @@ const InsideSketchbook = (props) => {
 
   const saveScrollID = (id) => {
     window.localStorage.setItem("scrollID", id);
+    window.localStorage.setItem("pageNum", pageNum);
   }
 
   const scrollToPost = () => {
-    console.log(refs);
     if (refs && refs[scrollID] && refs[scrollID]["current"]) {
-      console.log(refs[scrollID]);
-      refs[scrollID]["current"].scrollIntoView();
+      refs[scrollID]["current"].scrollIntoView({ behavior: 'smooth' });
     }
   }
 
   React.useEffect(() => {
-    if (justPosted === "true" && refs && refs[scrollID]) {
-      console.log(refs[scrollID]);
-      justPosted = "false";
-
-      window.localStorage.setItem("justPosted", false);
-      window.localStorage.setItem("scrollID", null);
+    let justEdited = window.localStorage.getItem("justEdited");
+    if (justEdited === "true" && refs && refs[scrollID]) {
+      justEdited = "false";
       scrollToPost();
-      // setTimeout((scrollID) => { scrollToPost(scrollID); }, 1000);
-      // setTimeout(() => { lastPageBottom() }, 1000);
-      // lastPageBottom();
+      setPageNum(Number(window.localStorage.getItem("pageNum")));
+      window.localStorage.setItem("justEdited", false);
+      window.localStorage.setItem("scrollID", null);
+      window.localStorage.setItem("pageNum", 1);
     }
   }, [refs])
+
+  React.useEffect(() => {
+    let justPosted = window.localStorage.getItem("justPosted");
+    if (justPosted === "true") {
+      justPosted = "false";
+      window.localStorage.setItem("justPosted", false);
+      lastPageBottom();
+    }
+  }, [lastPageBottom])
 
 
 
@@ -274,50 +276,53 @@ const InsideSketchbook = (props) => {
         {displayedPosts.length > 0 ?
           Object.keys(displayedPosts).map(k => {
             return (
-              <Paper ref={refs[displayedPosts[k].id]} style={{ margin: '50px' }} >
-                <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                  <Grid container>
-                    <Grid item xs={11}>
-                      <NavLink
-                        style={{ color: "#d33232" }}
-                        onClick={() => {
-                          props.getPostsReq(displayedPosts[k].user_id);
-                          firstPage();
-                        }}
-                        to={`/sketchbook/${displayedPosts[k].user_id}`}>
-                        {displayedPosts[k].avatar ?
-                          <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+              <>
+                <div ref={refs[displayedPosts[k].id]} style={{ padding: '0px' }}></div>
+                <Paper style={{ margin: '50px' }} >
+                  <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
+                    <Grid container>
+                      <Grid item xs={11}>
+                        <NavLink
+                          style={{ color: "#d33232" }}
+                          onClick={() => {
+                            props.getPostsReq(displayedPosts[k].user_id);
+                            firstPage();
+                          }}
+                          to={`/sketchbook/${displayedPosts[k].user_id}`}>
+                          {displayedPosts[k].avatar ?
+                            <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+                            :
+                            <></>
+                          }
+                          <Typography>{displayedPosts[k].username}</Typography>
+                        </NavLink>
+                      </Grid>
+                      <Grid item xs={1}>
+                        {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                          <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
                           :
-                          <></>
+                          <>
+                          </>
                         }
-                        <Typography>{displayedPosts[k].username}</Typography>
-                      </NavLink>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={1}>
-                      {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                        <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
-                        :
-                        <>
-                        </>
-                      }
-                    </Grid>
-                  </Grid>
-                  <Divider variant="middle"></Divider>
-                  <ReactMarkdown source={displayedPosts[k].body} />
-                  <Divider variant="middle"></Divider>
-                  <p>{displayedPosts[k].timestamp}</p>
-                  {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                    <>
-                      <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                        <Edit color="primary" onClick={() => { saveScrollID(displayedPosts[k].id) }} />
-                      </NavLink>
-                    </>
-                    :
-                    <>
-                    </>
-                  }
-                </Container>
-              </Paper>
+                    <Divider variant="middle"></Divider>
+                    <ReactMarkdown source={displayedPosts[k].body} />
+                    <Divider variant="middle"></Divider>
+                    <p>{displayedPosts[k].timestamp}</p>
+                    {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                      <>
+                        <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
+                          <Edit color="primary" onClick={() => { saveScrollID(displayedPosts[k].id) }} />
+                        </NavLink>
+                      </>
+                      :
+                      <>
+                      </>
+                    }
+                  </Container>
+                </Paper>
+              </>
             )
           })
           :
