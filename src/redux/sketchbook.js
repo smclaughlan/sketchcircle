@@ -151,7 +151,7 @@ export const sendUpdatePostReq = (token, postId, text, skbId) => async dispatch 
   if (res.ok) {
     const updRes = await res.json();
     //need to add updated post to state
-    window.location.href = `/sketchbook/${skbId}`;
+    // window.location.href = `/sketchbook/${skbId}`;
   }
 }
 

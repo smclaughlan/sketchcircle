@@ -1,4 +1,5 @@
 import * as React from "react";
+import { NavLink } from 'react-router-dom';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { Button } from '@material-ui/core';
@@ -17,6 +18,8 @@ export function MDE(props) {
   const [value, setValue] = React.useState("");
   const [postLoaded, setPostLoaded] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState("write");
+
+  const sketchbookId = window.location.href.split('/')[4];
 
   const newPost = () => {
     props.sendPostReq(props.token, props.sketchbook_id, value);
@@ -48,7 +51,9 @@ export function MDE(props) {
         }
       />
       {props.editPost ?
-        <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={updatePost}>Update Post</Button>
+        <NavLink to={`/sketchbook/${sketchbookId}`}>
+          <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={updatePost}>Update Post</Button>
+        </NavLink>
         :
         <Button variant="outlined" style={{ marginTop: "10px", marginRight: "10px" }} onClick={newPost}>Post</Button>
       }
