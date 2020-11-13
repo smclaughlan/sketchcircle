@@ -168,11 +168,13 @@ const InsideSketchbook = (props) => {
 
     const scrollToPost = () => {
       if (refs && refs[scrollID] && refs[scrollID]["current"]) {
-        refs[scrollID]["current"].scrollIntoView({ behavior: 'smooth' });
+        console.log(refs[scrollID])
+        refs[scrollID].current.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
     let justEdited = window.localStorage.getItem("justEdited");
+    console.log(justEdited);
     if (justEdited === "true" && refs && refs[scrollID]) {
       props.getPostsReq(sketchbookId);
       let goToPage = Number(window.localStorage.getItem("pageNum"));
