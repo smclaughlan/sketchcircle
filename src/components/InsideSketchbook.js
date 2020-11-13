@@ -54,6 +54,8 @@ const InsideSketchbook = (props) => {
         }
       }
     }
+
+
   }
   updateDisplayedPosts();
   let { posts } = props;
@@ -64,6 +66,16 @@ const InsideSketchbook = (props) => {
       acc[id] = React.createRef();
       return acc;
     }, {})
+  }
+
+  const updateRefs = () => {
+    if (posts) {
+      refs = Object.keys(posts[sketchbookId]).reduce((acc, value) => {
+        let id = posts[sketchbookId][value]["id"];
+        acc[id] = React.createRef();
+        return acc;
+      }, {})
+    }
   }
   // console.log(refs);
 
@@ -172,20 +184,18 @@ const InsideSketchbook = (props) => {
     window.localStorage.setItem("pageNum", 1);
 
     const scrollToPost = () => {
-      if (refs && refs[scrollID] && refs[scrollID]["current"]) {
+      if (refs && refs[scrollID]) {
         console.log(refs[scrollID])
         refs[scrollID].current.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
     let justEdited = window.localStorage.getItem("justEdited");
-    console.log(justEdited);
-    console.log(refs);
     if (justEdited === "true" && refs && refs[scrollID]) {
       justEdited = "false";
       window.localStorage.setItem("justEdited", false);
       window.localStorage.setItem("scrollID", null);
-      scrollToPost();
+      setTimeout(scrollToPost, 1000);
     }
   }, [])
 
