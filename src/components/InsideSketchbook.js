@@ -17,7 +17,7 @@ const converter = new Showdown.Converter({
 });
 
 const InsideSketchbook = (props) => {
-  const displayedPosts = [];
+  let displayedPosts = [];
 
   let scrollID = window.localStorage.getItem("scrollID");
 
@@ -40,19 +40,22 @@ const InsideSketchbook = (props) => {
 
   const sketchbookId = window.location.href.split('/')[4];
 
-  if (props.posts && props.posts[sketchbookId]) {
-    let skbPosts = props.posts[sketchbookId];
-    totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
-    if (totalPages < 1) {
-      totalPages = 1;
-    }
-    const postKeys = Object.keys(skbPosts);
-    for (let i = pageNum * postsPerPage - postsPerPage; i < pageNum * postsPerPage; i++) {
-      if (skbPosts[postKeys[i]]) {
-        displayedPosts.push(skbPosts[postKeys[i]]);
+  const updateDisplayedPosts = () => {
+    if (props.posts && props.posts[sketchbookId]) {
+      let skbPosts = props.posts[sketchbookId];
+      totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
+      if (totalPages < 1) {
+        totalPages = 1;
+      }
+      const postKeys = Object.keys(skbPosts);
+      for (let i = pageNum * postsPerPage - postsPerPage; i < pageNum * postsPerPage; i++) {
+        if (skbPosts[postKeys[i]]) {
+          displayedPosts = [...displayedPosts, skbPosts[postKeys[i]]];
+        }
       }
     }
   }
+  updateDisplayedPosts();
 
   const updateRefs = () => {
     if (props.posts) {
@@ -64,11 +67,6 @@ const InsideSketchbook = (props) => {
     }
   }
   updateRefs();
-
-
-  React.useEffect(() => {
-    props.getPostsReq(sketchbookId);
-  }, [])
 
   React.useEffect(() => {
     if (props.goals && props.goals[sketchbookId]) {
@@ -164,28 +162,7 @@ const InsideSketchbook = (props) => {
 
 
 
-  React.useEffect(() => {
 
-    const scrollToPost = () => {
-      if (refs && refs[scrollID] && refs[scrollID]["current"]) {
-        console.log(refs[scrollID])
-        refs[scrollID].current.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    let justEdited = window.localStorage.getItem("justEdited");
-    console.log(justEdited);
-    if (justEdited === "true" && refs && refs[scrollID]) {
-      props.getPostsReq(sketchbookId);
-      let goToPage = Number(window.localStorage.getItem("pageNum"));
-      setPageNum(goToPage);
-      justEdited = "false";
-      window.localStorage.setItem("justEdited", false);
-      window.localStorage.setItem("scrollID", null);
-      window.localStorage.setItem("pageNum", 1);
-      scrollToPost();
-    }
-  }, [refs, scrollID, pageNum])
 
   React.useEffect(() => {
     let justPosted = window.localStorage.getItem("justPosted");
@@ -196,7 +173,36 @@ const InsideSketchbook = (props) => {
     }
   }, [lastPageBottom])
 
+  React.useEffect(() => {
+    props.getPostsReq(sketchbookId);
+  }, [])
 
+  React.useEffect(() => {
+    updateDisplayedPosts();
+    updateRefs();
+  }, [props.posts, displayedPosts])
+
+  React.useEffect(() => {
+    const scrollToPost = () => {
+      if (refs && refs[scrollID] && refs[scrollID]["current"]) {
+        console.log(refs[scrollID])
+        refs[scrollID].current.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    let justEdited = window.localStorage.getItem("justEdited");
+    console.log(justEdited);
+    if (justEdited === "true" && refs && refs[scrollID]) {
+      updateDisplayedPosts();
+      let goToPage = Number(window.localStorage.getItem("pageNum"));
+      setPageNum(goToPage);
+      justEdited = "false";
+      scrollToPost();
+      window.localStorage.setItem("justEdited", false);
+      window.localStorage.setItem("scrollID", null);
+      window.localStorage.setItem("pageNum", 1);
+    }
+  }, [refs, scrollID, pageNum, props.posts])
 
   return (
     <>

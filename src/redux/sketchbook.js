@@ -150,21 +150,13 @@ export const sendUpdatePostReq = (token, postId, text, skbId) => async dispatch 
     }
   });
 
-  if (res.ok) {
-    const updRes = await res.json();
-    //need to add updated post to state
-    // window.location.href = `/sketchbook/${skbId}`;
-    let updPost = {};
-    updPost["posts"] = {};
-    updPost["posts"][skbId] = {};
-    updPost["posts"][skbId][postId] = {};
-
-    updPost["posts"][skbId][postId] = {
-      body: text,
-    }
-
-    dispatch(updatePost(updPost));
-  }
+  // if (res.ok) {
+  //   const updRes = await res.json();
+  //need to add updated post to state
+  // window.location.href = `/sketchbook/${skbId}`;
+  let updPost = { skbId, postId, text };
+  dispatch(updatePost(updPost));
+  // }
 }
 
 export default function reducer(state = {}, action) {
@@ -197,9 +189,10 @@ export default function reducer(state = {}, action) {
       }
     }
     case UPDATE_POST: {
+      const { skbId, postId, text } = action.updPost;
+      state["posts"][skbId][postId]["body"] = text;
       return {
         ...state,
-        ...action.updPost,
       }
     }
     case ADD_GOAL: {
