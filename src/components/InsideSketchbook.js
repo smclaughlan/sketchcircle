@@ -149,29 +149,27 @@ const InsideSketchbook = (props) => {
     updateRefs();
   }
 
-  const lastPageBottom = () => {
-    setPageNum(totalPages);
-    scrollToPageBottom();
-    updateRefs();
-  }
+
 
   const saveScrollID = (id) => {
     window.localStorage.setItem("scrollID", id);
     window.localStorage.setItem("pageNum", pageNum);
   }
 
-
-
-
-
   React.useEffect(() => {
+    const lastPageBottom = () => {
+      setPageNum(totalPages);
+      scrollToPageBottom();
+      updateRefs();
+    }
+
     let justPosted = window.localStorage.getItem("justPosted");
     if (justPosted === "true") {
       justPosted = "false";
       window.localStorage.setItem("justPosted", false);
       lastPageBottom();
     }
-  }, [lastPageBottom])
+  }, [])
 
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
