@@ -48,10 +48,16 @@ const InsideSketchbook = (props) => {
         totalPages = 1;
       }
       const postKeys = Object.keys(skbPosts);
-      for (let i = pageNum * postsPerPage - postsPerPage; i < pageNum * postsPerPage; i++) {
-        if (skbPosts[postKeys[i]]) {
-          displayedPosts = [...displayedPosts, skbPosts[postKeys[i]]];
+      for (let i = 0; i < skbPosts.length; i++) {
+        const earliestPostOnPageOrLater = i >= pageNum * postsPerPage;
+        const lastPostOnPageOrEarlier = i < pageNum * postsPerPage + postsPerPage;
+        const currPost = skbPosts[postKeys[i]];
+        if (earliestPostOnPageOrLater && lastPostOnPageOrEarlier) {
+          currPost.displayed = true;
+        } else {
+          currPost.displayed = false;
         }
+        displayedPosts = [...displayedPosts, currPost];
       }
     }
 
@@ -296,55 +302,106 @@ const InsideSketchbook = (props) => {
         </Container>
         {displayedPosts.length > 0 ?
           Object.keys(displayedPosts).map(k => {
-            return (
-              <>
-                <div ref={refs[displayedPosts[k].id]} style={{ padding: '0px' }}></div>
-                <Paper style={{ margin: '50px' }} >
-                  <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                    <Grid container>
-                      <Grid item xs={11}>
-                        <NavLink
-                          style={{ color: "#d33232" }}
-                          onClick={() => {
-                            props.getPostsReq(displayedPosts[k].user_id);
-                            firstPage();
-                          }}
-                          to={`/sketchbook/${displayedPosts[k].user_id}`}>
-                          {displayedPosts[k].avatar ?
-                            <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+            if (displayedPosts[k].displayed === true) {
+              return (
+                <>
+                  <div ref={refs[displayedPosts[k].id]} style={{ padding: '0px' }}></div>
+                  <Paper style={{ margin: '50px' }} >
+                    <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
+                      <Grid container>
+                        <Grid item xs={11}>
+                          <NavLink
+                            style={{ color: "#d33232" }}
+                            onClick={() => {
+                              props.getPostsReq(displayedPosts[k].user_id);
+                              firstPage();
+                            }}
+                            to={`/sketchbook/${displayedPosts[k].user_id}`}>
+                            {displayedPosts[k].avatar ?
+                              <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+                              :
+                              <></>
+                            }
+                            <Typography>{displayedPosts[k].username}</Typography>
+                          </NavLink>
+                        </Grid>
+                        <Grid item xs={1}>
+                          {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                            <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
                             :
-                            <></>
+                            <>
+                            </>
                           }
-                          <Typography>{displayedPosts[k].username}</Typography>
-                        </NavLink>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={1}>
-                        {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                          <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
-                          :
-                          <>
-                          </>
-                        }
+                      <Divider variant="middle"></Divider>
+                      <ReactMarkdown source={displayedPosts[k].body} />
+                      <Divider variant="middle"></Divider>
+                      <p>{displayedPosts[k].timestamp}</p>
+                      {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                        <>
+                          <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
+                            <Edit color="primary" onClick={() => { saveScrollID(displayedPosts[k].id) }} />
+                          </NavLink>
+                        </>
+                        :
+                        <>
+                        </>
+                      }
+                    </Container>
+                  </Paper>
+                </>
+              )
+            } else {
+              return (
+                <>
+                  <Paper style={{ margin: '50px', display: 'hidden' }} >
+                    <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
+                      <Grid container>
+                        <Grid item xs={11}>
+                          <NavLink
+                            style={{ color: "#d33232" }}
+                            onClick={() => {
+                              props.getPostsReq(displayedPosts[k].user_id);
+                              firstPage();
+                            }}
+                            to={`/sketchbook/${displayedPosts[k].user_id}`}>
+                            {displayedPosts[k].avatar ?
+                              <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+                              :
+                              <></>
+                            }
+                            <Typography>{displayedPosts[k].username}</Typography>
+                          </NavLink>
+                        </Grid>
+                        <Grid item xs={1}>
+                          {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                            <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                            :
+                            <>
+                            </>
+                          }
+                        </Grid>
                       </Grid>
-                    </Grid>
-                    <Divider variant="middle"></Divider>
-                    <ReactMarkdown source={displayedPosts[k].body} />
-                    <Divider variant="middle"></Divider>
-                    <p>{displayedPosts[k].timestamp}</p>
-                    {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                      <>
-                        <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                          <Edit color="primary" onClick={() => { saveScrollID(displayedPosts[k].id) }} />
-                        </NavLink>
-                      </>
-                      :
-                      <>
-                      </>
-                    }
-                  </Container>
-                </Paper>
-              </>
-            )
+                      <Divider variant="middle"></Divider>
+                      <ReactMarkdown source={displayedPosts[k].body} />
+                      <Divider variant="middle"></Divider>
+                      <p>{displayedPosts[k].timestamp}</p>
+                      {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                        <>
+                          <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
+                            <Edit color="primary" onClick={() => { saveScrollID(displayedPosts[k].id) }} />
+                          </NavLink>
+                        </>
+                        :
+                        <>
+                        </>
+                      }
+                    </Container>
+                  </Paper>
+                </>
+              )
+            }
           })
           :
           <></>
