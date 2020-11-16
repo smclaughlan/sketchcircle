@@ -199,6 +199,7 @@ const InsideSketchbook = (props) => {
     && refs
     && refs[scrollID]
     && refs[scrollID].current !== null) {
+    props.getPostsReq(sketchbookId);
     justEdited = "false";
     scrollToPost();
   }
