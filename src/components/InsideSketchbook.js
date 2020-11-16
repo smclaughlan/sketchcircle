@@ -43,15 +43,17 @@ const InsideSketchbook = (props) => {
   const updateDisplayedPosts = () => {
     if (props.posts && props.posts[sketchbookId]) {
       let skbPosts = props.posts[sketchbookId];
+      console.log(skbPosts);
       totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
       if (totalPages < 1) {
         totalPages = 1;
       }
       const postKeys = Object.keys(skbPosts);
-      for (let i = 0; i < skbPosts.length; i++) {
-        const earliestPostOnPageOrLater = i >= pageNum * postsPerPage;
-        const lastPostOnPageOrEarlier = i < pageNum * postsPerPage + postsPerPage;
-        const currPost = skbPosts[postKeys[i]];
+      for (let i = 0; i < postKeys.length; i++) {
+        const earliestPostOnPageOrLater = i >= pageNum * postsPerPage - postsPerPage;
+        const lastPostOnPageOrEarlier = i < pageNum * postsPerPage;
+        let currPost = skbPosts[postKeys[i]];
+        console.log(currPost);
         if (earliestPostOnPageOrLater && lastPostOnPageOrEarlier) {
           currPost.displayed = true;
         } else {
@@ -60,9 +62,10 @@ const InsideSketchbook = (props) => {
         displayedPosts = [...displayedPosts, currPost];
       }
     }
-
-
+    console.log(displayedPosts);
   }
+
+
   updateDisplayedPosts();
   let { posts } = props;
 
@@ -355,50 +358,7 @@ const InsideSketchbook = (props) => {
             } else {
               return (
                 <>
-                  <Paper style={{ margin: '50px', display: 'hidden' }} >
-                    <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                      <Grid container>
-                        <Grid item xs={11}>
-                          <NavLink
-                            style={{ color: "#d33232" }}
-                            onClick={() => {
-                              props.getPostsReq(displayedPosts[k].user_id);
-                              firstPage();
-                            }}
-                            to={`/sketchbook/${displayedPosts[k].user_id}`}>
-                            {displayedPosts[k].avatar ?
-                              <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
-                              :
-                              <></>
-                            }
-                            <Typography>{displayedPosts[k].username}</Typography>
-                          </NavLink>
-                        </Grid>
-                        <Grid item xs={1}>
-                          {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                            <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
-                            :
-                            <>
-                            </>
-                          }
-                        </Grid>
-                      </Grid>
-                      <Divider variant="middle"></Divider>
-                      <ReactMarkdown source={displayedPosts[k].body} />
-                      <Divider variant="middle"></Divider>
-                      <p>{displayedPosts[k].timestamp}</p>
-                      {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                        <>
-                          <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                            <Edit color="primary" onClick={() => { saveScrollID(displayedPosts[k].id) }} />
-                          </NavLink>
-                        </>
-                        :
-                        <>
-                        </>
-                      }
-                    </Container>
-                  </Paper>
+                  <div ref={refs[displayedPosts[k].id]} style={{ padding: '0px', visibility: 'hidden' }}></div>
                 </>
               )
             }
