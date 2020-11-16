@@ -136,7 +136,9 @@ const InsideSketchbook = (props) => {
   }
 
   const scrollToPageBottom = () => {
-    pageBottom.current.scrollIntoView();
+    if (pageBottom && pageBottom.current && pageBottom.current !== null) {
+      pageBottom.current.scrollIntoView();
+    }
   }
 
   const firstPage = () => {
@@ -159,19 +161,19 @@ const InsideSketchbook = (props) => {
     scrollToPageButtons();
   }
 
-  React.useEffect(() => {
-    const lastPageBottom = () => {
-      setPageNum(totalPages);
-      scrollToPageBottom();
-    }
 
-    let justPosted = window.localStorage.getItem("justPosted");
-    if (justPosted === "true") {
-      justPosted = "false";
-      window.localStorage.setItem("justPosted", false);
-      lastPageBottom();
-    }
-  }, [])
+  const lastPageBottom = () => {
+    setPageNum(totalPages);
+    scrollToPageBottom();
+  }
+
+  let justPosted = window.localStorage.getItem("justPosted");
+  if (justPosted === "true") {
+    justPosted = "false";
+    window.localStorage.setItem("justPosted", false);
+    lastPageBottom();
+  }
+
 
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
@@ -184,8 +186,6 @@ const InsideSketchbook = (props) => {
   const scrollToPost = () => {
     let scrollID = window.localStorage.getItem("scrollID");
     if (refs && refs[scrollID]) {
-      console.log(refs[scrollID])
-      console.log(refs)
       refs[scrollID].current.scrollIntoView({ behavior: 'smooth' });
       window.localStorage.setItem("scrollID", null);
       window.localStorage.setItem("justEdited", false);
@@ -208,9 +208,6 @@ const InsideSketchbook = (props) => {
     window.localStorage.setItem("scrollID", id);
     window.localStorage.setItem("pageNum", pageNum);
   }
-
-
-
 
   return (
     <>

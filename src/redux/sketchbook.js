@@ -135,7 +135,6 @@ export const sendDeletePostReq = (token, postId) => async dispatch => {
   });
   if (res.ok) {
     const delRes = await res.json();
-    console.log(delRes);
     // dispatch(delPost());
   }
 }
