@@ -71,7 +71,7 @@ const InsideSketchbook = (props) => {
 
   let { posts } = props;
   React.useEffect(() => {
-    if (posts) {
+    if (posts && posts.length > 0) {
       let newRefs = Object.keys(posts[sketchbookId]).reduce((acc, value) => {
         let id = posts[sketchbookId][value]["id"];
         acc[id] = React.createRef();
@@ -129,6 +129,8 @@ const InsideSketchbook = (props) => {
   const deletePost = async (postId) => {
     await props.sendDeletePostReq(props.token, postId);
     await props.getPostsReq(sketchbookId);
+    let isLastPostDisplayed = displayedPosts[displayedPosts.length - 2].displayed;
+    if (isLastPostDisplayed === false && displayedPosts.length > postsPerPage) prevPage();
   }
 
   const scrollToPageButtons = () => {
@@ -160,7 +162,6 @@ const InsideSketchbook = (props) => {
     setPageNum(totalPages);
     scrollToPageButtons();
   }
-
 
   const lastPageBottom = () => {
     setPageNum(totalPages);
