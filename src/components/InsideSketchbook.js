@@ -127,10 +127,17 @@ const InsideSketchbook = (props) => {
   }
 
   const deletePost = async (postId) => {
+    let wasLastPost = displayedPosts[displayedPosts.length - 1].id === postId;
     await props.sendDeletePostReq(props.token, postId);
     await props.getPostsReq(sketchbookId);
     let isLastPostDisplayed = displayedPosts[displayedPosts.length - 2].displayed;
-    if (isLastPostDisplayed === false && displayedPosts.length > postsPerPage) prevPage();
+    if (wasLastPost
+      && isLastPostDisplayed === false
+      && displayedPosts.length > postsPerPage) {
+      prevPage();
+    } else {
+      setPageNum(pageNum);
+    }
   }
 
   const scrollToPageButtons = () => {
