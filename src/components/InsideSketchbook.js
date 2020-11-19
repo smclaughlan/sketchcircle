@@ -38,54 +38,13 @@ const InsideSketchbook = (props) => {
   const sketchbookId = window.location.href.split('/')[4];
 
 
-  let goToPage = Number(window.localStorage.getItem("pageNum"));
-  if (goToPage > 1) {
-    setPageNum(goToPage);
-    window.localStorage.setItem("pageNum", 1);
-  }
-
-
-  const updateDisplayedPosts = () => {
-    if (props.posts && props.posts[sketchbookId]) {
-      let skbPosts = props.posts[sketchbookId];
-      totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
-      if (totalPages < 1) {
-        totalPages = 1;
-      }
-      const postKeys = Object.keys(skbPosts);
-      for (let i = 0; i < postKeys.length; i++) {
-        const earliestPostOnPageOrLater = i >= pageNum * postsPerPage - postsPerPage;
-        const lastPostOnPageOrEarlier = i < pageNum * postsPerPage;
-        let currPost = skbPosts[postKeys[i]];
-        if (earliestPostOnPageOrLater && lastPostOnPageOrEarlier) {
-          currPost.displayed = true;
-        } else {
-          currPost.displayed = false;
-        }
-        displayedPosts = [...displayedPosts, currPost];
-      }
-    }
-  }
-  updateDisplayedPosts();
-
-  let { posts } = props;
-  React.useEffect(() => {
-    if (posts && posts.length > 0) {
-      let newRefs = Object.keys(posts[sketchbookId]).reduce((acc, value) => {
-        let id = posts[sketchbookId][value]["id"];
-        acc[id] = React.createRef();
-        return acc;
-      }, {});
-      setRefs(newRefs);
-    }
-  }, [posts])
-
-
+  /** Goal Related **/
   React.useEffect(() => {
     if (props.goals && props.goals[sketchbookId]) {
       setDisplayedGoals(props.goals[sketchbookId]);
     }
-  }, [props.goals])
+  }, [props.goals]);
+
 
   const titleChange = event => {
     setNewGoalData({
@@ -124,6 +83,57 @@ const InsideSketchbook = (props) => {
     e.preventDefault();
     props.sendNewGoalReq(props.token, newGoalData);
   }
+
+
+  let goToPage = Number(window.localStorage.getItem("pageNum"));
+  if (goToPage > 1) {
+    setPageNum(goToPage);
+    window.localStorage.setItem("pageNum", 1);
+  }
+
+  /** Post Related **/
+  const updateDisplayedPosts = () => {
+    if (props.posts && props.posts[sketchbookId]) {
+      let skbPosts = props.posts[sketchbookId];
+      totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
+      if (totalPages < 1) {
+        totalPages = 1;
+      }
+      const postKeys = Object.keys(skbPosts);
+      for (let i = 0; i < postKeys.length; i++) {
+        const earliestPostOnPageOrLater = i >= pageNum * postsPerPage - postsPerPage;
+        const lastPostOnPageOrEarlier = i < pageNum * postsPerPage;
+        let currPost = skbPosts[postKeys[i]];
+        if (earliestPostOnPageOrLater && lastPostOnPageOrEarlier) {
+          currPost.displayed = true;
+        } else {
+          currPost.displayed = false;
+        }
+        displayedPosts = [...displayedPosts, currPost];
+      }
+    }
+  }
+  updateDisplayedPosts();
+
+  let { posts } = props;
+  React.useEffect(() => {
+    if (posts && posts.length > 0) {
+      let newRefs = Object.keys(posts[sketchbookId]).reduce((acc, value) => {
+        let id = posts[sketchbookId][value]["id"];
+        acc[id] = React.createRef();
+        return acc;
+      }, {});
+      setRefs(newRefs);
+    }
+  }, [posts]);
+
+  React.useEffect(() => {
+    props.getPostsReq(sketchbookId);
+  }, []);
+
+  React.useEffect(() => {
+    updateDisplayedPosts();
+  }, [props.posts, displayedPosts]);
 
   const deletePost = async (postId) => {
     let wasLastPost = displayedPosts[displayedPosts.length - 1].id === postId;
@@ -181,14 +191,6 @@ const InsideSketchbook = (props) => {
     lastPageBottom();
   }
 
-
-  React.useEffect(() => {
-    props.getPostsReq(sketchbookId);
-  }, [])
-
-  React.useEffect(() => {
-    updateDisplayedPosts();
-  }, [props.posts, displayedPosts])
 
   const scrollToPost = () => {
     let scrollID = window.localStorage.getItem("scrollID");
