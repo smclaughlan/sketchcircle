@@ -149,6 +149,7 @@ const InsideSketchbook = (props) => {
     }
   }
 
+  /** Scroll/Page Change **/
   const scrollToPageButtons = () => {
     pageButtons.current.scrollIntoView();
   }
@@ -190,7 +191,6 @@ const InsideSketchbook = (props) => {
     window.localStorage.setItem("justPosted", false);
     lastPageBottom();
   }
-
 
   const scrollToPost = () => {
     let scrollID = window.localStorage.getItem("scrollID");
