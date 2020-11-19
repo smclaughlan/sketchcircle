@@ -17,14 +17,12 @@ const converter = new Showdown.Converter({
 });
 
 const InsideSketchbook = (props) => {
-  let displayedPosts = [];
-
   const [newGoalData, setNewGoalData] = React.useState({
     title: '',
     description: '',
     target: 1,
     targetDate: '',
-  })
+  });
   const [displayedGoals, setDisplayedGoals] = React.useState();
   const [refs, setRefs] = React.useState({});
 
@@ -33,6 +31,7 @@ const InsideSketchbook = (props) => {
 
 
   const [pageNum, setPageNum] = React.useState(1);
+  let displayedPosts = [];
   const postsPerPage = 5;
   let totalPages = 0;
 
