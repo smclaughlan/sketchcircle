@@ -58,7 +58,7 @@ const LineGraph = (props) => {
       idealData.push(props.target);
     } else {
       const percentage = i / (dateLabels.length);
-      const idealDataPoint = Math.round(props.target * percentage);
+      const idealDataPoint = props.target * percentage;
       idealData.push(idealDataPoint);
     }
   }
