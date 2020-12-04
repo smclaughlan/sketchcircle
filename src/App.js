@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Theme from './Theme';
 import Nav from './components/Nav';
 import Main from './components/Main';
+import Footer from './components/Footer';
 import Login from './components/Login';
 import Register from './components/Register';
 import InsideSketchbook from './components/InsideSketchbook';
@@ -26,6 +27,7 @@ function App(props) {
           <Route path="/sketchbook/:sketchbook_id" component={InsideSketchbook} currentUserId={props.currentUserId} />
           <Route path="/" component={Main} {...props} currentUserId={props.currentUserId} />
         </Switch>
+        <Footer />
       </BrowserRouter>
     </Theme>
   );
