@@ -7,8 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 
 const useStyles = makeStyles((theme) => ({
-  bar: {
+  footer: {
     backgroundColor: theme.primaryColor,
+    top: '20px',
+    bottom: 0,
   },
   barButton: {
     '&:hover': {
@@ -40,12 +42,12 @@ const Footer = (props) => {
 
   return (
     <div >
-      <AppBar className={classes.bar} position="relative">
+      <AppBar className={classes.footer} position='relative'>
         <Toolbar>
           {navigation}
         </Toolbar>
       </AppBar>
-    </div>
+    </div >
   );
 }
 
