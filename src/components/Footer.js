@@ -5,10 +5,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.primaryColor,
+    position: 'relative',
     top: '20px',
     bottom: 0,
   },
@@ -25,29 +27,35 @@ const Footer = (props) => {
 
   const navigation =
     <Grid container spacing={3}>
-      <Grid item xs={10}>
+      <Grid item xs={4} style={{ textAlign: 'center' }}>
         <NavLink style={{ color: 'white' }} to="/">
-          <Button className={classes.barButton} color="inherit">Sketchcircle</Button>
+          <Typography color="inherit">Copyright 2020</Typography>
         </NavLink>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={4} style={{ textAlign: 'center' }}>
         <NavLink style={{ color: 'white' }} to="/">
-          <Button className={classes.barButton} color="inherit">Logout</Button>
+          <Typography color="inherit">Github</Typography>
         </NavLink>
+      </Grid>
+      <Grid item xs={4} style={{ textAlign: 'center' }}>
         <NavLink style={{ color: 'white' }} to="/update">
-          <Button className={classes.barButton} color="inherit">Edit Account</Button>
+          <Typography color="inherit">Contact</Typography>
         </NavLink>
       </Grid>
     </Grid >
 
   return (
-    <div >
-      <AppBar className={classes.footer} position='relative'>
-        <Toolbar>
-          {navigation}
-        </Toolbar>
-      </AppBar>
-    </div >
+    <>
+      <div style={{ minHeight: "50vh" }}>
+      </div>
+      <div>
+        <AppBar className={classes.footer}>
+          <Toolbar>
+            {navigation}
+          </Toolbar>
+        </AppBar>
+      </div >
+    </>
   );
 }
 
