@@ -28,19 +28,17 @@ const Footer = (props) => {
   const navigation =
     <Grid container spacing={3}>
       <Grid item xs={4} style={{ textAlign: 'center' }}>
-        <NavLink style={{ color: 'white' }} to="/">
-          <Typography color="inherit">Copyright 2020</Typography>
-        </NavLink>
+        <Typography color="white">Copyright 2020</Typography>
       </Grid>
       <Grid item xs={4} style={{ textAlign: 'center' }}>
-        <NavLink style={{ color: 'white' }} to="/">
+        <a style={{ color: 'white' }} href="https://github.com/smclaughlan/sketchcircle">
           <Typography color="inherit">Github</Typography>
-        </NavLink>
+        </a>
       </Grid>
       <Grid item xs={4} style={{ textAlign: 'center' }}>
-        <NavLink style={{ color: 'white' }} to="/update">
+        <a style={{ color: 'white' }} href="https://smclaughlan.github.io/#four">
           <Typography color="inherit">Contact</Typography>
-        </NavLink>
+        </a>
       </Grid>
     </Grid >
 
