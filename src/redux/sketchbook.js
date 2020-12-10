@@ -5,6 +5,7 @@ const GET_SKETCHBOOKS = 'sketchcircle/sketchbooks/GET_SKETCHBOOKS';
 const ADD_FOLLOW = 'sketchcircle/sketchbooks/ADD_FOLLOW';
 const DELETE_FOLLOW = 'sketchcircle/sketchbooks/DELETE_FOLLOW';
 const ADD_POST = 'sketchcircle/sketchbooks/ADD_POST';
+const UPDATE_POST = 'sketchcircle/sketchbooks/UPDATE_POST';
 const DELETE_POST = 'sketchcircle/sketchbooks/DELETE_POST';
 const ADD_GOAL = 'sketchcircle/sketchbooks/ADD_GOAL';
 const ADD_DATAPOINT = 'sketchcircle/sketchbooks/ADD_DATAPOINT';
@@ -14,6 +15,7 @@ export const getSketchbooks = (sketchbooks) => ({ type: GET_SKETCHBOOKS, sketchb
 export const addFollow = (newFollow) => ({ type: ADD_FOLLOW, newFollow });
 export const deleteFollow = (removedFollow) => ({ type: DELETE_FOLLOW, removedFollow });
 export const addPost = (newPost) => ({ type: ADD_POST, newPost });
+export const updatePost = (updPost) => ({ type: UPDATE_POST, updPost });
 export const delPost = () => ({ type: DELETE_POST });
 export const addGoal = (newGoal) => ({ type: ADD_GOAL, newGoal });
 export const addDataPoint = (newDataPoint) => ({ type: ADD_DATAPOINT, newDataPoint });
@@ -133,7 +135,6 @@ export const sendDeletePostReq = (token, postId) => async dispatch => {
   });
   if (res.ok) {
     const delRes = await res.json();
-    console.log(delRes);
     // dispatch(delPost());
   }
 }
@@ -148,11 +149,13 @@ export const sendUpdatePostReq = (token, postId, text, skbId) => async dispatch 
     }
   });
 
-  if (res.ok) {
-    const updRes = await res.json();
-    //need to add updated post to state
-    window.location.href = `/sketchbook/${skbId}`;
-  }
+  // if (res.ok) {
+  //   const updRes = await res.json();
+  //need to add updated post to state
+  // window.location.href = `/sketchbook/${skbId}`;
+  let updPost = { skbId, postId, text };
+  dispatch(updatePost(updPost));
+  // }
 }
 
 export default function reducer(state = {}, action) {
@@ -179,10 +182,16 @@ export default function reducer(state = {}, action) {
       }
     }
     case ADD_POST: {
-
       return {
         ...state,
         ...action.newPost,
+      }
+    }
+    case UPDATE_POST: {
+      const { skbId, postId, text } = action.updPost;
+      state["posts"][skbId][postId]["body"] = text;
+      return {
+        ...state,
       }
     }
     case ADD_GOAL: {

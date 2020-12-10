@@ -10,8 +10,7 @@ const LineGraph = (props) => {
   const dateFromTimestamp = new Date(props.timestamp);
   const sketchbookId = window.location.href.split('/')[4];
 
-  //check first if value of all relevant datapoints is larger than target
-  //and if so, return a completed message for that goal instead
+  /** Completed Goal **/
   let total = 0;
   if (props.id in props.datapoints) {
     const datapointForGraphs = props.datapoints[props.id];
@@ -29,10 +28,10 @@ const LineGraph = (props) => {
     )
   }
 
-  //then check if the current date is past the the targetdate
-  //and if so, return a failed message for that goal instead
+  /** Failed Goal **/
   const currentDate = new Date();
-  if (currentDate > dateFromTargetDate) {
+  const isCurrDatePastTargetDate = currentDate > dateFromTargetDate
+  if (isCurrDatePastTargetDate) {
     return (
       <Container style={{ margin: "20px" }}>
         <Typography>{props.targetDate} {props.title} failed!</Typography>
@@ -40,6 +39,7 @@ const LineGraph = (props) => {
     )
   }
 
+  /** Incomplete Goal/Draw Graph **/
   const dateLabels = [];
   if (dateFromTargetDate > dateFromTimestamp) {
     const accTargetDate = moment(dateFromTargetDate).add(1, 'day').toDate();

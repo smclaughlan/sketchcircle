@@ -17,51 +17,34 @@ const converter = new Showdown.Converter({
 });
 
 const InsideSketchbook = (props) => {
-  const displayedPosts = [];
-  let justPosted = window.localStorage.getItem("justPosted");
-  let winXLoc = window.localStorage.getItem("pageXOffset");
-  let winYLoc = window.localStorage.getItem("pageYOffset");
-
   const [newGoalData, setNewGoalData] = React.useState({
     title: '',
     description: '',
     target: 1,
     targetDate: '',
-  })
+  });
   const [displayedGoals, setDisplayedGoals] = React.useState();
+  const [refs, setRefs] = React.useState({});
 
   const pageButtons = React.useRef(null);
   const pageBottom = React.useRef(null);
 
+
   const [pageNum, setPageNum] = React.useState(1);
+  let displayedPosts = [];
   const postsPerPage = 5;
   let totalPages = 0;
 
   const sketchbookId = window.location.href.split('/')[4];
 
-  if (props.posts && props.posts[sketchbookId]) {
-    let skbPosts = props.posts[sketchbookId];
-    totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
-    if (totalPages < 1) {
-      totalPages = 1;
-    }
-    const postKeys = Object.keys(skbPosts);
-    for (let i = pageNum * postsPerPage - postsPerPage; i < pageNum * postsPerPage; i++) {
-      if (skbPosts[postKeys[i]]) {
-        displayedPosts.push(skbPosts[postKeys[i]]);
-      }
-    }
-  }
 
-  React.useEffect(() => {
-    props.getPostsReq(sketchbookId);
-  }, [])
-
+  /** Goal Related **/
   React.useEffect(() => {
     if (props.goals && props.goals[sketchbookId]) {
       setDisplayedGoals(props.goals[sketchbookId]);
     }
-  }, [props.goals])
+  }, [props.goals]);
+
 
   const titleChange = event => {
     setNewGoalData({
@@ -101,22 +84,80 @@ const InsideSketchbook = (props) => {
     props.sendNewGoalReq(props.token, newGoalData);
   }
 
-  const deletePost = async (postId) => {
-    await props.sendDeletePostReq(props.token, postId);
-    await props.getPostsReq(sketchbookId);
+
+  let goToPage = Number(window.localStorage.getItem("pageNum"));
+  if (goToPage > 1) {
+    setPageNum(goToPage);
+    window.localStorage.setItem("pageNum", 1);
   }
 
+  /** Post Related **/
+  const updateDisplayedPosts = () => {
+    if (props.posts && props.posts[sketchbookId]) {
+      let skbPosts = props.posts[sketchbookId];
+      totalPages = Math.ceil(Object.keys(skbPosts).length / postsPerPage);
+      if (totalPages < 1) {
+        totalPages = 1;
+      }
+      const postKeys = Object.keys(skbPosts);
+      for (let i = 0; i < postKeys.length; i++) {
+        const earliestPostOnPageOrLater = i >= pageNum * postsPerPage - postsPerPage;
+        const lastPostOnPageOrEarlier = i < pageNum * postsPerPage;
+        let currPost = skbPosts[postKeys[i]];
+        if (earliestPostOnPageOrLater && lastPostOnPageOrEarlier) {
+          currPost.displayed = true;
+        } else {
+          currPost.displayed = false;
+        }
+        displayedPosts = [...displayedPosts, currPost];
+      }
+    }
+  }
+  updateDisplayedPosts();
+
+  let { posts } = props;
+  React.useEffect(() => {
+    if (posts && posts.length > 0) {
+      let newRefs = Object.keys(posts[sketchbookId]).reduce((acc, value) => {
+        let id = posts[sketchbookId][value]["id"];
+        acc[id] = React.createRef();
+        return acc;
+      }, {});
+      setRefs(newRefs);
+    }
+  }, [posts]);
+
+  React.useEffect(() => {
+    props.getPostsReq(sketchbookId);
+  }, []);
+
+  React.useEffect(() => {
+    updateDisplayedPosts();
+  }, [props.posts, displayedPosts]);
+
+  const deletePost = async (postId) => {
+    let wasLastPost = displayedPosts[displayedPosts.length - 1].id === postId;
+    await props.sendDeletePostReq(props.token, postId);
+    await props.getPostsReq(sketchbookId);
+    let isLastPostDisplayed = displayedPosts[displayedPosts.length - 2].displayed;
+    if (wasLastPost
+      && isLastPostDisplayed === false
+      && displayedPosts.length > postsPerPage) {
+      prevPage();
+    } else {
+      setPageNum(pageNum);
+    }
+  }
+
+  /** Scroll/Page Change **/
   const scrollToPageButtons = () => {
     pageButtons.current.scrollIntoView();
   }
 
   const scrollToPageBottom = () => {
-    pageBottom.current.scrollIntoView();
-  }
-
-  const saveWindowPos = () => {
-    window.localStorage.setItem("pageXOffset", window.pageXOffset);
-    window.localStorage.setItem("pageYOffset", window.pageYOffset);
+    if (pageBottom && pageBottom.current && pageBottom.current !== null) {
+      pageBottom.current.scrollIntoView();
+    }
   }
 
   const firstPage = () => {
@@ -144,10 +185,37 @@ const InsideSketchbook = (props) => {
     scrollToPageBottom();
   }
 
+  let justPosted = window.localStorage.getItem("justPosted");
   if (justPosted === "true") {
     justPosted = "false";
     window.localStorage.setItem("justPosted", false);
     lastPageBottom();
+  }
+
+  const scrollToPost = () => {
+    let scrollID = window.localStorage.getItem("scrollID");
+    if (refs && refs[scrollID]) {
+      refs[scrollID].current.scrollIntoView({ behavior: 'smooth' });
+      window.localStorage.setItem("scrollID", null);
+      window.localStorage.setItem("justEdited", false);
+      window.localStorage.setItem("pageNum", 1);
+    }
+  }
+
+  let justEdited = window.localStorage.getItem("justEdited");
+  let scrollID = window.localStorage.getItem("scrollID");
+  if (justEdited === "true"
+    && refs
+    && refs[scrollID]
+    && refs[scrollID].current !== null) {
+    props.getPostsReq(sketchbookId);
+    justEdited = "false";
+    scrollToPost();
+  }
+
+  const saveScrollID = (id) => {
+    window.localStorage.setItem("scrollID", id);
+    window.localStorage.setItem("pageNum", pageNum);
   }
 
   return (
@@ -242,52 +310,63 @@ const InsideSketchbook = (props) => {
         </Container>
         {displayedPosts.length > 0 ?
           Object.keys(displayedPosts).map(k => {
-            return (
-              <Paper style={{ margin: '50px' }} >
-                <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
-                  <Grid container>
-                    <Grid item xs={11}>
-                      <NavLink
-                        style={{ color: "#d33232" }}
-                        onClick={() => {
-                          props.getPostsReq(displayedPosts[k].user_id);
-                          firstPage();
-                        }}
-                        to={`/sketchbook/${displayedPosts[k].user_id}`}>
-                        {displayedPosts[k].avatar ?
-                          <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
-                          :
-                          <></>
-                        }
-                        <Typography>{displayedPosts[k].username}</Typography>
-                      </NavLink>
-                    </Grid>
-                    <Grid item xs={1}>
+            if (displayedPosts[k].displayed === true) {
+              return (
+                <>
+                  <div ref={refs[displayedPosts[k].id]} style={{ padding: '0px' }}></div>
+                  <Paper style={{ margin: '50px' }} >
+                    <Container style={{ margin: '10px', padding: '10px' }} key={displayedPosts[k].id}>
+                      <Grid container>
+                        <Grid item xs={11}>
+                          <NavLink
+                            style={{ color: "#d33232" }}
+                            onClick={() => {
+                              props.getPostsReq(displayedPosts[k].user_id);
+                              firstPage();
+                            }}
+                            to={`/sketchbook/${displayedPosts[k].user_id}`}>
+                            {displayedPosts[k].avatar ?
+                              <img className="postAvatar" alt={`${displayedPosts[k].username}'s avatar`} src={displayedPosts[k].avatar} />
+                              :
+                              <></>
+                            }
+                            <Typography>{displayedPosts[k].username}</Typography>
+                          </NavLink>
+                        </Grid>
+                        <Grid item xs={1}>
+                          {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
+                            <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                            :
+                            <>
+                            </>
+                          }
+                        </Grid>
+                      </Grid>
+                      <Divider variant="middle"></Divider>
+                      <ReactMarkdown source={displayedPosts[k].body} />
+                      <Divider variant="middle"></Divider>
+                      <p>{displayedPosts[k].timestamp}</p>
                       {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                        <DeleteForever className="deleteButton" color="primary" onClick={() => { deletePost(displayedPosts[k].id) }} />
+                        <>
+                          <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
+                            <Edit color="primary" onClick={() => { saveScrollID(displayedPosts[k].id) }} />
+                          </NavLink>
+                        </>
                         :
                         <>
                         </>
                       }
-                    </Grid>
-                  </Grid>
-                  <Divider variant="middle"></Divider>
-                  <ReactMarkdown source={displayedPosts[k].body} />
-                  <Divider variant="middle"></Divider>
-                  <p>{displayedPosts[k].timestamp}</p>
-                  {displayedPosts[k].user_id === parseInt(props.currentUserId) ?
-                    <>
-                      <NavLink to={`/sketchbook/${sketchbookId}/post/${displayedPosts[k].id}/edit`}>
-                        <Edit color="primary" onClick={() => { saveWindowPos() }} />
-                      </NavLink>
-                    </>
-                    :
-                    <>
-                    </>
-                  }
-                </Container>
-              </Paper>
-            )
+                    </Container>
+                  </Paper>
+                </>
+              )
+            } else {
+              return (
+                <>
+                  <div ref={refs[displayedPosts[k].id]} style={{ padding: '0px', visibility: 'hidden' }}></div>
+                </>
+              )
+            }
           })
           :
           <></>

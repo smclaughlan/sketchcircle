@@ -10,6 +10,6 @@ See the [live version](http://sketchcircle.herokuapp.com).
 * React
 * Python
 * Flask
-* PostgresQL
+* PostgreSQL
 * MaterialUI
 * CSS
