@@ -30,7 +30,7 @@ const Sketchbook = props => {
             </>
           }
         </div>
-        <Divider variant="Middle"></Divider>
+        <Divider variant="middle"></Divider>
         <div>
           <Typography style={{ fontSize: "12px", padding: "10px" }}>Updated: {timestampDate.toLocaleString()}</Typography>
         </div>
