@@ -7,7 +7,12 @@ import { Provider } from 'react-redux';
 import configureStore from './redux/configureStore';
 import history from "./utils/history";
 import openSocket from 'socket.io-client';
-import { apiBaseUrl, localBaseUrl } from './config';
+import { apiBaseUrl, localBaseUrl, gAnalytics } from './config';
+
+import ReactGA from 'react-ga';
+
+ReactGA.initialize(`${gAnalytics}`);
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 // const socket = openSocket(`${localBaseUrl}`);
 // socket.on('error', (error) => {
