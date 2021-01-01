@@ -9,10 +9,10 @@ import history from "./utils/history";
 import openSocket from 'socket.io-client';
 import { apiBaseUrl, localBaseUrl, gAnalytics } from './config';
 
-import ReactGA from 'react-ga';
+// import ReactGA from 'react-ga';
 
-ReactGA.initialize(`${gAnalytics}`);
-ReactGA.pageview(window.location.pathname + window.location.search);
+// ReactGA.initialize(`${gAnalytics}`);
+// ReactGA.pageview(window.location.pathname + window.location.search);
 
 // const socket = openSocket(`${localBaseUrl}`);
 // socket.on('error', (error) => {
