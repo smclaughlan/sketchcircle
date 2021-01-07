@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { Button, Container, Paper, TextField, Typography } from '@material-ui/core';
 import { sendLoginReq } from '../redux/user';
 
-const Login = (props) => {
+function Login(props) {
   const [loginData, setLoginData] = React.useState({
     email: '',
     password: '',
