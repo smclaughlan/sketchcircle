@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Container, Typography } from '@material-ui/core';
 import AddData from './AddData';
 
-const LineGraph = (props) => {
+function LineGraph(props) {
   const dateFromTargetDate = new Date(props.targetDate);
   const dateFromTimestamp = new Date(props.timestamp);
   const sketchbookId = window.location.href.split('/')[4];
