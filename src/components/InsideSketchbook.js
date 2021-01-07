@@ -16,7 +16,7 @@ const converter = new Showdown.Converter({
   tasklists: true
 });
 
-const InsideSketchbook = (props) => {
+function InsideSketchbook(props) {
   const [newGoalData, setNewGoalData] = React.useState({
     title: '',
     description: '',
