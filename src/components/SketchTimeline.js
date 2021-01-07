@@ -13,7 +13,7 @@ import TimelineOppositeContent from '@material-ui/lab/TimelineOppositeContent';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
 
-const SketchTimeline = (props) => {
+function SketchTimeline(props) {
 
   const sketchbookId = window.location.href.split('/')[4];
 
