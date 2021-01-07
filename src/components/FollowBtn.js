@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { addFollowReq, deleteFollowReq, getSketchbooksReq } from '../redux/sketchbook';
 import { Star, StarBorder } from '@material-ui/icons';
 
-const FollowBtn = (props) => {
+function FollowBtn(props) {
   const [isFollowed, setFollowed] = React.useState(Object.keys(props.follows).includes(props.sketchbook_id.toString()));
   const { token, sketchbook_id, addFollowReq, deleteFollowReq } = props;
 
