@@ -4,7 +4,7 @@ import { Button, Container, Paper, TextField, Typography } from '@material-ui/co
 import { sendRegisterReq } from '../redux/user';
 import { Redirect } from 'react-router-dom';
 
-const Register = (props) => {
+function Register(props) {
   const [registerData, setRegisterData] = React.useState({
     username: '',
     email: '',
