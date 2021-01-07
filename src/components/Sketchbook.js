@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import FollowBtn from './FollowBtn';
 import { Card, CardContent, Divider, Typography } from '@material-ui/core';
 
-const Sketchbook = props => {
+function Sketchbook(props) {
   const timestampDate = new Date(props.timestamp);
 
   return (
