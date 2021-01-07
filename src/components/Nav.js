@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const NavBar = (props) => {
+function NavBar(props) {
   const classes = useStyles();
 
   const logOut = () => {
