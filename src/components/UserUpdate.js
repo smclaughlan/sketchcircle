@@ -4,7 +4,7 @@ import { Button, Container, Paper, TextField } from '@material-ui/core';
 import { sendUpdateReq } from '../redux/user';
 import { getSketchbooksReq } from '../redux/sketchbook';
 
-const UserUpdate = (props) => {
+function UserUpdate(props) {
   const [updateData, setUpdateData] = React.useState({
     avatarUrl: '',
   });
