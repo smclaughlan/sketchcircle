@@ -12,7 +12,7 @@ import { Container } from '@material-ui/core';
 //   tasklists: true
 // });
 
-const EditPost = (props) => {
+function EditPost(props) {
 
   const sketchbookId = window.location.href.split('/')[4];
   const editPost = window.location.href.split('/')[6];
