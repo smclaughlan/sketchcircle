@@ -5,7 +5,7 @@ import { Card, CardContent, Divider, Typography } from '@material-ui/core';
 import { apiBaseUrl, localBaseUrl } from '../config';
 
 
-const ShoutBox = props => {
+function ShoutBox(props) {
   const [socket, setSocket] = React.useState(props.socket);
   const [socketConnected, setSocketConnected] = React.useState(false);
   const [chatMessages, setChatMessages] = React.useState();
