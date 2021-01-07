@@ -15,7 +15,7 @@ import ShoutBox from './ShoutBox';
 //   },
 // }));
 
-const Main = (props) => {
+function Main(props) {
   // const classes = useStyles();
 
   const [pageNum, setPageNum] = React.useState(1);
