@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Container, TextField, Typography, Button } from '@material-ui/core';
 import { sendAddDataPointReq } from '../redux/sketchbook';
 
-const AddData = (props) => {
+function AddData(props) {
   const [value, setValue] = React.useState();
 
   const valueChange = e => {
