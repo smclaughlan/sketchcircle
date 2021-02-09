@@ -6,7 +6,7 @@ import { sendAddDataPointReq } from '../redux/sketchbook';
 function AddData(props) {
   const [value, setValue] = React.useState();
 
-  const valueChange = e => {
+  function valueChange(e) {
     try {
       const num = Number(e.target.value);
       setValue(num);
@@ -15,7 +15,7 @@ function AddData(props) {
     }
   }
 
-  const createDataPoint = (e) => {
+  function createDataPoint(e) {
     e.preventDefault();
     props.sendAddDataPointReq(props.token, props.id, value);
   }
