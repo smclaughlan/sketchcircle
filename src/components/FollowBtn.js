@@ -5,10 +5,10 @@ import { addFollowReq, deleteFollowReq, getSketchbooksReq } from '../redux/sketc
 import { Star, StarBorder } from '@material-ui/icons';
 
 function FollowBtn(props) {
-  const [isFollowed, setFollowed] = React.useState(Object.keys(props.follows).includes(props.sketchbook_id.toString()));
+  const [isFollowed, setFollowed] = React.useState(props.follows[props.sketchbook_id.toString()]);
   const { token, sketchbook_id, addFollowReq, deleteFollowReq } = props;
 
-  const createFollow = () => {
+  function createFollow() {
     (async () => {
       await addFollowReq(token, sketchbook_id);
       setFollowed(true);
@@ -17,7 +17,7 @@ function FollowBtn(props) {
     })();
   }
 
-  const removeFollow = () => {
+  function removeFollow() {
     (async () => {
       await deleteFollowReq(token, sketchbook_id);
       setFollowed(false);
@@ -27,12 +27,12 @@ function FollowBtn(props) {
   }
 
   React.useEffect(() => {
-    if (Object.keys(props.follows).includes(props.sketchbook_id.toString())) {
+    if (props.follows[props.sketchbook_id.toString()]) {
       setFollowed(true);
     } else {
       setFollowed(false);
     }
-  }, [props.follows]);
+  }, [props.follows, props.sketchbook_id]);
 
   return (isFollowed ?
     <Star color="primary" style={{ cursor: "pointer" }} onClick={removeFollow} />
