@@ -35,11 +35,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    // getPostsReq: (...args) => dispatch(getPostsReq(...args)),
-    // sendNewGoalReq: (...args) => dispatch(sendNewGoalReq(...args)),
-    // sendDeletePostReq: (...args) => dispatch(sendDeletePostReq(...args)),
-  };
+  return {};
 };
 
 export default connect(
