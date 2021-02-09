@@ -75,7 +75,7 @@ function Main(props) {
           <Typography variant="h3" align="center">SketchCircle</Typography>
           <Typography align="center">A community for developing artists reaching goals together</Typography>
         </Container>
-        <ShoutBox />
+        {/* <ShoutBox /> no shoutbox for now */}
         <Container>
           <Paper style={{ margin: "20px" }} elevation={3}>
             <Typography variant="h5" style={{ padding: "10px" }}>Starred Sketchbooks</Typography>
