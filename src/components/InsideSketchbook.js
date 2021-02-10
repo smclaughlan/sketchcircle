@@ -113,9 +113,13 @@ function InsideSketchbook(props) {
       }
     }
   }
-  updateDisplayedPosts();
 
   let { posts } = props;
+
+  React.useEffect(() => {
+    updateDisplayedPosts();
+  }, [posts]);
+
   React.useEffect(() => {
     if (posts && posts.length > 0) {
       let newRefs = Object.keys(posts[sketchbookId]).reduce((acc, value) => {
@@ -127,9 +131,10 @@ function InsideSketchbook(props) {
     }
   }, [posts]);
 
+
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
-  }, []);
+  }, [sketchbookId]);
 
   React.useEffect(() => {
     updateDisplayedPosts();
