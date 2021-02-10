@@ -5,7 +5,7 @@ import { addFollowReq, deleteFollowReq, getSketchbooksReq } from '../redux/sketc
 import { Star, StarBorder } from '@material-ui/icons';
 
 function FollowBtn(props) {
-  const [isFollowed, setFollowed] = React.useState(props.follows[props.sketchbook_id.toString()]);
+  const [isFollowed, setFollowed] = React.useState(props.follows[props.sketchbook_id]);
   const { token, sketchbook_id, addFollowReq, deleteFollowReq } = props;
 
   function createFollow() {
@@ -27,7 +27,7 @@ function FollowBtn(props) {
   }
 
   React.useEffect(() => {
-    if (props.follows[props.sketchbook_id.toString()]) {
+    if (props.follows[props.sketchbook_id]) {
       setFollowed(true);
     } else {
       setFollowed(false);
