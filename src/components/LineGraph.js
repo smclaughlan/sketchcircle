@@ -9,17 +9,21 @@ function LineGraph(props) {
   const dateFromTargetDate = new Date(props.targetDate);
   const dateFromTimestamp = new Date(props.timestamp);
   const sketchbookId = window.location.href.split('/')[4];
+  const [total, setTotal] = React.useState(0);
 
   /** Completed Goal **/
-  let total = 0;
-  if (props.id in props.datapoints) {
-    const datapointForGraphs = props.datapoints[props.id];
-    Object.keys(datapointForGraphs).forEach(k => {
-      const currDatapoint = datapointForGraphs[k];
-      const currValue = currDatapoint.value;
-      total += currValue;
-    });
-  }
+  // let total = 0;
+  React.useEffect(() => {
+    if (props.id in props.datapoints) {
+      const datapointForGraphs = props.datapoints[props.id];
+      Object.keys(datapointForGraphs).forEach(k => {
+        const currDatapoint = datapointForGraphs[k];
+        const currValue = currDatapoint.value;
+        setTotal(total + currValue);
+      });
+    }
+  }, [props.datapoints])
+
   if (total > props.target) {
     return (
       <Container style={{ margin: "20px" }}>
