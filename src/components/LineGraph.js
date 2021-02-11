@@ -11,8 +11,97 @@ function LineGraph(props) {
   const sketchbookId = window.location.href.split('/')[4];
   const [total, setTotal] = React.useState(0);
 
+  const [dateLabels, setDateLabels] = React.useState([]);
+  const [idealData, setIdealData] = React.useState([]);
+  const [userData, setUserData] = React.useState([]);
+  const [goalDisplayTotal, setGoalDisplayTotal] = React.useState(0);
+
+  /** Incomplete Goal/Draw Graph **/
+  React.useEffect(() => {
+    let userDataTemp = userData.slice();
+    let dateLabelsTemp = dateLabels.slice();
+    let idealDataTemp = idealData.slice();
+    if (dateFromTargetDate > dateFromTimestamp) {
+      const accTargetDate = moment(dateFromTargetDate).add(1, 'day').toDate();
+      let iDate = moment(dateFromTimestamp).toDate();
+      while (iDate <= accTargetDate) {
+        dateLabelsTemp.push(iDate.toLocaleString().split(',')[0]);
+        // setDateLabels(dateLabels.concat([iDate.toLocaleString().split(',')[0]]));
+        iDate = moment(iDate).add(1, 'day').toDate();
+      }
+    }
+
+    for (let i = 1; i <= dateLabelsTemp.length; i++) {
+      if (i === 1) {
+        idealDataTemp.push(0);
+        // setIdealData(idealData.concat([0]));
+      } else if (i === dateLabelsTemp.length) {
+        idealDataTemp.push(props.target);
+        // setIdealData(idealData.concat([props.target]));
+      } else {
+        const percentage = i / (dateLabelsTemp.length);
+        const idealDataPoint = props.target * percentage;
+        idealDataTemp.push(idealDataPoint);
+        // setIdealData(idealData.concat([idealDataPoint]));
+      }
+    }
+
+    if (props.id in props.datapoints) {
+      const datapointForGraphs = props.datapoints[props.id];
+      Object.keys(datapointForGraphs).forEach(k => {
+        const currDatapoint = datapointForGraphs[k];
+        //get value
+        const currValue = currDatapoint.value;
+        //get timestamp
+        // goalDisplayTotal += currValue; //this will be displayed below, no further math with gDT
+        setGoalDisplayTotal(goalDisplayTotal + currValue);
+        const currTimestamp = moment(currDatapoint.timestamp)
+          .toDate()
+          .toLocaleString()
+          .split(',')[0]; //gives e.g."6/20/2020" as with dateLabels[]
+        //if timestamp matches index of dateLabels[] then add it to userData[]
+        //at that index in userData
+
+
+
+        if (dateLabelsTemp.indexOf(currTimestamp) !== -1) {
+          const idxToAddValue = dateLabelsTemp.indexOf(currTimestamp);
+          if (userDataTemp[idxToAddValue]) {
+            // userData[idxToAddValue] += currValue;
+            userDataTemp[idxToAddValue] += currValue;
+          } else {
+            userDataTemp[idxToAddValue] = currValue;
+            if (idxToAddValue > 0) { //add previous value to this value, making
+              //...each date's values add up over time
+              if (userDataTemp[idxToAddValue - 1] !== undefined) {
+                userDataTemp[idxToAddValue] += userDataTemp[idxToAddValue - 1];
+              }
+            }
+          }
+        }
+      })
+
+      for (let i = 0; i < userDataTemp.length; i++) { //test for empty days
+        if (userDataTemp[i] === undefined) {
+          userDataTemp[i] = userDataTemp[i - 1]; //if day is empty, use previous day's value. Flat line on graph.
+          for (let j = i + 1; j < userDataTemp.length; j++) { //add current value to all the rest of the userDataTemp
+            if (userDataTemp[j] === undefined) {
+              break;
+            }
+            userDataTemp[j] += userDataTemp[i];
+          }
+        }
+      }
+    }
+
+    setDateLabels(dateLabelsTemp);
+    setIdealData(idealDataTemp);
+    setUserData(userDataTemp);
+  }, []);
+
+
+
   /** Completed Goal **/
-  // let total = 0;
   React.useEffect(() => {
     if (props.id in props.datapoints) {
       const datapointForGraphs = props.datapoints[props.id];
@@ -41,78 +130,6 @@ function LineGraph(props) {
         <Typography>{props.targetDate} {props.title} failed!</Typography>
       </Container>
     )
-  }
-
-  /** Incomplete Goal/Draw Graph **/
-  const dateLabels = [];
-  if (dateFromTargetDate > dateFromTimestamp) {
-    const accTargetDate = moment(dateFromTargetDate).add(1, 'day').toDate();
-    let iDate = moment(dateFromTimestamp).toDate();
-    while (iDate <= accTargetDate) {
-      dateLabels.push(iDate.toLocaleString().split(',')[0]);
-      iDate = moment(iDate).add(1, 'day').toDate();
-    }
-  }
-
-  const idealData = [];
-  for (let i = 1; i <= dateLabels.length; i++) {
-    if (i === 1) {
-      idealData.push(0);
-    } else if (i === dateLabels.length) {
-      idealData.push(props.target);
-    } else {
-      const percentage = i / (dateLabels.length);
-      const idealDataPoint = props.target * percentage;
-      idealData.push(idealDataPoint);
-    }
-  }
-
-  const userData = [];
-  let goalDisplayTotal = 0;
-  if (props.id in props.datapoints) {
-    const datapointForGraphs = props.datapoints[props.id];
-    Object.keys(datapointForGraphs).forEach(k => {
-      const currDatapoint = datapointForGraphs[k];
-      //get value
-      const currValue = currDatapoint.value;
-      //get timestamp
-      goalDisplayTotal += currValue; //this will be displayed below, no further math with gDT
-      const currTimestamp = moment(currDatapoint.timestamp)
-        .toDate()
-        .toLocaleString()
-        .split(',')[0]; //gives e.g."6/20/2020" as with dateLabels[]
-      //if timestamp matches index of dateLabels[] then add it to userData[]
-      //at that index in userData
-
-
-
-      if (dateLabels.indexOf(currTimestamp) !== -1) {
-        const idxToAddValue = dateLabels.indexOf(currTimestamp);
-        if (userData[idxToAddValue]) {
-          userData[idxToAddValue] += currValue;
-        } else {
-          userData[idxToAddValue] = currValue;
-          if (idxToAddValue > 0) { //add previous value to this value, making
-            //...each date's values add up over time
-            if (userData[idxToAddValue - 1] !== undefined) {
-              userData[idxToAddValue] += userData[idxToAddValue - 1];
-            }
-          }
-        }
-      }
-    })
-
-    for (let i = 0; i < userData.length; i++) { //test for empty days
-      if (userData[i] === undefined) {
-        userData[i] = userData[i - 1]; //if day is empty, use previous day's value. Flat line on graph.
-        for (let j = i + 1; j < userData.length; j++) { //add current value to all the rest of the userData
-          if (userData[j] === undefined) {
-            break;
-          }
-          userData[j] += userData[i];
-        }
-      }
-    }
   }
 
 
