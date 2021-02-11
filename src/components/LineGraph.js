@@ -21,12 +21,13 @@ function LineGraph(props) {
     let userDataTemp = userData.slice();
     let dateLabelsTemp = dateLabels.slice();
     let idealDataTemp = idealData.slice();
+    let goalDisplayTemp = 0;
+
     if (dateFromTargetDate > dateFromTimestamp) {
       const accTargetDate = moment(dateFromTargetDate).add(1, 'day').toDate();
       let iDate = moment(dateFromTimestamp).toDate();
       while (iDate <= accTargetDate) {
         dateLabelsTemp.push(iDate.toLocaleString().split(',')[0]);
-        // setDateLabels(dateLabels.concat([iDate.toLocaleString().split(',')[0]]));
         iDate = moment(iDate).add(1, 'day').toDate();
       }
     }
@@ -54,7 +55,7 @@ function LineGraph(props) {
         const currValue = currDatapoint.value;
         //get timestamp
         // goalDisplayTotal += currValue; //this will be displayed below, no further math with gDT
-        setGoalDisplayTotal(goalDisplayTotal + currValue);
+        goalDisplayTemp += currValue;
         const currTimestamp = moment(currDatapoint.timestamp)
           .toDate()
           .toLocaleString()
@@ -97,6 +98,7 @@ function LineGraph(props) {
     setDateLabels(dateLabelsTemp);
     setIdealData(idealDataTemp);
     setUserData(userDataTemp);
+    setGoalDisplayTotal(goalDisplayTemp);
   }, []);
 
 
