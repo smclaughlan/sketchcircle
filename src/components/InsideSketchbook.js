@@ -29,7 +29,6 @@ function InsideSketchbook(props) {
   const pageButtons = React.useRef(null);
   const pageBottom = React.useRef(null);
 
-
   const [pageNum, setPageNum] = React.useState(1);
   let displayedPosts = [];
   const postsPerPage = 5;
@@ -113,13 +112,9 @@ function InsideSketchbook(props) {
       }
     }
   }
+  updateDisplayedPosts();
 
   let { posts } = props;
-
-  React.useEffect(() => {
-    updateDisplayedPosts();
-  }, [posts]);
-
   React.useEffect(() => {
     if (posts && posts.length > 0) {
       let newRefs = Object.keys(posts[sketchbookId]).reduce((acc, value) => {
@@ -131,10 +126,9 @@ function InsideSketchbook(props) {
     }
   }, [posts]);
 
-
   React.useEffect(() => {
     props.getPostsReq(sketchbookId);
-  }, [sketchbookId]);
+  }, []);
 
   React.useEffect(() => {
     updateDisplayedPosts();
