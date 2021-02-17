@@ -30,7 +30,7 @@ function Footer(props) {
       </Grid>
       <Grid item xs={4} style={{ textAlign: 'center' }}>
         <a style={{ color: 'white' }} href="https://github.com/smclaughlan/sketchcircle">
-          <Typography color="inherit">Github</Typography>
+          <Typography color="inherit">GitHub</Typography>
         </a>
       </Grid>
       <Grid item xs={4} style={{ textAlign: 'center' }}>
