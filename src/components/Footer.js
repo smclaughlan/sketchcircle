@@ -26,7 +26,7 @@ function Footer(props) {
   const navigation =
     <Grid container spacing={3}>
       <Grid item xs={4} style={{ textAlign: 'center' }}>
-        <Typography color="inherit">Copyright 2020</Typography>
+        <Typography color="inherit">Copyright Sean McLaughlan</Typography>
       </Grid>
       <Grid item xs={4} style={{ textAlign: 'center' }}>
         <a style={{ color: 'white' }} href="https://github.com/smclaughlan/sketchcircle">
