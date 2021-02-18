@@ -1,15 +1,30 @@
 # Sketchcircle
+  *By Sean McLaughlan - [Visit SketchCircle](http://sketchcircle.herokuapp.com)*
 
-Sketchcircle is designed to support the features specific to art improvement sketchbook communities. It features goal setting, an image only timeline, and an easy to use interface.
+  **Table of Contents**
+  * [SketchCircle at a Glance](#sketchcircle-at-a-glance)
+  * [Front-end](#front-end)
+  * [Back-end](#back-end)
+  * [Conclusion](#conclusion)
 
-See the [live version](http://sketchcircle.herokuapp.com).
+## SketchCircle at a Glance
+Sketchcircle is designed to support the features specific to art improvement sketchbook communities. In addition to posting to and favoriting sketchbooks, users can set goals and view an image only timeline for each sketchbook.
 
-## Technologies
+## Front-end
+The front-end of SketchCircle uses JavaScript, React, Redux, and MaterialUI.
 
-* JavaScript
-* React
-* Python
-* Flask
-* PostgreSQL
-* MaterialUI
-* CSS
+### React
+
+### Redux
+
+### MaterialUI
+
+
+## Back-end
+The back-end uses Python, Flask, and PostgreSQL.
+
+### PostgreSQL
+
+### Flask
+
+## Conclusion
