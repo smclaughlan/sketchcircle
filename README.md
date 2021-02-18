@@ -3,6 +3,10 @@
 
 - [Sketchcircle](#sketchcircle)
   - [SketchCircle at a Glance](#sketchcircle-at-a-glance)
+    - [Starring (favoriting)](#starring-favoriting)
+    - [Posting](#posting)
+    - [Goals](#goals)
+    - [Image Only Timeline](#image-only-timeline)
   - [Front-end](#front-end)
     - [React](#react)
     - [Redux](#redux)
@@ -13,7 +17,21 @@
   - [Conclusion](#conclusion)
 
 ## SketchCircle at a Glance
-Sketchcircle is designed to support the features specific to art improvement sketchbook communities. In addition to posting to and favoriting sketchbooks, users can set goals and view an image only timeline for each sketchbook.
+Sketchcircle is designed to support the features specific to art improvement sketchbook communities. In addition to posting to and starring (favoriting) sketchbooks, users can set goals and view an image only timeline for each sketchbook.
+
+### Starring (favoriting)
+
+### Posting
+Posts on SketchCircle are handled through MarkDown and the [reacte-mde](https://www.npmjs.com/package/react-mde) package.
+
+![](documentation/images/post1.png)
+![](documentation/images/post2.png)
+
+### Goals
+Goals have a name, description, target value, and target date. These are publicly viewable on the site. If a goal is reached or failed a message will be displayed instead of the graph saying whether the goal was accomplished or not. Adding new data will automatically be added to the current date.
+![](documentation/images/goal.png)
+
+### Image Only Timeline
 
 ## Front-end
 The front-end of SketchCircle uses JavaScript, React, Redux, and MaterialUI.
@@ -22,7 +40,9 @@ The front-end of SketchCircle uses JavaScript, React, Redux, and MaterialUI.
 SketchCircle uses React to create a smooth user experience.
 
 ### Redux
-Redux is used to store the site's data on the front-end.
+Redux is used to store the site's data on the front-end. While Redux was not strictly necessary for SketchCircle, I chose to use it so that I could learn more about it and spend more time using it.
+
+One advantage of using Redux, though, is that returning to previous sketchbooks or the main page will be instant, not requiring waiting for new data.
 
 ### MaterialUI
 MaterialUI components were used to save time and create a uniform look and feel.
