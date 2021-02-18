@@ -1,11 +1,16 @@
 # Sketchcircle
   *By Sean McLaughlan - [Visit SketchCircle](http://sketchcircle.herokuapp.com)*
 
-  **Table of Contents**
-  * [SketchCircle at a Glance](#sketchcircle-at-a-glance)
-  * [Front-end](#front-end)
-  * [Back-end](#back-end)
-  * [Conclusion](#conclusion)
+- [Sketchcircle](#sketchcircle)
+  - [SketchCircle at a Glance](#sketchcircle-at-a-glance)
+  - [Front-end](#front-end)
+    - [React](#react)
+    - [Redux](#redux)
+    - [MaterialUI](#materialui)
+  - [Back-end](#back-end)
+    - [PostgreSQL](#postgresql)
+    - [Flask](#flask)
+  - [Conclusion](#conclusion)
 
 ## SketchCircle at a Glance
 Sketchcircle is designed to support the features specific to art improvement sketchbook communities. In addition to posting to and favoriting sketchbooks, users can set goals and view an image only timeline for each sketchbook.
@@ -14,6 +19,7 @@ Sketchcircle is designed to support the features specific to art improvement ske
 The front-end of SketchCircle uses JavaScript, React, Redux, and MaterialUI.
 
 ### React
+SketchCircle uses React.
 
 ### Redux
 
