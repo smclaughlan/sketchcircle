@@ -20,6 +20,9 @@
 Sketchcircle is designed to support the features specific to art improvement sketchbook communities. In addition to posting to and starring (favoriting) sketchbooks, users can set goals and view an image only timeline for each sketchbook.
 
 ### Starring (favoriting)
+Starring sketchbooks puts them into a separate area at the top of the page, making personally important content easy to find.
+
+![](documentation/images/starring.png)
 
 ### Posting
 Posts on SketchCircle are handled through MarkDown and the [reacte-mde](https://www.npmjs.com/package/react-mde) package.
@@ -29,9 +32,13 @@ Posts on SketchCircle are handled through MarkDown and the [reacte-mde](https://
 
 ### Goals
 Goals have a name, description, target value, and target date. These are publicly viewable on the site. If a goal is reached or failed a message will be displayed instead of the graph saying whether the goal was accomplished or not. Adding new data will automatically be added to the current date.
+
 ![](documentation/images/goal.png)
 
 ### Image Only Timeline
+The image timeline feature allows users to see all the images from that particular sketchbook without text or responses from other users.
+
+![](documentation/images/timeline.png)
 
 ## Front-end
 The front-end of SketchCircle uses JavaScript, React, Redux, and MaterialUI.
