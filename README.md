@@ -52,7 +52,11 @@ Redux is used to store the site's data on the front-end. While Redux was not str
 One advantage of using Redux, though, is that returning to previous sketchbooks or the main page will be instant, not requiring waiting for new data.
 
 ### MaterialUI
-MaterialUI components were used to save time and create a uniform look and feel.
+
+```js
+import { Button, Container, Paper, Grid, Typography } from '@material-ui/core';
+```
+MaterialUI offers a library of React components that were used to save time and create a uniform look and feel for the project.
 
 ## Back-end
 The back-end uses Python, Flask, and PostgreSQL.
