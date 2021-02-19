@@ -64,4 +64,4 @@ The database stores everything from users, to posts, to favorites, goals and goa
 Flask is also used on the back-end for saving to and querying the database.
 
 ## Conclusion
-My two main goals with this project were learning more about redux and also making a project with at least a few real users in mind. I got to spend more time with redux on this project than any in the past. I also discussed the features that potential users would want from something like SketchCircle, which is where the goal setting and image-only timeline came from. It was a fun project, over all.
+My two main goals with this project were learning more about Redux and also making a project with a few real users in mind. I got to spend more time with Redux on this project than any in the past. I also discussed the features that potential users would want from something like SketchCircle, which is where the goal setting and image only timeline came from. It was a fun project.
