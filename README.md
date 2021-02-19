@@ -44,7 +44,7 @@ The image timeline feature allows users to see all the images from that particul
 The front-end of SketchCircle uses JavaScript, React, Redux, and MaterialUI.
 
 ### React
-SketchCircle uses React to create a smooth user experience.
+SketchCircle uses React to create a smooth user experience. Navigating the site is much quicker than if vanilla JavaScript had been used.
 
 ### Redux
 Redux is used to store the site's data on the front-end. While Redux was not strictly necessary for SketchCircle, I chose to use it so that I could learn more about it and spend more time using it.
