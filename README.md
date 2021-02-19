@@ -25,7 +25,7 @@ Starring sketchbooks puts them into a separate area at the top of the page, maki
 ![](documentation/images/starring.png)
 
 ### Posting
-Posts on SketchCircle are handled through MarkDown and the [reacte-mde](https://www.npmjs.com/package/react-mde) package.
+Posts on SketchCircle are handled through Markdown and the [reacte-mde](https://www.npmjs.com/package/react-mde) package.
 
 ![](documentation/images/post1.png)
 ![](documentation/images/post2.png)
