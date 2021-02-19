@@ -17,7 +17,7 @@
   - [Conclusion](#conclusion)
 
 ## SketchCircle at a Glance
-Sketchcircle is designed to support the features specific to art improvement sketchbook communities. In addition to posting to and starring (favoriting) sketchbooks, users can set goals and view an image only timeline for each sketchbook.
+Sketchcircle is designed to support the features specific to art improvement sketchbook communities, which typically have been based on forums. In addition to posting to and starring (favoriting) sketchbooks, users can set goals and view an image only timeline for each sketchbook.
 
 ### Starring (favoriting)
 Starring sketchbooks puts them into a separate area at the top of the page, making personally important content easy to find.
@@ -27,16 +27,21 @@ Starring sketchbooks puts them into a separate area at the top of the page, maki
 ### Posting
 Posts on SketchCircle are handled through Markdown and the [reacte-mde](https://www.npmjs.com/package/react-mde) package.
 
+An example post:
+
 ![](documentation/images/post1.png)
+
+The Markdown editor:
+
 ![](documentation/images/post2.png)
 
 ### Goals
-Goals have a name, description, target value, and target date. These are publicly viewable on the site. If a goal is reached or failed a message will be displayed instead of the graph saying whether the goal was accomplished or not. Adding new data will automatically be added to the current date.
+Goals have a name, description, target value, and target date, as well as data points recording values and dates. These goals are publicly viewable on the site. If a goal is reached or failed a message will be displayed saying whether the goal was accomplished or not. Adding new data will automatically be added to the current date on the graph.
 
 ![](documentation/images/goal.png)
 
 ### Image Only Timeline
-The image timeline feature allows users to see all the images from that particular sketchbook without text or responses from other users.
+The image only timeline feature allows users to see all the images from that particular sketchbook without text or responses from other users.
 
 ![](documentation/images/timeline.png)
 
@@ -44,7 +49,7 @@ The image timeline feature allows users to see all the images from that particul
 The front-end of SketchCircle uses JavaScript, React, Redux, and MaterialUI.
 
 ### React
-SketchCircle uses React to create a smooth user experience. Navigating the site is much quicker than if vanilla JavaScript had been used.
+SketchCircle uses React to create a smooth user experience. Navigating the site is much quicker than if vanilla JavaScript had been used, for example.
 
 ### Redux
 Redux is used to store the site's data on the front-end. While Redux was not strictly necessary for SketchCircle, I chose to use it so that I could learn more about it and spend more time using it.
@@ -68,4 +73,4 @@ The database stores everything from users, to posts, to favorites, goals and goa
 Flask is also used on the back-end for saving to and querying the database.
 
 ## Conclusion
-My two main goals with this project were learning more about Redux and also making a project with a few real users in mind. I got to spend more time with Redux on this project than any in the past. I also discussed the features that potential users would want from something like SketchCircle, which is where the goal setting and image only timeline came from. It was a fun project.
+My two main goals with this project were learning more about Redux and also making a project with a few real users in mind. I got to spend more time with Redux on this project than any in the past. I also discussed the features that potential users would want from something like SketchCircle, which is where the goal setting and image only timeline originated.
